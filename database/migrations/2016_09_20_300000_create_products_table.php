@@ -28,6 +28,21 @@ class CreateProductsTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('invoice_product', function (Blueprint $table) {
+            $table->increments('id');
+
+            $table->string('name');
+            $table->string('pkwiu');
+            $table->string('measure_unit');
+            $table->mediumInteger('price')->unsigned();
+            $table->tinyInteger('vat')->unsigned();
+
+            $table->integer('invoice_id')->unsigned()->nullable();
+            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+
+            $table->timestamps();
+        });
+
     }
 
     /**
@@ -37,6 +52,7 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('invoice_product');
         Schema::dropIfExists('products');
     }
 }

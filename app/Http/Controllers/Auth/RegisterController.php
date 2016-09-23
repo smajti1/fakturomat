@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\User;
-use Validator;
+use App\Company;
 use App\Http\Controllers\Controller;
+use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\DB;
+use Validator;
 
 class RegisterController extends Controller
 {
@@ -48,9 +50,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+            'company_name' => 'required|max:255|unique:companies,name',
+            'email'        => 'required|email|max:255|unique:users',
+            'password'     => 'required|min:6|confirmed',
         ]);
     }
 
@@ -62,10 +64,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => bcrypt($data['password']),
-        ]);
+        $user = null;
+
+        DB::transaction(function () use (&$user, $data) {
+            $user = User::create([
+                'email'    => $data['email'],
+                'password' => bcrypt($data['password']),
+            ]);
+
+            $company = Company::create([
+                'name'                => $data['company_name'],
+                'street'              => $data['street'],
+                'city'                => $data['city'],
+                'post_code'           => $data['post_code'],
+                'nip'                 => $data['nip'],
+                'regon'               => $data['regon'],
+                'email'               => $data['company_email'],
+                'www'                 => $data['www'],
+                'phone'               => $data['phone'],
+                'bank_account_number' => $data['bank_account_number'],
+            ]);
+
+            $company->user()->associate($user);
+        });
+
+        return $user;
     }
 }

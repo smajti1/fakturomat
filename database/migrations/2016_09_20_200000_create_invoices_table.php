@@ -15,10 +15,15 @@ class CreateInvoicesTable extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->increments('id');
+            $table->tinyInteger('payment')->unsigned();
+            $table->tinyInteger('status')->unsigned();
+            $table->date('payment_at');
+            $table->string('number');
+            $table->date('issue_date');
             $table->timestamps();
         });
 
-        Schema::create('company_has_invoice', function (Blueprint $table) {
+        Schema::create('company_invoice', function (Blueprint $table) {
             $table->increments('id');
 
             $table->integer('company_id')->unsigned()->nullable();
@@ -36,7 +41,7 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_has_invoice');
+        Schema::dropIfExists('company_invoice');
         Schema::dropIfExists('invoices');
     }
 }

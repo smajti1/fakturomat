@@ -1,20 +1,18 @@
+var showHideSwitches = document.querySelectorAll('[data-show-hide]');
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * include Vue and Vue Resource. This gives a great starting point for
- * building robust, powerful web applications using Vue and Laravel.
- */
+for (var i = 0; i < showHideSwitches.length; i++) {
+    showHideSwitches[i].addEventListener('click', function (e) {
+        e.preventDefault();
+        var arrow = this.getElementsByTagName('i')[0];
+        var showHideElement = document.getElementById(this.dataset.showHide);
 
-require('./bootstrap');
+        if (arrow.className.indexOf('down') > 0) {
+            arrow.className = arrow.className.replace('down', 'up');
+            showHideElement.className = showHideElement.className.replace('hide', '');
+        } else {
+            arrow.className = arrow.className.replace('up', 'down');
+            showHideElement.className = showHideElement.className + ' hide';
+        }
+    });
+}
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the body of the page. From here, you may begin adding components to
- * the application, or feel free to tweak this setup for your needs.
- */
-
-Vue.component('example', require('./components/Example.vue'));
-
-const app = new Vue({
-    el: 'body'
-});
