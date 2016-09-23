@@ -2,16 +2,15 @@
 <html lang="pl">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Fakturomat') }}</title>
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
 
     <!-- Scripts -->
     <script>
@@ -21,65 +20,42 @@
     </script>
 </head>
 <body>
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
 
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
-                    <span class="sr-only">Toggle Navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+    <div class="collapse" id="navbar-header" aria-expanded="false" style="height: 0px;">
+        <div class="container-fluid bg-inverse p-a-1">
+            <ul>
+                @if (Auth::guest())
+                    <li><a href="{{ url('/login') }}">Login</a></li>
+                    <li><a href="{{ url('/register') }}">Register</a></li>
+                @else
+                    <li>
+                        <a href="{{ url('/logout') }}"
+                           onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                            Logout
+                        </a>
 
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-            </div>
-
-            <div class="collapse navbar-collapse" id="app-navbar-collapse">
-                <!-- Left Side Of Navbar -->
-                <ul class="nav navbar-nav">
-                    &nbsp;
-                </ul>
-
-                <!-- Right Side Of Navbar -->
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Authentication Links -->
-                    @if (Auth::guest())
-                        <li><a href="{{ url('/login') }}">Login</a></li>
-                        <li><a href="{{ url('/register') }}">Register</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                {{ Auth::user()->email }} <span class="caret"></span>
-                            </a>
-
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{ url('/logout') }}"
-                                        onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
-                                        {{ csrf_field() }}
-                                    </form>
-                                </li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-            </div>
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                            {{ csrf_field() }}
+                        </form>
+                    </li>
+                @endif
+            </ul>
         </div>
-    </nav>
+    </div>
+    <div class="navbar navbar-light bg-faded navbar-static-top">
+        <button class="navbar-toggler collapsed pull-right" type="button" data-toggle="collapse" data-target="#navbar-header" aria-expanded="false">
+            ☰
+        </button>
+        <span class="pull-right">
+            @if (Auth::check())
+                {{ Auth::user()->email }}
+            @endif
+        </span>
+    </div>
 
     @yield('content')
 
-    <!-- Scripts -->
-    <script src="/js/app.js"></script>
+    <script src="{{ asset('/js/app.js') }}"></script>
 </body>
 </html>

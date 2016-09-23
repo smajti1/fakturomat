@@ -8,10 +8,10 @@ for (var i = 0; i < showHideSwitches.length; i++) {
 
         if (arrow.className.indexOf('down') > 0) {
             arrow.className = arrow.className.replace('down', 'up');
-            showHideElement.className = showHideElement.className.replace('hide', '');
+            showHideElement.className = showHideElement.className.replace('invisible', '');
         } else {
             arrow.className = arrow.className.replace('up', 'down');
-            showHideElement.className = showHideElement.className + ' hide';
+            showHideElement.className = showHideElement.className + ' invisible';
         }
     });
 }
