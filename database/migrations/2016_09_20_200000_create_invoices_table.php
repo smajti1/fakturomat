@@ -20,17 +20,18 @@ class CreateInvoicesTable extends Migration
             $table->date('payment_at');
             $table->string('number');
             $table->date('issue_date');
-            $table->timestamps();
-        });
-
-        Schema::create('company_invoice', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('price');
 
             $table->integer('company_id')->unsigned()->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
-            $table->integer('invoice_id')->unsigned()->nullable();
-            $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
+            $table->integer('buyer_id')->unsigned()->nullable();
+            $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
+
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->timestamps();
         });
     }
 
@@ -41,7 +42,6 @@ class CreateInvoicesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_invoice');
         Schema::dropIfExists('invoices');
     }
 }

@@ -1,13 +1,11 @@
 /node_modules
-/public/storage
-/public/css/*
-/public/js/*
-/public/fonts/*
+/public/css
+/public/js
+/public/fonts
 /vendor
 /.idea
 Homestead.json
 Homestead.yaml
 .env
-/.idea
 _ide_helper.php
 .phpstorm.meta.php

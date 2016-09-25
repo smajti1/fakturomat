@@ -21,22 +21,19 @@
 </head>
 <body>
 
-    <div class="collapse" id="navbar-header" aria-expanded="false" style="height: 0px;">
+    <div class="collapse" id="navbar-header" aria-expanded="false" style="height: 0">
         <div class="container-fluid bg-inverse p-a-1">
             <ul>
                 @if (Auth::guest())
-                    <li><a href="{{ url('/login') }}">Login</a></li>
-                    <li><a href="{{ url('/register') }}">Register</a></li>
+                    <li><a class="btn btn-outline-secondary" href="{{ url('/login') }}">Zaloguj</a></li>
+                    <li><a class="btn btn-outline-secondary" href="{{ url('/register') }}">Rejestracja</a></li>
                 @else
                     <li>
-                        <a href="{{ url('/logout') }}"
-                           onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
-
-                        <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                        <form id="logout-form" action="{{ url('/logout') }}" method="POST">
                             {{ csrf_field() }}
+                            <button type="submit" class="btn btn-outline-secondary">
+                                Wyloguj
+                            </button>
                         </form>
                     </li>
                 @endif
@@ -54,7 +51,18 @@
         </span>
     </div>
 
-    @yield('content')
+    <div class="container">
+        @if($flash = session('flash'))
+            <div class="alert alert-{{ key($flash) }} alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                {!! current($flash) !!}
+            </div>
+        @endif
+        @yield('breadcrumbs')
+        @yield('content')
+    </div>
 
     <script src="{{ asset('/js/app.js') }}"></script>
 </body>

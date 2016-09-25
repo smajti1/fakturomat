@@ -16,9 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('street');
-            $table->string('city');
-            $table->string('post_code');
+            $table->string('address');
             $table->string('nip');
             $table->string('regon');
             $table->string('email');

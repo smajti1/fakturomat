@@ -22,8 +22,8 @@ class CreateProductsTable extends Migration
             $table->mediumInteger('price')->unsigned();
             $table->tinyInteger('vat')->unsigned();
 
-            $table->integer('company_id')->unsigned()->nullable();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });

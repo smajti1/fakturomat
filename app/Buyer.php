@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Buyer extends Model
 {
 
     protected $fillable = [
@@ -22,5 +22,4 @@ class Company extends Model
 
         return $user->id !== $this->user->id;
     }
-
 }

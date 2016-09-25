@@ -4,3 +4,7 @@ a {
 
 @import '../../../vendor/bower_components/bootstrap/dist/css/bootstrap';
 @import '../../../vendor/bower_components/font-awesome/css/font-awesome';
+
+.fa-color-hover:hover {
+  color: silver;
+}

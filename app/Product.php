@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Company extends Model
+class Product extends Model
 {
 
     protected $fillable = [
-        'name', 'address', 'nip', 'regon', 'email', 'www', 'phone', 'bank_account_number',
+        'name', 'pkwiu', 'measure_unit', 'price', 'vat',
     ];
 
     public function user()
@@ -22,5 +22,4 @@ class Company extends Model
 
         return $user->id !== $this->user->id;
     }
-
 }

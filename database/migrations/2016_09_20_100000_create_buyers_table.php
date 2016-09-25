@@ -17,14 +17,11 @@ class CreateBuyersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('address');
-            $table->string('city');
-            $table->string('post_code');
             $table->string('nip');
             $table->string('regon');
             $table->string('email');
             $table->string('www');
             $table->string('phone');
-            $table->string('bank_name');
             $table->string('bank_account_number');
 
             $table->integer('user_id')->unsigned()->nullable();

@@ -74,9 +74,7 @@ class RegisterController extends Controller
 
             $company = Company::create([
                 'name'                => $data['company_name'],
-                'street'              => $data['street'],
-                'city'                => $data['city'],
-                'post_code'           => $data['post_code'],
+                'address'             => $data['address'],
                 'nip'                 => $data['nip'],
                 'regon'               => $data['regon'],
                 'email'               => $data['company_email'],
@@ -86,6 +84,7 @@ class RegisterController extends Controller
             ]);
 
             $company->user()->associate($user);
+            $company->save();
         });
 
         return $user;
