@@ -2,10 +2,12 @@
 
 namespace App;
 
+use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    use Sluggable;
 
     protected $fillable = [
         'name', 'pkwiu', 'measure_unit', 'price', 'vat',
@@ -20,6 +22,20 @@ class Product extends Model
     {
         $user = $user ?: \Auth::user();
 
-        return $user->id !== $this->user->id;
+        return $user->id === $this->user->id;
+    }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
     }
 }

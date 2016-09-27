@@ -26,6 +26,43 @@ class BuyerController extends Controller
 
     public function store()
     {
+        $this->validate($this->request, $this->rules());
+
+        $buyer = Buyer::create($this->request->all());
+        $buyer->user()->associate(\Auth::user());
+        $buyer->save();
+
+        $this->request->session()->flash('flash', ['success' => 'Dodano nowego kontrahenta!']);
+
+        return redirect()->route('buyer.index');
+    }
+
+    public function edit(Buyer $buyer)
+    {
+        abort_if(!$buyer->isOwner(), 404);
+
+        return view('buyers.edit', compact('buyer'));
+    }
+
+    public function update(Buyer $buyer)
+    {
+        abort_if(!$buyer->isOwner(), 404);
+        $this->validate($this->request, $this->rules());
+        $buyer->update($this->request->all());
+
+        return redirect()->route('buyer.index');
+    }
+
+    public function destroy(Buyer $buyer)
+    {
+        abort_if(!$buyer->isOwner(), 404);
+        $buyer->delete();
+
+        return redirect()->route('buyer.index');
+    }
+
+    protected function rules()
+    {
         $rules = [
             'name'                => 'required|max:255',
             'address'             => 'max:255',
@@ -37,40 +74,6 @@ class BuyerController extends Controller
             'bank_account_number' => 'max:255',
         ];
 
-        $this->validate($this->request, $rules);
-
-        $buyer = Buyer::create($this->request->all());
-        $buyer->user()->associate(\Auth::user());
-        $buyer->save();
-
-        $this->request->session()->flash('flash', ['success' => 'Dodano nowego kontrahenta!']);
-
-        return redirect()->route('buyer.index');
-    }
-
-    public function show(Buyer $buyer)
-    {
-        //
-    }
-
-    public function edit(Buyer $buyer)
-    {
-        //
-    }
-
-    public function update(Buyer $buyer)
-    {
-        abort_if($buyer->isOwner(), 404);
-        $buyer->update($this->request->all());
-
-        return redirect()->route('buyer.index');
-    }
-
-    public function destroy(Buyer $buyer)
-    {
-        abort_if($buyer->isOwner(), 404);
-        $buyer->delete();
-
-        return redirect()->route('buyer.index');
+        return $rules;
     }
 }

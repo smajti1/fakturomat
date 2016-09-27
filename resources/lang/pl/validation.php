@@ -112,6 +112,7 @@ return [
     'attributes' => [
         'company_name' => 'nazwa firmy',
         'password'     => 'hasło',
+        'name'         => 'nazwa',
     ],
 
 ];

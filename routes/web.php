@@ -30,9 +30,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put(   '/faktura/dodaj',      'InvoiceController@store')->name(  'invoices.store');
     Route::delete('/faktura/{invoices}', 'InvoiceController@destroy')->name('invoices.destroy');
 
-    Route::get(   '/kontrahent',            'BuyerController@index')->name(  'buyer.index');
-    Route::get(   '/kontrahent/dodaj',      'BuyerController@create')->name( 'buyer.create');
-    Route::put(   '/kontrahent/dodaj',      'BuyerController@store')->name(  'buyer.store');
-    Route::delete('/kontrahent/{buyer}',    'BuyerController@destroy')->name('buyer.destroy');
+    Route::get(   '/kontrahent',               'BuyerController@index')->name(  'buyer.index');
+    Route::get(   '/kontrahent/dodaj',         'BuyerController@create')->name( 'buyer.create');
+    Route::put(   '/kontrahent/dodaj',         'BuyerController@store')->name(  'buyer.store');
+    Route::get(   '/kontrahent/{buyer}',       'BuyerController@edit')->name(  'buyer.edit');
+    Route::post(  '/kontrahent/{buyer}',       'BuyerController@update')->name(  'buyer.update');
+    Route::delete('/kontrahent/{buyer}',       'BuyerController@destroy')->name('buyer.destroy');
 
 });

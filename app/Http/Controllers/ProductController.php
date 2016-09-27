@@ -61,7 +61,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
-        abort_if($product->isOwner(), 404);
+        abort_if(!$product->isOwner(), 404);
         $product->delete();
 
         return redirect()->route('product.index');

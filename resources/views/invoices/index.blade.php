@@ -23,7 +23,7 @@
                     <form action="{{ route('invoice.destroy', compact('invoice')) }}" method="POST">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="DELETE">
-                        <button type="submit">
+                        <button type="submit" class="btn-like-link">
                             <i class="fa fa-trash fa-color-hover" aria-hidden="true"></i>
                         </button>
                     </form>

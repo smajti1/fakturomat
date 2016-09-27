@@ -48,7 +48,7 @@ class InvoiceController extends Controller
 
     public function destroy(Invoice $invoice)
     {
-        abort_if($invoice->isOwner(), 404);
+        abort_if(!$invoice->isOwner(), 404);
         $invoice->delete();
 
         return redirect()->route('invoices.index');

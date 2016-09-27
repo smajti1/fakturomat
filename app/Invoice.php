@@ -39,6 +39,6 @@ class Invoice extends Model
     {
         $user = $user ?: \Auth::user();
 
-        return $user->id !== $this->user->id;
+        return $user->id === $this->user->id;
     }
 }

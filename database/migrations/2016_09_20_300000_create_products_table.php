@@ -15,12 +15,12 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('name');
             $table->string('pkwiu');
             $table->string('measure_unit');
             $table->mediumInteger('price')->unsigned();
             $table->tinyInteger('vat')->unsigned();
+            $table->string('slug');
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -30,7 +30,6 @@ class CreateProductsTable extends Migration
 
         Schema::create('invoice_product', function (Blueprint $table) {
             $table->increments('id');
-
             $table->string('name');
             $table->string('pkwiu');
             $table->string('measure_unit');
