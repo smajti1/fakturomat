@@ -18,12 +18,6 @@
                     <div class="form-control-feedback">{{ $errors->first('name') }}</div>
                 </div>
 
-                <div class="form-group{{ $errors->has('pkwiu') ? ' has-danger' : '' }}">
-                    <label for="pkwiu" class="sr-only">Pkwiu</label>
-                    <input id="pkwiu" type="text" class="form-control form-control-danger" placeholder="Pkwiu" name="pkwiu" value="{{ old('pkwiu') }}">
-                    <div class="form-control-feedback">{{ $errors->first('pkwiu') }}</div>
-                </div>
-
                 <div class="form-group{{ $errors->has('measure_unit') ? ' has-danger' : '' }}">
                     <label for="measure_unit" class="sr-only">Jednostka miary</label>
                     <input id="measure_unit" type="text" class="form-control form-control-danger" placeholder="Jednostka miary" name="measure_unit" value="{{ old('measure_unit') }}">

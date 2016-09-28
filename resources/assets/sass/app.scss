@@ -4,6 +4,7 @@ a {
 
 @import '../../../vendor/bower_components/bootstrap/dist/css/bootstrap';
 @import '../../../vendor/bower_components/font-awesome/css/font-awesome';
+@import '../../../vendor/bower_components/selectize/dist/css/selectize';
 
 .fa-color-hover:hover {
   color: silver;
@@ -13,4 +14,26 @@ a {
   background: transparent;
   border: 0;
   padding: 0;
+}
+
+.block {
+  display: block;
+}
+
+.small {
+  font-size: .6rem;
+}
+
+.grey-text {
+  color: grey;
+}
+
+.selectize-input {
+  padding-bottom: 0;
+}
+
+.selectize-dropdown {
+  margin: -7px 0 0 0;
+  position: relative;
+  top: 0 !important;
 }

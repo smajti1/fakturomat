@@ -6,7 +6,6 @@
         <thead>
             <tr>
                 <th>Nazwa</th>
-                <th>Pkwiu</th>
                 <th>Jednostka miary</th>
                 <th>Cena</th>
                 <th>Vat</th>
@@ -17,7 +16,6 @@
             @foreach(Auth::user()->products as $product)
                 <tr>
                     <td>{{ $product->name }}</td>
-                    <td>{{ $product->pkwiu }}</td>
                     <td>{{ $product->measure_unit }}</td>
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->vat }}</td>

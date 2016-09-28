@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    const JSON_LIST_LIMIT = 20;
     protected $request;
 
     public function __construct(Request $request)
@@ -24,11 +25,22 @@ class ProductController extends Controller
         return view('products.create');
     }
 
+    public function jsonList()
+    {
+        $search = $this->request->searchText;
+        $list = \Auth::user()
+            ->products()
+            ->where('name', 'LIKE', $search . '%')
+            ->limit(self::JSON_LIST_LIMIT)
+            ->get();
+
+        return $list;
+    }
+
     public function store()
     {
         $rules = [
             'name'         => 'required|max:255',
-            'pkwiu'        => 'max:255',
             'measure_unit' => 'max:255',
             'price'        => 'required|integer',
             'vat'          => 'integer',

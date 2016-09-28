@@ -16,7 +16,6 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('pkwiu');
             $table->string('measure_unit');
             $table->mediumInteger('price')->unsigned();
             $table->tinyInteger('vat')->unsigned();
@@ -31,10 +30,10 @@ class CreateProductsTable extends Migration
         Schema::create('invoice_product', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('pkwiu');
             $table->string('measure_unit');
             $table->mediumInteger('price')->unsigned();
             $table->tinyInteger('vat')->unsigned();
+            $table->tinyInteger('amount')->unsigned();
 
             $table->integer('invoice_id')->unsigned()->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
