@@ -23,10 +23,10 @@
                     <div class="form-control-feedback">{{ $errors->first('address') }}</div>
                 </div>
 
-                <div class="form-group{{ $errors->has('nip') ? ' has-danger' : '' }}">
-                    <label for="nip" class="sr-only">Nip</label>
-                    <input id="nip" type="text" class="form-control form-control-danger" placeholder="Nip" name="nip" value="{{ old('nip', $buyer->nip) }}">
-                    <div class="form-control-feedback">{{ $errors->first('nip') }}</div>
+                <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
+                    <label for="tax_id_number" class="sr-only">Nip</label>
+                    <input id="tax_id_number" type="text" class="form-control form-control-danger" placeholder="Nip" name="tax_id_number" value="{{ old('tax_id_number', $buyer->tax_id_number) }}">
+                    <div class="form-control-feedback">{{ $errors->first('tax_id_number') }}</div>
                 </div>
 
                 <div class="form-group{{ $errors->has('regon') ? ' has-danger' : '' }}">
@@ -51,12 +51,6 @@
                     <label for="phone" class="sr-only">Telefon</label>
                     <input id="phone" type="text" class="form-control form-control-danger" placeholder="Telefon" name="phone" value="{{ old('phone', $buyer->phone) }}">
                     <div class="form-control-feedback">{{ $errors->first('phone') }}</div>
-                </div>
-
-                <div class="form-group{{ $errors->has('bank_account_number') ? ' has-danger' : '' }}">
-                    <label for="bank_account_number" class="sr-only">Numer konta bankowego</label>
-                    <input id="bank_account_number" type="text" class="form-control form-control-danger" placeholder="Numer konta bankowego" name="bank_account_number" value="{{ old('bank_account_number', $buyer->bank_account_number) }}">
-                    <div class="form-control-feedback">{{ $errors->first('bank_account_number') }}</div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">

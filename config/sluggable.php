@@ -26,7 +26,7 @@ return [
      * want to make sure your slugs aren't too long.
      */
 
-    'maxLength' => null,
+    'maxLength' => 50,
 
     /**
      * If left to "null", then use the cocur/slugify package to generate the slug
@@ -121,6 +121,6 @@ return [
      * Only set this to true if you understand the possible consequences.
      */
     
-    'onUpdate' => false,
+    'onUpdate' => true,
 
 ];

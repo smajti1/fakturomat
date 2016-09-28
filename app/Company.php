@@ -10,7 +10,7 @@ class Company extends Model
     use Sluggable;
 
     protected $fillable = [
-        'name', 'address', 'nip', 'regon', 'email', 'www', 'phone', 'bank_account_number',
+        'name', 'address', 'tax_id_number', 'regon', 'email', 'www', 'phone', 'bank_account_number',
     ];
 
     public function user()

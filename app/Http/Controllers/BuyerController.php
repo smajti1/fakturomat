@@ -37,6 +37,22 @@ class BuyerController extends Controller
         return redirect()->route('buyer.index');
     }
 
+    protected function rules()
+    {
+        $rules = [
+            'name'                => 'required|max:255',
+            'address'             => 'max:255',
+            'tax_id_number'       => 'max:255',
+            'regon'               => 'max:255',
+            'email'               => 'max:255',
+            'www'                 => 'max:255',
+            'phone'               => 'max:255',
+            'bank_account_number' => 'max:255',
+        ];
+
+        return $rules;
+    }
+
     public function edit(Buyer $buyer)
     {
         abort_if(!$buyer->isOwner(), 404);
@@ -59,21 +75,5 @@ class BuyerController extends Controller
         $buyer->delete();
 
         return redirect()->route('buyer.index');
-    }
-
-    protected function rules()
-    {
-        $rules = [
-            'name'                => 'required|max:255',
-            'address'             => 'max:255',
-            'nip'                 => 'max:255',
-            'regon'               => 'max:255',
-            'email'               => 'max:255',
-            'www'                 => 'max:255',
-            'phone'               => 'max:255',
-            'bank_account_number' => 'max:255',
-        ];
-
-        return $rules;
     }
 }

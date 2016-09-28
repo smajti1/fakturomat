@@ -31,22 +31,11 @@ class RegisterController extends Controller
      */
     protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -56,12 +45,6 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return User
-     */
     protected function create(array $data)
     {
         $user = null;
@@ -75,7 +58,7 @@ class RegisterController extends Controller
             $company = Company::create([
                 'name'                => $data['company_name'],
                 'address'             => $data['address'],
-                'nip'                 => $data['nip'],
+                'tax_id_number'       => $data['tax_id_number'],
                 'regon'               => $data['regon'],
                 'email'               => $data['company_email'],
                 'www'                 => $data['www'],
