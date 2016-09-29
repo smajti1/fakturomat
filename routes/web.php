@@ -20,6 +20,12 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/home', 'HomeController@index');
 
+    Route::get('firma',                   'CompanyController@index')->name('company.index');
+    Route::get('firma/dodaj',             'CompanyController@create')->name('company.create');
+    Route::put('firma/dodaj',             'CompanyController@store')->name('company.store');
+    Route::get('firma/{company}/edytuj',  'CompanyController@edit')->name('company.edit');
+    Route::post('firma/{company}/edytuj', 'CompanyController@update')->name('company.update');
+
     Route::get('/produkt-lista', 'ProductController@jsonList')->name('product.json.list');
     Route::get('/firma-lista',   'CompanyController@jsonList')->name('company.json.list');
 

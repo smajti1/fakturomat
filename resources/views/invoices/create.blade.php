@@ -10,16 +10,17 @@
         <input type="hidden" name="_method" value="PUT">
         {{ csrf_field() }}
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6 company">
                 <strong>Sprzedawca</strong>
                 <?php $company = Auth::user()->companies->first(); ?>
-                <div>
+                <div class="company-name-placeholder">
                     {{ $company->name }}
                 </div>
-                <div>
+                <div class="company-address-placeholder">
                     {{ $company->address }}
                 </div>
                 <input type="text" id="select-company" placeholder="Zmień firmę">
+                <input type="hidden" name="company_id" value="{{ $company->id }}">
             </div>
             <div class="col-sm-6">
                 <strong>Nabywca</strong>
@@ -138,7 +139,7 @@
                             '<td>' + products.length + '</td>' +
                             '<td>' + selectedItem.name + '</td>' +
                             '<td>' + selectedItem.measure_unit + '</td>' +
-                            '<td><input type="number" value="1" name="amount"></td>' +
+                            '<td><input type="number" value="1" name="amount" class="price-input"></td>' +
                             '<td>' + selectedItem.price + ' zł</td>' +
                             '<td>' + selectedItem.price + ' zł</td>' +
                             '<td>' + selectedItem.vat + '%</td>' +

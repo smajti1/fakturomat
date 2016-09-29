@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Company;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -19,5 +20,36 @@ class CompanyController extends Controller
             ->get();
 
         return $list;
+    }
+
+    public function index()
+    {
+        $companies = \Auth::user()->companies();
+
+        return view('companies.index', compact('companies'));
+    }
+
+    public function create()
+    {
+        return view('companies.create');
+    }
+
+    public function store()
+    {
+
+    }
+
+
+    public function edit(Company $company)
+    {
+        abort_if(!$company->isOwner(), 404);
+
+        return view('companies.edit', compact('company'));
+    }
+
+    public function update(Company $company, Request $request)
+    {
+        abort_if(!$company->isOwner(), 404);
+        
     }
 }
