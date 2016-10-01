@@ -38,4 +38,11 @@ class Product extends Model
     {
         return 'slug';
     }
+
+    public function calculateVat()
+    {
+        $vat = 1 + $this->vat/100;
+
+        return $vat;
+    }
 }

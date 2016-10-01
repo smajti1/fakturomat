@@ -24,7 +24,7 @@ class CompanyController extends Controller
 
     public function index()
     {
-        $companies = \Auth::user()->companies();
+        $companies = \Auth::user()->companies;
 
         return view('companies.index', compact('companies'));
     }
@@ -34,9 +34,23 @@ class CompanyController extends Controller
         return view('companies.create');
     }
 
-    public function store()
+    public function store(Request $request)
     {
+        $company = Company::create([
+            'name'                => $request->company_name,
+            'address'             => $request->address,
+            'tax_id_number'       => $request->tax_id_number,
+            'regon'               => $request->regon,
+            'email'               => $request->company_email,
+            'www'                 => $request->www,
+            'phone'               => $request->phone,
+            'bank_account_number' => $request->bank_account_number,
+        ]);
 
+        $company->user()->associate(\Auth::user());
+        $company->save();
+
+        return redirect()->route('company.index');
     }
 
 

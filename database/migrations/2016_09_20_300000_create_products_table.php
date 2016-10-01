@@ -27,7 +27,7 @@ class CreateProductsTable extends Migration
             $table->timestamps();
         });
 
-        Schema::create('invoice_product', function (Blueprint $table) {
+        Schema::create('invoice_products', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('measure_unit');
@@ -50,7 +50,7 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('invoice_product');
+        Schema::dropIfExists('invoice_products');
         Schema::dropIfExists('products');
     }
 }

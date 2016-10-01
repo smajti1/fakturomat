@@ -11,18 +11,17 @@ class Invoice extends Model
     const PAYMENT_BANK_TRANSFER = 2;
     const STATUS_NOT_PAID = 1;
     const STATUS_PAID = 2;
-    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date'];
-    protected $hidden = ['password', 'remember_token',];
+    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price'];
 
 
-    public function companies()
+    public function company()
     {
         return $this->belongsTo(Company::class);
     }
 
     public function invoice_products()
     {
-        return $this->hasMany(Product::class, 'invoice_product');
+        return $this->hasMany(InvoiceProduct::class);
     }
 
     public function user()

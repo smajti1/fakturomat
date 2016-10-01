@@ -16,7 +16,8 @@
                         </ol>
                     </div>
                     <div class="col-md-3">
-                        <a href="">Dodaj Firmę</a>
+                        <a href="{{ route('company.index') }}">Lista Firm</a>
+                        <a href="{{ route('company.create') }}">Dodaj Firmę</a>
                     </div>
 
                     <div class="col-md-3">

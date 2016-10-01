@@ -26,7 +26,7 @@
 
                 <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
                     <label for="tax_id_number" class="sr-only">Nip</label>
-                    <input id="tax_id_number" type="text" class="form-control form-control-danger" placeholder="tax_id_number" name="tax_id_number" value="{{ old('tax_id_number') }}">
+                    <input id="tax_id_number" type="text" class="form-control form-control-danger" placeholder="Nip" name="tax_id_number" value="{{ old('tax_id_number') }}">
                     <div class="form-control-feedback">{{ $errors->first('tax_id_number') }}</div>
                 </div>
 

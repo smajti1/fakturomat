@@ -9,22 +9,54 @@
     <form class="form-horizontal" role="form" action="{{ route('invoices.store') }}" method="POST">
         <input type="hidden" name="_method" value="PUT">
         {{ csrf_field() }}
+        
+        <div>
+            <label for="number">Numer faktury</label>
+            <input id="number" name="number" type="text">
+        </div>
+        
         <div class="row">
             <div class="col-sm-6 company">
                 <strong>Sprzedawca</strong>
-                <?php $company = Auth::user()->companies->first(); ?>
-                <div class="company-name-placeholder">
-                    {{ $company->name }}
+                <div id="company-name-placeholder">
+                    {{ $companies->first()->name }}
                 </div>
-                <div class="company-address-placeholder">
-                    {{ $company->address }}
+                <div id="company-address-placeholder">
+                    {{ $companies->first()->address }}
                 </div>
-                <input type="text" id="select-company" placeholder="Zmień firmę">
-                <input type="hidden" name="company_id" value="{{ $company->id }}">
+
+                <label for="company_id">Zmień firmę</label>
+                <select name="company_id" id="company_id">
+                    @foreach($companies as $company)
+                        <option value="{{ $company->id }}"
+                            data-data="{{ json_encode($company->toArray()) }}"
+                            {{ $companies->first()->id === $company->id ? 'selected' : '' }}
+                        >
+                            {{ $company->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
             <div class="col-sm-6">
                 <strong>Nabywca</strong>
-                <input type="text" id="select-buyer" placeholder="Wybierz nabywce">
+                <div id="buyer-name-placeholder">
+                    {{ $buyers->first()->name }}
+                </div>
+                <div id="buyer-address-placeholder">
+                    {{ $buyers->first()->address }}
+                </div>
+
+                <label for="buyer_id">Zmień firmę</label>
+                <select name="buyer_id" id="buyer_id">
+                    @foreach($buyers as $buyer)
+                        <option value="{{ $buyer->id }}"
+                                data-data="{{ json_encode($buyer->toArray()) }}"
+                                {{ $buyers->first()->id === $buyer->id ? 'selected' : '' }}
+                        >
+                            {{ $buyer->name }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
         </div>
         <table id="invoice-product-list" class="table table-bordered table-responsive">
@@ -58,8 +90,37 @@
             </tbody>
         </table>
 
+        @if($errors->has('product'))
+            <span>{{ $errors->first('product') }}</span>
+        @endif
+
+        <div>
+            <label for="issue_date">Data wystawienia</label>
+            <input type="date" name="issue_date" id="issue_date" value="{{ date("Y-m-d") }}">
+        </div>
+
+        <div>
+            <label for="payment_at">Data płatności</label>
+            <input type="date" name="payment_at" id="payment_at" value="{{ date("Y-m-d", strtotime("+1 week")) }}">
+        </div>
+
+        <div>
+            <label for="payment">Płatność</label>
+            <select name="payment" id="payment">
+                <option value="{{ \App\Invoice::PAYMENT_CASH }}">gotówką</option>
+                <option value="{{ \App\Invoice::PAYMENT_BANK_TRANSFER }}">przelewem</option>
+            </select>
+        </div>
+
+        <div>
+            <label for="status">Status</label>
+            <select name="status" id="status">
+                <option value="{{ \App\Invoice::STATUS_NOT_PAID }}">nie zapłacona</option>
+                <option value="{{ \App\Invoice::STATUS_PAID }}">zapłacona</option>
+            </select>
+        </div>
+
         <input type="hidden" name="product-list-src" class="form-control" value="{{ route('product.json.list') }}">
-        <input type="hidden" name="company-list-src" class="form-control" value="{{ route('company.json.list') }}">
 
         <button type="submit" class="btn btn-primary">
             Zapisz fakturę
@@ -71,25 +132,19 @@
     @parent
     <script>
         var selectProductList;
-        var companyListSrc = $('[name=company-list-src]').val();
 
-        $('#select-company').selectize({
-            valueField: 'id',
-            labelField: 'name',
-            searchField: ['name', 'address'],
-            options: [],
-            create: false,
-            render: {
-                option: function(item, escape) {
-                    return '<div>' +
-                                '<span class="name">' + escape(item.name) + '</span>' +
-                                '<span class="small block grey-text">' + item.address + '</span>' +
-                            '</div>';
-                }
-            },
-            load: function(query, callback) {
-                selectLoad(query, callback, companyListSrc);
-            },
+        $('#company_id').selectize({
+            onChange : function(item) {
+                $('#company-name-placeholder').html(this.options[item].name);
+                $('#company-address-placeholder').html(this.options[item].address);
+            }
+        });
+
+        $('#buyer_id').selectize({
+            onChange : function(item) {
+                $('#buyer-name-placeholder').html(this.options[item].name);
+                $('#buyer-address-placeholder').html(this.options[item].address);
+            }
         });
 
         function selectLoad(query, callback, url) {
@@ -139,7 +194,7 @@
                             '<td>' + products.length + '</td>' +
                             '<td>' + selectedItem.name + '</td>' +
                             '<td>' + selectedItem.measure_unit + '</td>' +
-                            '<td><input type="number" value="1" name="amount" class="price-input"></td>' +
+                            '<td><input type="number" value="1" name="product[' + selectedItem.id + ']" class="price-input"></td>' +
                             '<td>' + selectedItem.price + ' zł</td>' +
                             '<td>' + selectedItem.price + ' zł</td>' +
                             '<td>' + selectedItem.vat + '%</td>' +

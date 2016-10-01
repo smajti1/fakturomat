@@ -43,8 +43,8 @@
                         <div class="form-control-feedback">{{ $errors->first('address') }}</div>
                     </div>
                     <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
-                        <label for="tax_id_number" class="sr-only">tax_id_number</label>
-                        <input id="tax_id_number" type="text" class="form-control form-control-danger" name="tax_id_number" value="{{ old('tax_id_number') }}" placeholder="tax_id_number">
+                        <label for="tax_id_number" class="sr-only">Nip</label>
+                        <input id="tax_id_number" type="text" class="form-control form-control-danger" name="tax_id_number" value="{{ old('tax_id_number') }}" placeholder="Nip">
                         <div class="form-control-feedback">{{ $errors->first('tax_id_number') }}</div>
                     </div>
                     <div class="form-group{{ $errors->has('regon') ? ' has-danger' : '' }}">
