@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get(   '/faktura',            'InvoiceController@index')->name(  'invoices.index');
     Route::get(   '/faktura/dodaj',      'InvoiceController@create')->name( 'invoices.create');
     Route::put(   '/faktura/dodaj',      'InvoiceController@store')->name(  'invoices.store');
-    Route::delete('/faktura/{invoices}', 'InvoiceController@destroy')->name('invoices.destroy');
+    Route::delete('/faktura/{invoice}',  'InvoiceController@destroy')->name('invoices.destroy');
 
     Route::get(   '/kontrahent',               'BuyerController@index')->name(  'buyer.index');
     Route::get(   '/kontrahent/dodaj',         'BuyerController@create')->name( 'buyer.create');
@@ -47,3 +47,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/kontrahent/{buyer}',       'BuyerController@destroy')->name('buyer.destroy');
 
 });
+
+Route::get(   '/faktura/{invoice}/html', 'InvoiceToPdfController@toHtml')->name('invoices.to.html');
+Route::get(   '/faktura/{invoice}/pdf',  'InvoiceToPdfController@toPdf')->name('invoices.to.pdf');

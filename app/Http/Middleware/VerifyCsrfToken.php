@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+        '/faktura/{invoice}/pdf',
+        '/faktura/{invoice}/html',
     ];
 }

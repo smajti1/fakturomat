@@ -14,4 +14,8 @@ class InvoiceProduct extends Product
         return $this->belongsTo(Invoice::class);
     }
 
+    public function priceWithVat()
+    {
+        return $this->price * $this->calculateVat();
+    }
 }
