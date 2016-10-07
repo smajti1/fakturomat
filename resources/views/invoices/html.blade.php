@@ -44,10 +44,10 @@
                 <strong>Płatność:</strong>
                 {{ $invoice->payment }}
             </div>
-            @if(strlen($invoice->company->bank_account_number) > 0)
+            @if(strlen($invoice->company->bank_account) > 0)
                 <div>
-                    <strong>Konto:</strong>
-                    {{ $invoice->company->bank_account_number }}
+                    <strong>Konto bankowe:</strong>
+                    {{ $invoice->company->bank_account}}
                 </div>
             @endif
         </div>

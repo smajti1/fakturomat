@@ -82,19 +82,17 @@ class InvoiceController extends Controller
         ];
     }
 
-    public function show(Invoice $invoice)
-    {
-        //
-    }
-
     public function edit(Invoice $invoice)
     {
-        //
+        abort_if(!$invoice->isOwner(), 404);
+
+        return view('invoices.edit', compact('invoice'));
     }
 
-    public function update(Invoice $invoice)
+    public function update(Invoice $invoice, Request $request)
     {
-        //
+        abort_if(!$invoice->isOwner(), 404);
+        $this->validate($request, $this->rules());
     }
 
     public function destroy(Invoice $invoice)

@@ -20,7 +20,10 @@
                     <td>{{ $product->price }}</td>
                     <td>{{ $product->vat }}</td>
                     <td>
-                        <form action="{{ route('product.destroy', compact('product')) }}" method="POST">
+                        <a href="{{ route('product.edit', compact('product')) }}" class="inline-block">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </a>
+                        <form action="{{ route('product.destroy', compact('product')) }}" method="POST" class="inline-block">
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn-like-link">

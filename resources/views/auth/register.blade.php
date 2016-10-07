@@ -67,10 +67,10 @@
                         <input id="phone" type="text" class="form-control form-control-danger" name="phone" value="{{ old('phone') }}" placeholder="Telefon">
                         <div class="form-control-feedback">{{ $errors->first('phone') }}</div>
                     </div>
-                    <div class="form-group{{ $errors->has('bank_account_number') ? ' has-danger' : '' }}">
-                        <label for="bank_account_number" class="sr-only">Nr konta bankowego</label>
-                        <input id="bank_account_number" type="text" class="form-control form-control-danger" name="bank_account_number" value="{{ old('bank_account_number') }}" placeholder="Nr konta bankowego">
-                        <div class="form-control-feedback">{{ $errors->first('bank_account_number') }}</div>
+                    <div class="form-group{{ $errors->has('bank_account') ? ' has-danger' : '' }}">
+                        <label for="bank_account" class="sr-only">Konto bankowe</label>
+                        <input id="bank_account" type="text" class="form-control form-control-danger" name="bank_account" value="{{ old('bank_account') }}" placeholder="Konto bankowe">
+                        <div class="form-control-feedback">{{ $errors->first('bank_account') }}</div>
                     </div>
 
                 </div>

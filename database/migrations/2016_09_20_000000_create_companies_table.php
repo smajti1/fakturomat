@@ -22,13 +22,14 @@ class CreateCompaniesTable extends Migration
             $table->string('email');
             $table->string('www');
             $table->string('phone');
-            $table->string('bank_account_number');
+            $table->string('bank_account');
             $table->string('slug');
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
             $table->timestamps();
+            $table->softDeletes();
         });
 
     }

@@ -40,14 +40,14 @@ class BuyerController extends Controller
     protected function rules()
     {
         $rules = [
-            'name'                => 'required|max:255',
-            'address'             => 'max:255',
-            'tax_id_number'       => 'max:255',
-            'regon'               => 'max:255',
-            'email'               => 'max:255',
-            'www'                 => 'max:255',
-            'phone'               => 'max:255',
-            'bank_account_number' => 'max:255',
+            'name'          => 'required|max:255',
+            'address'       => 'max:255',
+            'tax_id_number' => 'max:255',
+            'regon'         => 'max:255',
+            'email'         => 'max:255',
+            'www'           => 'max:255',
+            'phone'         => 'max:255',
+            'bank_account'  => 'max:255',
         ];
 
         return $rules;

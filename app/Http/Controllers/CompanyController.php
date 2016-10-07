@@ -36,17 +36,9 @@ class CompanyController extends Controller
 
     public function store(Request $request)
     {
-        $company = Company::create([
-            'name'                => $request->company_name,
-            'address'             => $request->address,
-            'tax_id_number'       => $request->tax_id_number,
-            'regon'               => $request->regon,
-            'email'               => $request->company_email,
-            'www'                 => $request->www,
-            'phone'               => $request->phone,
-            'bank_account_number' => $request->bank_account_number,
-        ]);
+        $this->validate($request, $this->rules());
 
+        $company = Company::create($request->all());
         $company->user()->associate(\Auth::user());
         $company->save();
 
@@ -63,7 +55,32 @@ class CompanyController extends Controller
 
     public function update(Company $company, Request $request)
     {
+        $this->validate($request, $this->rules());
         abort_if(!$company->isOwner(), 404);
-        
+        $company->update($request->all());
+
+        return redirect()->route('company.index');
+    }
+
+    public function destroy(Company $company)
+    {
+        abort_if(!$company->isOwner(), 404);
+        $company->delete();
+
+        return redirect()->back();
+    }
+
+    protected function rules()
+    {
+        return [
+            'name'          => 'required|max:255|unique:companies,name',
+            'address'       => 'max:255',
+            'tax_id_number' => 'max:255',
+            'regon'         => 'max:255',
+            'email'         => 'max:255',
+            'www'           => 'max:255',
+            'phone'         => 'max:255',
+            'bank_account'  => 'max:255',
+        ];
     }
 }

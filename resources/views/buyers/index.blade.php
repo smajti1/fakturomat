@@ -25,8 +25,10 @@
                 <td>{{ $buyer->www }}</td>
                 <td>{{ $buyer->phone }}</td>
                 <td>
-                    <a href="{{ route('buyer.edit', compact('buyer')) }}"><i class="fa fa-pencil-square-o"></i></a>
-                    <form action="{{ route('buyer.destroy', compact('buyer')) }}" method="POST">
+                    <a href="{{ route('buyer.edit', compact('buyer')) }}" class="inline-block">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <form action="{{ route('buyer.destroy', compact('buyer')) }}" method="POST" class="inline-block">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn-like-link">

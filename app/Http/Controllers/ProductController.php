@@ -39,14 +39,7 @@ class ProductController extends Controller
 
     public function store()
     {
-        $rules = [
-            'name'         => 'required|max:255',
-            'measure_unit' => 'max:255',
-            'price'        => 'required|integer',
-            'vat'          => 'integer',
-        ];
-
-        $this->validate($this->request, $rules);
+        $this->validate($this->request, $this->rules());
 
         $user = \Auth::user();
         $product = Product::create($this->request->all());
@@ -56,19 +49,29 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-    public function show(Product $product)
+    protected function rules()
     {
-        //
+        return [
+            'name'         => 'required|max:255',
+            'measure_unit' => 'max:255',
+            'price'        => 'required|integer',
+            'vat'          => 'integer',
+        ];
     }
 
     public function edit(Product $product)
     {
-        //
+        abort_if(!$product->isOwner(), 404);
+        return view('products.edit', compact('product'));
     }
 
-    public function update(Product $product)
+    public function update(Product $product, Request $request)
     {
-        //
+        $this->validate($request, $this->rules());
+        abort_if(!$product->isOwner(), 404);
+        $product->update($request->all());
+
+        return redirect()->route('product.index');
     }
 
     public function destroy(Product $product)

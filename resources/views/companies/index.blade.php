@@ -12,7 +12,8 @@
             <th>Email</th>
             <th>Strona www</th>
             <th>Telefon</th>
-            <th>Nr konta bankowego</th>
+            <th>Konto bankowe</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +26,19 @@
                 <td>{{ $company->email }}</td>
                 <td>{{ $company->www }}</td>
                 <td>{{ $company->phone }}</td>
-                <td>{{ $company->bank_account_number }}</td>
+                <td>{{ $company->bank_account }}</td>
+                <td>
+                    <a href="{{ route('company.edit', compact('company')) }}" class="inline-block">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <form action="{{ route('company.destroy', compact('company')) }}" method="POST" class="inline-block">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="_method" value="DELETE">
+                        <button type="submit" class="btn-like-link">
+                            <i class="fa fa-trash fa-color-hover" aria-hidden="true"></i>
+                        </button>
+                    </form>
+                </td>
             </tr>
         @endforeach
         </tbody>

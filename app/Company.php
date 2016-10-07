@@ -4,13 +4,14 @@ namespace App;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
-    use Sluggable;
+    use Sluggable, SoftDeletes;
 
     protected $fillable = [
-        'name', 'address', 'tax_id_number', 'regon', 'email', 'www', 'phone', 'bank_account_number',
+        'name', 'address', 'tax_id_number', 'regon', 'email', 'www', 'phone', 'bank_account',
     ];
 
     public function user()

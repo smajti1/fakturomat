@@ -1,4 +1,4 @@
-@extends('products.base')
+@extends('invoices.base')
 
 @section('content')
     <h1>Faktury</h1>
@@ -28,7 +28,10 @@
                 <td>{{ $invoice->payment_at }}</td>
                 <td>{{ $invoice->issue_date }}</td>
                 <td>
-                    <form action="{{ route('invoices.destroy', compact('invoice')) }}" method="POST">
+                    <a href="{{ route('invoices.edit', compact('invoice')) }}" class="inline-block">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </a>
+                    <form action="{{ route('invoices.destroy', compact('invoice')) }}" method="POST" class="inline-block">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="DELETE">
                         <button type="submit" class="btn-like-link">

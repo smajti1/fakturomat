@@ -56,14 +56,14 @@ class RegisterController extends Controller
             ]);
 
             $company = Company::create([
-                'name'                => $data['company_name'],
-                'address'             => $data['address'],
-                'tax_id_number'       => $data['tax_id_number'],
-                'regon'               => $data['regon'],
-                'email'               => $data['company_email'],
-                'www'                 => $data['www'],
-                'phone'               => $data['phone'],
-                'bank_account_number' => $data['bank_account_number'],
+                'name'          => $data['company_name'],
+                'address'       => $data['address'],
+                'tax_id_number' => $data['tax_id_number'],
+                'regon'         => $data['regon'],
+                'email'         => $data['company_email'],
+                'www'           => $data['www'],
+                'phone'         => $data['phone'],
+                'bank_account'  => $data['bank_account'],
             ]);
 
             $company->user()->associate($user);
