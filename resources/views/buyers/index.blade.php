@@ -2,6 +2,9 @@
 
 @section('content')
     <h1>Kontrahenci</h1>
+    <div>
+        <a href="{{ route('buyer.create') }}">Dodaj <i class="fa fa-plus"></i></a>
+    </div>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>

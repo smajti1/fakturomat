@@ -2,6 +2,9 @@
 
 @section('content')
     <h1>Twoje Firmy</h1>
+    <div>
+        <a href="{{ route('company.create') }}">Dodaj <i class="fa fa-plus"></i></a>
+    </div>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
