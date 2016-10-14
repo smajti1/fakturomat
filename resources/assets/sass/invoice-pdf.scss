@@ -1,0 +1,26 @@
+@import '../../../vendor/bower_components/bootstrap/dist/css/bootstrap';
+@import '../../../vendor/bower_components/font-awesome/css/font-awesome';
+
+body.invoice-pdf {
+  .border-box {
+    border: 1px solid #e0e0e0;
+  }
+
+  .border-box-content {
+    display: flex;
+
+    .border-box {
+      flex: 1;
+    }
+  }
+
+  thead {
+    display: table-header-group
+  }
+  tfoot {
+    display: table-row-group
+  }
+  tr {
+    page-break-inside: avoid
+  }
+}

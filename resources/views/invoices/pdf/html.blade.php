@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('/css/invoice-pdf.css') }}" rel="stylesheet">
 </head>
-<body class="pdf">
+<body class="pdf invoice-pdf" onload="subst()">
 
 <div class="container">
     <div class="row">
         <div id="invoice-number" class="col-xs-12">
-            <label for="number">Faktura</label>
-            <strong>{{ $invoice->number }}</strong>
+            <h1>Faktura {{ $invoice->number }}</h1>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-6 company">
+    <div class="row border-box-content">
+        <div class="col-xs-4 offset-xs-1 company border-box">
             <strong>Sprzedawca</strong>
             <div id="company-name-placeholder">
                 {{ $invoice->company->name }}
@@ -27,7 +26,7 @@
                 {{ $invoice->company->address }}
             </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-4 offset-xs-2s buyer border-box">
             <strong>Nabywca</strong>
             <div id="buyer-name-placeholder">
                 {{ $invoice->buyer->name }}
@@ -38,20 +37,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12">
-            <div>
-                <strong>Płatność:</strong>
-                {{ $invoice->payment }}
-            </div>
-            @if(strlen($invoice->company->bank_account) > 0)
-                <div>
-                    <strong>Konto bankowe:</strong>
-                    {{ $invoice->company->bank_account}}
-                </div>
-            @endif
-        </div>
-    </div>
     <table id="invoice-product-list" class="table table-bordered table-striped">
         <thead>
             <tr>
@@ -69,19 +54,19 @@
         <tbody>
         @foreach($invoice->invoice_products as $product)
             <?php
-                $grossSum[$product->vat] = ($grossSum[$product->vat] ?? 0) + $product->price;
-                $netSum[$product->vat] = ($netSum[$product->vat] ?? 0) + $product->price;
+            $grossSum[$product->vat] = ($grossSum[$product->vat] ?? 0) + $product->price;
+            $netSum[$product->vat] = ($netSum[$product->vat] ?? 0) + $product->price;
             ?>
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $product->name }}</td>
+                <td>{{ str_replace(' ', '&nbsp;', $product->name) }}</td>
                 <td>{{ $product->measure_unit }}</td>
                 <td>{{ $product->amount }}</td>
-                <td>{{ $product->price }} zł</td>
-                <td>{{ $product->price * $product->amount  }} zł</td>
-                <td>{{ $product->vat }}</td>
-                <td>{{ $product->price * $product->amount * $product->vat }} zł</td>
-                <td>{{ $product->price * $product->amount * $product->calculateVat() }} zł</td>
+                <td>{{ money_pl_format($product->price) }}&nbsp;zł</td>
+                <td>{{ money_pl_format($product->price * $product->amount)  }}&nbsp;zł</td>
+                <td>{{ $product->vat }}%</td>
+                <td>{{ money_pl_format($product->price * $product->amount * $product->vat / 100) }}&nbsp;zł</td>
+                <td>{{ money_pl_format($product->price * $product->amount * $product->calculateVat()) }}&nbsp;zł</td>
             </tr>
         @endforeach
         </tbody>
@@ -90,17 +75,28 @@
     <div class="row">
         <div class="col-xs-6">
             <div>
-                <label for="issue_date">Data wystawienia</label>
+                <strong>Płatność:</strong>
+                {{ $invoice->payment }}
+            </div>
+            @if(strlen($invoice->company->bank_account) > 0)
+                <div>
+                    <strong>Konto bankowe:</strong>
+                    {{ $invoice->company->bank_account}}
+                </div>
+            @endif
+
+            <div>
+                <label for="issue_date">Data&nbsp;wystawienia:</label>
                 {{ $invoice->issue_date }}
             </div>
 
             <div>
-                <label for="payment_at">Data płatności</label>
+                <label for="payment_at">Data&nbsp;płatności:</label>
                 {{ $invoice->payment_at }}
             </div>
 
             <div>
-                <label for="status">Status</label>
+                <label for="status">Status:</label>
                 {{ $invoice->status }}
             </div>
         </div>
@@ -122,17 +118,17 @@
                     ?>
                     @foreach($grossSum as $vat => $sum)
                         <tr>
-                            <td>{{ $allNetSum += $sum }}</td>
+                            <td>{{ money_pl_format($allNetSum += $sum) }}&nbsp;zł</td>
                             <td>{{ $vat }}%</td>
-                            <td>{{ $allVatSum  += $sum*$vat/100 }}</td>
-                            <td>{{ $allSum += $sum*(1 + $vat/100) }}</td>
+                            <td>{{ money_pl_format($allVatSum  += $sum*$vat/100) }}&nbsp;zł</td>
+                            <td>{{ money_pl_format($allSum += $sum*(1 + $vat/100)) }}&nbsp;zł</td>
                         </tr>
                     @endforeach
                     <tr>
-                        <td>{{ $allNetSum }}</td>
+                        <td>{{ money_pl_format($allNetSum) }}&nbsp;zł</td>
                         <td>Razem</td>
-                        <td>{{ $allVatSum }}</td>
-                        <td>{{ $allSum }}</td>
+                        <td>{{ money_pl_format($allVatSum) }}&nbsp;zł</td>
+                        <td>{{ money_pl_format($allSum) }}&nbsp;zł</td>
                     </tr>
                 </tbody>
             </table>

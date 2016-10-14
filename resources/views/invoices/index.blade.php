@@ -34,6 +34,7 @@
                     <a href="{{ route('invoices.edit', compact('invoice')) }}" class="inline-block">
                         <i class="fa fa-pencil-square-o"></i>
                     </a>
+
                     <form action="{{ route('invoices.destroy', compact('invoice')) }}" method="POST" class="inline-block">
                         {{ csrf_field() }}
                         <input type="hidden" name="_method" value="DELETE">
@@ -41,6 +42,10 @@
                             <i class="fa fa-trash fa-color-hover" aria-hidden="true"></i>
                         </button>
                     </form>
+
+                    <a href="{{ route('invoices.to.pdf', compact('invoice')) }}" class="inline-block">
+                        <i class="fa fa-print"></i>
+                    </a>
                 </td>
             </tr>
         @endforeach

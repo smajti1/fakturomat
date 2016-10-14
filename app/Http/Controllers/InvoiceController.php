@@ -46,7 +46,7 @@ class InvoiceController extends Controller
         foreach ($products as $product) {
             $amount = $request->product[$product->id];
             $price += $product->price * $product->calculateVat() * $amount;
-            $invoice_products = [
+            $invoice_products[] = [
                 'name'         => $product->name,
                 'measure_unit' => $product->measure_unit,
                 'price'        => $product->price,
@@ -59,12 +59,12 @@ class InvoiceController extends Controller
             $request->all() + compact('price')
         );
 
-        $invoice->invoice_products()->insert($invoice_products);
+        $invoice->invoice_products()->createMany($invoice_products);
 
         $user = \Auth::user();
         $invoice->user()->associate($user);
 
-        $company = Company::where('id', $request->invoice_id)->first();
+        $company = Company::where('id', $request->company_id)->first();
         $invoice->company()->associate($company);
 
         $buyer = Buyer::where('id', $request->buyer_id)->first();

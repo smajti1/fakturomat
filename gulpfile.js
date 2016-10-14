@@ -24,5 +24,6 @@ elixir(function (mix) {
             '../../../vendor/bower_components/selectize/dist/js/selectize.js',
             'app.js',
         ], 'public/js/app.js')
-        .sass('app.scss');
+        .sass('app.scss')
+        .sass('invoice-pdf.scss');
 });

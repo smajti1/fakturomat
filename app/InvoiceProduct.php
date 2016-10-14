@@ -2,7 +2,9 @@
 
 namespace App;
 
-class InvoiceProduct extends Product
+use Illuminate\Database\Eloquent\Model;
+
+class InvoiceProduct extends Model
 {
 
     protected $fillable = [
@@ -17,5 +19,19 @@ class InvoiceProduct extends Product
     public function priceWithVat()
     {
         return $this->price * $this->calculateVat();
+    }
+
+    public function isOwner(User $user = null):bool
+    {
+        $user = $user ?: \Auth::user();
+
+        return $user->id === $this->user->id;
+    }
+
+    public function calculateVat()
+    {
+        $vat = 1 + $this->vat/100;
+
+        return $vat;
     }
 }
