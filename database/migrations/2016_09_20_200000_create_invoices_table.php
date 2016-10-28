@@ -21,6 +21,7 @@ class CreateInvoicesTable extends Migration
             $table->string('number');
             $table->date('issue_date');
             $table->integer('price');
+            $table->string('path');
 
             $table->integer('company_id')->unsigned()->nullable();
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');

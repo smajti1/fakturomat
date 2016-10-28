@@ -52,7 +52,3 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/kontrahent/{buyer}',       'BuyerController@destroy')->name('buyer.destroy');
 
 });
-
-Route::get(   '/faktura/{invoice}/html', 'InvoiceToPdfController@toHtml')->name('invoices.to.html');
-Route::get(   '/faktura/{invoice}/pdf',  'InvoiceToPdfController@toPdf')->name('invoices.to.pdf');
-Route::get(   '/faktura/pdf/footer',     'InvoiceToPdfController@footer')->name('invoices.to.pdf.footer');

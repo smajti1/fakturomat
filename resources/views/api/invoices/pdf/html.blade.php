@@ -54,8 +54,8 @@
         <tbody>
         @foreach($invoice->invoice_products as $product)
             <?php
-            $grossSum[$product->vat] = ($grossSum[$product->vat] ?? 0) + $product->price;
-            $netSum[$product->vat] = ($netSum[$product->vat] ?? 0) + $product->price;
+            $grossSum[$product->vat] = ($grossSum[$product->vat] ?? 0) + $product->price * $product->amount;
+            $netSum[$product->vat] = ($netSum[$product->vat] ?? 0) + $product->price * $product->amount;
             ?>
             <tr>
                 <td>{{ $loop->iteration }}</td>

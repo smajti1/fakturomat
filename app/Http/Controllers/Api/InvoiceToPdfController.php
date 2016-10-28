@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Invoice;
 
 class InvoiceToPdfController extends Controller
@@ -12,7 +13,7 @@ class InvoiceToPdfController extends Controller
         $user = \Auth::user();
 
 //        abort_if(!$invoice->isOwner(), 404);
-        $url = route('invoices.to.html', compact('invoice'));
+        $url = route('api.invoices.to.html', compact('invoice') + ['api_token' => $user->api_token]);
         $filename = "faktura-" . $invoice->company->slug . '-' . date('Y-m-d') . ".pdf";
         $uploadDir = public_path('uploads/users/' . $user->id . '/invoices');
 
@@ -26,12 +27,9 @@ class InvoiceToPdfController extends Controller
             unlink($pathToFile);
         }
 
-
         $title = 'Faktura ' . $invoice->company->slug . ' nr ' . $invoice->number;
         $footer = '';//'--header-html ' . route('invoices.to.pdf.footer');//"--footer-line --footer-right 'strona [page]/[toPage]'";
         $code = "wkhtmltopdf $footer --title '$title' $url $pathToFile 2>&1";
-
-
 
         exec($code, $op);
         $headers = [
@@ -43,11 +41,11 @@ class InvoiceToPdfController extends Controller
 
     public function toHtml(Invoice $invoice)
     {
-        return view('invoices.pdf.html', compact('invoice'));
+        return view('api.invoices.pdf.html', compact('invoice'));
     }
 
     public function footer()
     {
-        return view('invoices.pdf.footer');
+        return view('api.invoices.pdf.footer');
     }
 }

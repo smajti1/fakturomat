@@ -43,7 +43,7 @@
                         </button>
                     </form>
 
-                    <a href="{{ route('invoices.to.pdf', compact('invoice')) }}" class="inline-block">
+                    <a href="{{ route('api.invoices.to.pdf', compact('invoice') + ['api_token' => \Auth::user()->api_token]) }}" class="inline-block">
                         <i class="fa fa-print"></i>
                     </a>
                 </td>
