@@ -11,11 +11,8 @@
             <div class="form-control-feedback">{{ $errors->first('name') }}</div>
         </div>
 
-        <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
-            <label for="address" class="sr-only">Adres</label>
-            <input id="address" type="text" class="form-control form-control-danger" name="address" value="{{ old('address') }}" placeholder="Adres">
-            <div class="form-control-feedback">{{ $errors->first('address') }}</div>
-        </div>
+        @include('helpers.google_address')
+
         <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
             <label for="tax_id_number" class="sr-only">nip</label>
             <input id="tax_id_number" type="text" class="form-control form-control-danger" name="tax_id_number" value="{{ old('tax_id_number') }}" placeholder="nip">
@@ -31,10 +28,10 @@
             <input id="email" type="text" class="form-control form-control-danger" name="email" value="{{ old('email') }}" placeholder="E-mail firmowy">
             <div class="form-control-feedback">{{ $errors->first('email') }}</div>
         </div>
-        <div class="form-group{{ $errors->has('www') ? ' has-danger' : '' }}">
-            <label for="www" class="sr-only">Strona www</label>
-            <input id="www" type="text" class="form-control form-control-danger" name="www" value="{{ old('www') }}" placeholder="Strona www">
-            <div class="form-control-feedback">{{ $errors->first('www') }}</div>
+        <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
+            <label for="website" class="sr-only">Strona www</label>
+            <input id="website" type="text" class="form-control form-control-danger" name="website" value="{{ old('website') }}" placeholder="Strona www">
+            <div class="form-control-feedback">{{ $errors->first('website') }}</div>
         </div>
         <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">
             <label for="phone" class="sr-only">Telefon</label>

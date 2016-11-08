@@ -23,4 +23,12 @@ body.invoice-pdf {
   tr {
     page-break-inside: avoid
   }
+
+  .table {
+    font-size: 12px
+  }
+
+  .table th, .table td {
+    padding: 5px;
+  }
 }

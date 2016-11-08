@@ -11,7 +11,7 @@ class Company extends Model
     use Sluggable, SoftDeletes;
 
     protected $fillable = [
-        'name', 'address', 'tax_id_number', 'regon', 'email', 'www', 'phone', 'bank_account',
+        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_account',
     ];
 
     public function user()
@@ -19,7 +19,7 @@ class Company extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function isOwner(User $user = null):bool
+    public function isOwner(User $user = null): bool
     {
         $user = $user ?: \Auth::user();
 
@@ -30,13 +30,20 @@ class Company extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getAddressAttribute(): string
+    {
+        $address = implode(' ', [$this->city, $this->zip_code, $this->street]);
+
+        return $address;
     }
 }

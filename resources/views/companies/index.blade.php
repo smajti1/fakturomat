@@ -27,7 +27,7 @@
                 <td>{{ $company->tax_id_number }}</td>
                 <td>{{ $company->regon }}</td>
                 <td>{{ $company->email }}</td>
-                <td>{{ $company->www }}</td>
+                <td>{{ $company->website }}</td>
                 <td>{{ $company->phone }}</td>
                 <td>{{ $company->bank_account }}</td>
                 <td>

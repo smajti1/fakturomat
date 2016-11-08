@@ -11,8 +11,10 @@ class Invoice extends Model
     const PAYMENT_BANK_TRANSFER = 2;
     const STATUS_NOT_PAID = 1;
     const STATUS_PAID = 2;
-    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price'];
-
+    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
+    protected $casts = [
+        'price' => 'float',
+    ];
 
     public function company()
     {

@@ -24,8 +24,9 @@
                 <td><a href="{{ route('buyer.edit', compact('buyer')) }}">{{ $buyer->name }}</a></td>
                 <td>{{ $buyer->address }}</td>
                 <td>{{ $buyer->tax_id_number }}</td>
+                <td>{{ $buyer->regon }}</td>
                 <td>{{ $buyer->email }}</td>
-                <td>{{ $buyer->www }}</td>
+                <td>{{ $buyer->website }}</td>
                 <td>{{ $buyer->phone }}</td>
                 <td>
                     <a href="{{ route('buyer.edit', compact('buyer')) }}" class="inline-block">

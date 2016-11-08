@@ -33,7 +33,7 @@ class InvoiceToPdfController extends Controller
 
         exec($code, $op);
         $headers = [
-          'Content-Disposition' => "filename=\"$filename\"",
+            'Content-Disposition' => "filename=\"$filename\"",
         ];
 
         return response()->file($pathToFile, $headers);
@@ -41,7 +41,9 @@ class InvoiceToPdfController extends Controller
 
     public function toHtml(Invoice $invoice)
     {
-        return view('api.invoices.pdf.html', compact('invoice'));
+        $spellOutAmount = spellOutAmount($invoice->price);
+
+        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount'));
     }
 
     public function footer()

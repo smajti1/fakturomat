@@ -20,7 +20,11 @@
 
                 <div class="form-group{{ $errors->has('measure_unit') ? ' has-danger' : '' }}">
                     <label for="measure_unit" class="sr-only">Jednostka miary</label>
-                    <input id="measure_unit" type="text" class="form-control form-control-danger" placeholder="Jednostka miary" name="measure_unit" value="{{ old('measure_unit') }}">
+                    <select name="measure_unit" id="measure_unit" class="form-control form-control-danger">
+                        @foreach($measureUnits as $key => $unit)
+                            <option value="{{ $key }}"{{ old('measure_unit') === $key ? 'selected' : '' }}>{{ $unit }}</option>
+                        @endforeach
+                    </select>
                     <div class="form-control-feedback">{{ $errors->first('measure_unit') }}</div>
                 </div>
 
@@ -30,9 +34,13 @@
                     <div class="form-control-feedback">{{ $errors->first('price') }}</div>
                 </div>
 
-                <div class="form-group{{ $errors->has('vat') ? ' has-danger' : '' }}">
-                    <label for="vat" class="sr-only">Vat</label>
-                    <input id="vat" type="text" class="form-control form-control-danger" placeholder="Vat" name="vat" value="{{ old('vat') }}" required>
+                <div class="form-group{{ $errors->has('tax_percent') ? ' has-danger' : '' }}">
+                    <label for="tax_percent" class="sr-only">Vat</label>
+                    <select name="tax_percent" id="tax_percent" class="form-control form-control-danger">
+                    @foreach($activeTaxes as $tax)
+                        <option value="{{ $tax['percent'] }}"{{ old('tax_percent') === $tax['percent'] ? 'selected' : '' }}>{{ $tax['label'] }}</option>
+                    @endforeach
+                    </select>
                     <div class="form-control-feedback">{{ $errors->first('vat') }}</div>
                 </div>
 

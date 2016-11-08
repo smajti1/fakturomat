@@ -22,7 +22,10 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        $measureUnits = config('invoice.measure_units.' . config('app.locale'));
+        $activeTaxes = activeTaxes();
+
+        return view('products.create', compact('measureUnits', 'activeTaxes'));
     }
 
     public function jsonList()
@@ -42,7 +45,9 @@ class ProductController extends Controller
         $this->validate($this->request, $this->rules());
 
         $user = \Auth::user();
-        $product = Product::create($this->request->all());
+        $productData = $this->request->all();
+        $productData['price'] = number_format($productData['price'], 2);
+        $product = Product::create($productData);
         $product->user()->associate($user);
         $product->save();
 
@@ -54,14 +59,15 @@ class ProductController extends Controller
         return [
             'name'         => 'required|max:255',
             'measure_unit' => 'max:255',
-            'price'        => 'required|integer',
-            'vat'          => 'integer',
+            'price'        => 'required|numeric',
+            'tax_percent'  => 'required|integer',
         ];
     }
 
     public function edit(Product $product)
     {
         abort_if(!$product->isOwner(), 404);
+
         return view('products.edit', compact('product'));
     }
 

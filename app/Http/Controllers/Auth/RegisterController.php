@@ -57,11 +57,13 @@ class RegisterController extends Controller
 
             $company = Company::create([
                 'name'          => $data['company_name'],
-                'address'       => $data['address'],
+                'city'          => $data['city'],
+                'zip_code'      => $data['zip_code'],
+                'street'        => $data['street'],
                 'tax_id_number' => $data['tax_id_number'],
                 'regon'         => $data['regon'],
                 'email'         => $data['company_email'],
-                'www'           => $data['www'],
+                'website'       => $data['website'],
                 'phone'         => $data['phone'],
                 'bank_account'  => $data['bank_account'],
             ]);

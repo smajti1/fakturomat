@@ -16,11 +16,13 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('address');
+            $table->string('city');
+            $table->string('zip_code');
+            $table->string('street');
             $table->string('tax_id_number');
             $table->string('regon');
             $table->string('email');
-            $table->string('www');
+            $table->string('website');
             $table->string('phone');
             $table->string('bank_account');
             $table->string('slug');

@@ -18,11 +18,7 @@
                     <div class="form-control-feedback">{{ $errors->first('name') }}</div>
                 </div>
 
-                <div class="form-group{{ $errors->has('address') ? ' has-danger' : '' }}">
-                    <label for="address" class="sr-only">Adres</label>
-                    <input id="address" type="text" class="form-control form-control-danger" placeholder="Adres" name="address" value="{{ old('address') }}">
-                    <div class="form-control-feedback">{{ $errors->first('address') }}</div>
-                </div>
+                @include('helpers.google_address')
 
                 <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
                     <label for="tax_id_number" class="sr-only">Nip</label>
@@ -42,10 +38,10 @@
                     <div class="form-control-feedback">{{ $errors->first('email') }}</div>
                 </div>
                 
-                <div class="form-group{{ $errors->has('www') ? ' has-danger' : '' }}">
-                    <label for="www" class="sr-only">Strona www</label>
-                    <input id="www" type="text" class="form-control form-control-danger" placeholder="Strona www" name="www" value="{{ old('www') }}">
-                    <div class="form-control-feedback">{{ $errors->first('www') }}</div>
+                <div class="form-group{{ $errors->has('website') ? ' has-danger' : '' }}">
+                    <label for="website" class="sr-only">Strona www</label>
+                    <input id="website" type="text" class="form-control form-control-danger" placeholder="Strona www" name="website" value="{{ old('website') }}">
+                    <div class="form-control-feedback">{{ $errors->first('website') }}</div>
                 </div>
 
                 <div class="form-group{{ $errors->has('phone') ? ' has-danger' : '' }}">

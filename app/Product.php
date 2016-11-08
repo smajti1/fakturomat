@@ -10,7 +10,7 @@ class Product extends Model
     use Sluggable;
 
     protected $fillable = [
-        'name', 'measure_unit', 'price', 'vat',
+        'name', 'measure_unit', 'price', 'tax_percent',
     ];
 
     public function user()
@@ -18,7 +18,7 @@ class Product extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function isOwner(User $user = null):bool
+    public function isOwner(User $user = null): bool
     {
         $user = $user ?: \Auth::user();
 
@@ -29,8 +29,8 @@ class Product extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
@@ -39,9 +39,9 @@ class Product extends Model
         return 'slug';
     }
 
-    public function calculateVat()
+    public function calculateVat(): float
     {
-        $vat = 1 + $this->vat/100;
+        $vat = 1 + $this->tax_percent / 100;
 
         return $vat;
     }

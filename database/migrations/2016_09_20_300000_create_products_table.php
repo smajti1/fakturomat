@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('measure_unit');
             $table->mediumInteger('price')->unsigned();
-            $table->tinyInteger('vat')->unsigned();
+            $table->tinyInteger('tax_percent')->unsigned();
             $table->string('slug');
 
             $table->integer('user_id')->unsigned()->nullable();
@@ -32,7 +32,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('measure_unit');
             $table->mediumInteger('price')->unsigned();
-            $table->tinyInteger('vat')->unsigned();
+            $table->tinyInteger('tax_percent')->unsigned();
             $table->tinyInteger('amount')->unsigned();
 
             $table->integer('invoice_id')->unsigned()->nullable();

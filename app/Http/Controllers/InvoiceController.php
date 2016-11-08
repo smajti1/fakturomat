@@ -29,10 +29,18 @@ class InvoiceController extends Controller
     public function create()
     {
         $user = \Auth::user();
+        if ($user->buyers->isEmpty()) {
+            //message = Aby dodać fakturę musisz dodać kontrachenta
+            //ToDo in the future add some dialog or wizard
+
+            return redirect()->route('buyer.create');
+        }
         $companies = $user->companies;
         $buyers = $user->buyers;
+        $measureUnits = config('invoice.measure_units.' . config('app.locale'));
+        $activeTaxes = activeTaxes();
 
-        return view('invoices.create', compact('companies', 'buyers'));
+        return view('invoices.create', compact('companies', 'buyers', 'measureUnits', 'activeTaxes'));
     }
 
     public function store(Request $request)
@@ -50,13 +58,14 @@ class InvoiceController extends Controller
                 'name'         => $product->name,
                 'measure_unit' => $product->measure_unit,
                 'price'        => $product->price,
-                'vat'          => $product->vat,
+                'tax_percent'  => $product->tax_percent,
                 'amount'       => $amount,
             ];
         }
 
+        $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
         $invoice = Invoice::create(
-            $request->all() + compact('price')
+            $invoiceData + compact('price')
         );
 
         $invoice->invoice_products()->createMany($invoice_products);

@@ -41,11 +41,13 @@ class BuyerController extends Controller
     {
         $rules = [
             'name'          => 'required|max:255',
-            'address'       => 'max:255',
+            'city'          => 'max:255',
+            'zip_code'      => 'max:255',
+            'street'        => 'max:255',
             'tax_id_number' => 'max:255',
             'regon'         => 'max:255',
             'email'         => 'max:255',
-            'www'           => 'max:255',
+            'website'       => 'max:255',
             'phone'         => 'max:255',
             'bank_account'  => 'max:255',
         ];

@@ -10,7 +10,7 @@ class Buyer extends Model
     use Sluggable;
 
     protected $fillable = [
-        'name', 'address', 'tax_id_number', 'regon', 'email', 'www', 'phone',
+        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone',
     ];
 
     public function user()
@@ -18,7 +18,7 @@ class Buyer extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function isOwner(User $user = null):bool
+    public function isOwner(User $user = null): bool
     {
         $user = $user ?: \Auth::user();
 
@@ -29,13 +29,20 @@ class Buyer extends Model
     {
         return [
             'slug' => [
-                'source' => 'name'
-            ]
+                'source' => 'name',
+            ],
         ];
     }
 
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function getAddressAttribute(): string
+    {
+        $address = implode(' ', [$this->city, $this->zip_code, $this->street]);
+
+        return $address;
     }
 }

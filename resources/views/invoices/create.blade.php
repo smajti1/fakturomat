@@ -59,7 +59,8 @@
                 </select>
             </div>
         </div>
-        <table id="invoice-product-list" class="table table-bordered table-responsive">
+        {{--ToDo change add product form--}}
+        <table id="invoice-product-list" class="table table-responsive">
             <thead>
                 <tr>
                     <th>Lp</th>
@@ -67,10 +68,8 @@
                     <th>Jedn.m.</th>
                     <th>Ilość</th>
                     <th>Cena netto</th>
-                    <th>Kwota netto</th>
                     <th>VAT</th>
-                    <th>Kwota VAT</th>
-                    <th>Kwota brutto</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -79,13 +78,12 @@
                     <td>
                         <input id="select-product" placeholder="Wyszukaj lub dodaj produkt">
                     </td>
+                    <td>
+                    </td>
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>x</td>
                 </tr>
             </tbody>
         </table>
@@ -192,14 +190,12 @@
                     var product = $(
                         '<tr>' +
                             '<td>' + products.length + '</td>' +
-                            '<td>' + selectedItem.name + '</td>' +
+                            '<td><input value="' + selectedItem.name + '"></td>' +
                             '<td>' + selectedItem.measure_unit + '</td>' +
                             '<td><input type="number" value="1" name="product[' + selectedItem.id + ']" class="price-input"></td>' +
                             '<td>' + selectedItem.price + ' zł</td>' +
-                            '<td>' + selectedItem.price + ' zł</td>' +
-                            '<td>' + selectedItem.vat + '%</td>' +
-                            '<td>' + selectedItem.price * (1 + (selectedItem.vat/100)) + ' zł</td>' +
-                            '<td>' + selectedItem.price * (1 + (selectedItem.vat/100)) + ' zł</td>' +
+                            '<td>' + selectedItem.tax_percent + '%</td>' +
+                            '<td>x</td>' +
                         '</tr>'
                     );
 

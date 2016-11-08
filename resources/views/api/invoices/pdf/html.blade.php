@@ -78,6 +78,10 @@
                 <strong>Płatność:</strong>
                 {{ $invoice->payment }}
             </div>
+            <div>
+                <strong>Kwota słownie:</strong>
+                {{ $spellOutAmount }}
+            </div>
             @if(strlen($invoice->company->bank_account) > 0)
                 <div>
                     <strong>Konto bankowe:</strong>
