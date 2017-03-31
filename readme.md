@@ -4,13 +4,13 @@ Fakturomat is a system to create and manage your invoices
 
 ## require
 
-<a href="https://laravel.com/docs/5.3" alt="Laravel 5.3 docs">laravel 5.3</a>
+[laravel](https://laravel.com/docs/5.4) 5.4
 
-php7+
+[php](http://www.php.net/) php7+
 
-<a href="http://php.net/manual/en/book.intl.php" alt="PHP: intl - Manual">php intl extension</a> php7.0-intl
+[php Internationalization Functions  extension](http://php.net/manual/en/book.intl.php) php7.0-intl
 
-<a href="http://wkhtmltopdf.org" alt="wkhtmltopdf official website">wkhtmltopdf</a> recommended v0.12.3.^ version
+[wkhtmltopdf](http://wkhtmltopdf.org) recommended v0.12.3.^ version
 
 ## installation
 
