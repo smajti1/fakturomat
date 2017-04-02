@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('/home', 'HomeController@index');
+    Route::get('/panel', 'PanelController@index')->name('panel');
 
     Route::get('firma',                   'CompanyController@index')->name('company.index');
     Route::get('firma/dodaj',             'CompanyController@create')->name('company.create');
@@ -52,3 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::delete('/kontrahent/{buyer}',       'BuyerController@destroy')->name('buyer.destroy');
 
 });
+
+Route::get('register',      'AccountWizardController@wizard')->name('register');
+Route::get('konto/{step?}', 'AccountWizardController@wizard')->name('wizard.account');
+Route::post('konto/{step}', 'AccountWizardController@wizardPost')->name('wizard.account.post');

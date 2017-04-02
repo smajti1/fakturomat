@@ -17,7 +17,7 @@
     </div>
 
     <div class="row border-box-content">
-        <div class="col-xs-4 offset-xs-1 company border-box">
+        <div class="col-xs-4 offset-xs-1 company padding-20">
             <strong>Sprzedawca</strong>
             <div id="company-name-placeholder">
                 {{ $invoice->company->name }}
@@ -26,7 +26,7 @@
                 {{ $invoice->company->address }}
             </div>
         </div>
-        <div class="col-xs-4 offset-xs-2s buyer border-box">
+        <div class="col-xs-4 offset-xs-2s buyer padding-20">
             <strong>Nabywca</strong>
             <div id="buyer-name-placeholder">
                 {{ $invoice->buyer->name }}

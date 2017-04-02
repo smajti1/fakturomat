@@ -45,8 +45,7 @@ class ProductController extends Controller
         $this->validate($this->request, $this->rules());
 
         $user = \Auth::user();
-        $productData = $this->request->all();
-        $productData['price'] = number_format($productData['price'], 2);
+        $productData = $this->request->only('name', 'measure_unit', 'price', 'tax_percent');
         $product = Product::create($productData);
         $product->user()->associate($user);
         $product->save();

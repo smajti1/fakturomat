@@ -17,13 +17,20 @@
                     <div class="form-control-feedback">{{ $errors->first('name') }}</div>
                 </div>
 
-                @include('helpers.google_address')
-
                 <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
                     <label for="tax_id_number" class="sr-only">Nip</label>
                     <input id="tax_id_number" type="text" class="form-control form-control-danger" placeholder="Nip" name="tax_id_number" value="{{ old('tax_id_number', $buyer->tax_id_number) }}">
                     <div class="form-control-feedback">{{ $errors->first('tax_id_number') }}</div>
                 </div>
+
+                @include('helpers.google_address', [
+                    'address_string' => old('address_string'),
+                    'city' => old('city', $buyer->city),
+                    'zip_code' => old('zip_code', $buyer->zip_code),
+                    'street' => old('street', $buyer->street),
+                ])
+
+                <p class="h3">Dodatkowe dane</p>
 
                 <div class="form-group{{ $errors->has('regon') ? ' has-danger' : '' }}">
                     <label for="regon" class="sr-only">Regon</label>

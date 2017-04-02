@@ -29,10 +29,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/panel';
 
     public function __construct()
     {
+        $this->redirectTo = url()->route('panel');
         $this->middleware('guest');
     }
 

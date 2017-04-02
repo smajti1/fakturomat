@@ -18,3 +18,9 @@ Route::group(['middleware' => ['auth:api']], function()
     Route::get('/faktura/{invoice}/html', 'Api\InvoiceToPdfController@toHtml')->name('api.invoices.to.html');
     Route::get('/faktura/{invoice}/pdf',  'Api\InvoiceToPdfController@toPdf')->name('api.invoices.to.pdf');
 });
+
+Route::group(['middleware' => ['auth:basic']], function () {
+    Route::get('/test', function (Request $request) {
+        return response()->json(['name' => 'test']);
+    });
+});

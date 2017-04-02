@@ -5,8 +5,9 @@
     <div>
         <a href="{{ route('product.create') }}">Dodaj <i class="fa fa-plus"></i></a>
     </div>
-    <table class="table table-bordered table-striped">
-        <thead>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead>
             <tr>
                 <th>Nazwa</th>
                 <th>Jednostka miary</th>
@@ -14,8 +15,8 @@
                 <th>Vat</th>
                 <th></th>
             </tr>
-        </thead>
-        <tbody>
+            </thead>
+            <tbody>
             @foreach(Auth::user()->products as $product)
                 <tr>
                     <td>{{ $product->name }}</td>
@@ -36,6 +37,7 @@
                     </td>
                 </tr>
             @endforeach
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 @endsection

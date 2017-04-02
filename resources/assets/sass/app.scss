@@ -2,9 +2,20 @@ a {
   cursor: pointer;
 }
 
-@import '../../../vendor/bower_components/bootstrap/dist/css/bootstrap';
+@import '../../../vendor/bower_components/bootstrap/scss/bootstrap';
 @import '../../../vendor/bower_components/font-awesome/css/font-awesome';
 @import '../../../vendor/bower_components/selectize/dist/css/selectize';
+
+@import "wizard";
+
+html, body {
+  background-color: #fff;
+  color: #636b6f;
+  font-family: 'Raleway';
+  font-weight: 200;
+  height: 100vh;
+  margin: 0;
+}
 
 .fa-color-hover:hover {
   color: silver;
@@ -32,10 +43,6 @@ a {
   color: grey;
 }
 
-.selectize-input {
-  padding-bottom: 0;
-}
-
 .selectize-dropdown {
   margin: -7px 0 0 0;
   position: relative;
@@ -44,4 +51,91 @@ a {
 
 .price-input {
   max-width: 60px;
+}
+
+#welcome-page {
+  .title {
+    font-size: 6rem;
+  }
+}
+
+.container-fluid ul {
+  display: inline-flex;
+  list-style: none;
+  margin-bottom: 0;
+
+  li {
+    padding: .5rem .5rem .5rem 0;
+  }
+}
+
+.container-fluid li {
+  float: left;
+}
+
+.container-fluid li button,
+.container-fluid li a {
+  font-weight: bold;
+}
+
+.btn.nohover:hover {
+  cursor:default !important;
+}
+
+ul.nav-list {
+  display: block;
+  padding: 0;
+}
+
+.breadcrumb {
+  margin-top: 1rem;
+}
+
+.container {
+  padding: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  font-style: italic;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+  font-style: italic;
+}
+
+:-ms-input-placeholder { /* IE 10+ */
+  font-style: italic;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+  font-style: italic;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: map-get($grid-breakpoints, md)) {
+  ul.nav-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  ul.nav-list li {
+    margin: 0 auto;
+  }
+}
+
+.padding-bottom-1 {
+  padding-bottom: 1rem;
+}
+
+.btn-color-636b6f {
+  color: #636b6f;
+}
+
+.btn-color-636b6f:hover {
+  background-color: #f7f7f9;
+  color: #636b6f;
+}
+
+.padding-20 {
+  padding: 20px;
 }

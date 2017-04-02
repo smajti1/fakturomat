@@ -2,17 +2,29 @@
 
 Fakturomat is a system to create and manage your invoices
 
-## require
-
-[laravel](https://laravel.com/docs/5.4) 5.4
+## environment require
 
 [php](http://www.php.net/) php7+
 
 [php Internationalization Functions  extension](http://php.net/manual/en/book.intl.php) php7.0-intl
 
-[wkhtmltopdf](http://wkhtmltopdf.org) recommended v0.12.3.^ version
 
-## installation
+all what [laravel](https://laravel.com/docs/5.4) 5.4 required
+
+##### download and install wkhtmltopdf
+[wkhtmltopdf](http://wkhtmltopdf.org) recommended v0.12.4.^ version
+
+    $ sudo wget https://downloads.wkhtmltopdf.org/0.12/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+    
+    $ sudo unxz wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+    
+    $ sudo tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+    
+    $ cd /wkhtmltox/bin
+    
+    $ sudo mv wkhtmltopdf  /usr/bin/wkhtmltopdf
+    
+## Download and set up project
 
     $ git clone git@bitbucket.org:smajti1/fakturomat.git
     
@@ -33,7 +45,11 @@ Fakturomat is a system to create and manage your invoices
 next set up .env file
 
     $ php artisan migrate
+
+test run
     
-## config
+    $ php artisan serve
+
+## Config
 
 currency and taxes set in config/invoice.php

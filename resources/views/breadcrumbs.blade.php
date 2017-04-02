@@ -4,7 +4,7 @@
             <a href="{{ url('/') }}">Strona główna</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ url('/home') }}">Panel</a>
+            <a href="{{ route('panel') }}">Panel</a>
         </li>
         @yield('breadcrumb')
     </ol>

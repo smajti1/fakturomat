@@ -8,7 +8,7 @@ class InvoiceProduct extends Model
 {
 
     protected $fillable = [
-        'name', 'measure_unit', 'price', 'vat', 'amount',
+        'name', 'measure_unit', 'price', 'tax_percent', 'vat', 'amount',
     ];
 
     public function invoice()

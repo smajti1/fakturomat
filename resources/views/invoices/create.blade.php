@@ -60,8 +60,9 @@
             </div>
         </div>
         {{--ToDo change add product form--}}
-        <table id="invoice-product-list" class="table table-responsive">
-            <thead>
+        <div class="table-responsive">
+            <table id="invoice-product-list" class="table">
+                <thead>
                 <tr>
                     <th>Lp</th>
                     <th>Nazwa towaru/usługi</th>
@@ -71,10 +72,10 @@
                     <th>VAT</th>
                     <th></th>
                 </tr>
-            </thead>
-            <tbody>
+                </thead>
+                <tbody>
                 <tr id="product-placeholder">
-                    <td></td>
+                    <td>1</td>
                     <td>
                         <input id="select-product" placeholder="Wyszukaj lub dodaj produkt">
                     </td>
@@ -83,10 +84,12 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>x</td>
+                    <td class="remove-product"><i class="fa fa-times"></i></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+            <a href="#" id="add-product">Dodaj produkt <i class="fa fa-plus-square"></i></a>
+        </div>
 
         @if($errors->has('product'))
             <span>{{ $errors->first('product') }}</span>
@@ -145,6 +148,10 @@
             }
         });
 
+        $('#invoice-product-list').on('click', '.remove-product', function () {
+           this.parentNode.remove();
+        });
+
         function selectLoad(query, callback, url) {
             selectProductList = {};
             if (!query.length) return callback();
@@ -195,13 +202,29 @@
                             '<td><input type="number" value="1" name="product[' + selectedItem.id + ']" class="price-input"></td>' +
                             '<td>' + selectedItem.price + ' zł</td>' +
                             '<td>' + selectedItem.tax_percent + '%</td>' +
-                            '<td>x</td>' +
+                            '<td class="remove-product"><i class="fa fa-times"></i></td>' +
                         '</tr>'
                     );
 
                     $('#product-placeholder').before(product);
                 }
             }
+        });
+
+        $('#add-product').on('click', function () {
+            var product = $(
+                '<tr>' +
+                '<td>' + $('#invoice-product-list tr').length + '</td>' +
+                '<td><input ></td>' +
+                '<td></td>' +
+                '<td><input type="number" value="1" name="product[]" class="price-input"></td>' +
+                '<td></td>' +
+                '<td></td>' +
+                '<td class="remove-product"><i class="fa fa-times"></i></td>' +
+                '</tr>'
+            );
+
+            $('#invoice-product-list tbody tr:last-child').after(product);
         });
     </script>
 @endsection

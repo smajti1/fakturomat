@@ -1,0 +1,91 @@
+.wizard {
+
+  $wizardBackgroundColor: #3385c6;
+
+  #crumbs {
+
+    text-align: center;
+    padding: 0.8rem;
+
+    li {
+      padding: 6px 0 8px 30px;
+      position: relative;
+      display: inline-block;
+      color: whitesmoke;
+      margin: .2rem;
+
+      &.next {
+        background-color: #f7f7f9;
+        color: #000;
+
+        &:after {
+          border-left-color: #f7f7f9;
+        }
+      }
+
+      &.prev {
+        background-color: $wizardBackgroundColor;
+        a {
+          color: #fff;
+        }
+
+        &:after {
+          border-left-color: $wizardBackgroundColor;
+        }
+      }
+
+      &:before, &:after {
+        width: 0;
+        height: 0;
+        position: absolute;
+        content: "";
+        top: 0;
+      }
+
+      &:before {
+        border-top: 20px inset transparent;
+        border-bottom: 18px inset transparent;
+        border-left: 20px solid #fff;
+        left: 0;
+      }
+
+      &:after {
+        border-top: 20px inset transparent;
+        border-bottom: 18px inset transparent;
+        border-left: 20px solid $wizardBackgroundColor;
+        right: -20px;
+        z-index: 2;
+      }
+
+      &:first-child:before,
+      &:last-child:after {
+        border: none;
+      }
+
+      &:first-child {
+        -webkit-border-radius: 4px 0 0 4px;
+        -moz-border-radius: 4px 0 0 4px;
+        border-radius: 4px 0 0 4px;
+        padding: 6px 0 8px 10px;
+      }
+
+      &:last-child {
+        -webkit-border-radius: 0 4px 4px 0;
+        -moz-border-radius: 0 4px 4px 0;
+        border-radius: 0 4px 4px 0;
+        padding: 6px 10px 8px 30px;
+      }
+
+      &.current {
+        background: #007ACC;
+        color: #fff;
+        font-weight: bold;
+
+        &:after {
+          border-left: 20px solid #007ACC;
+        }
+      }
+    }
+
+  }
+}

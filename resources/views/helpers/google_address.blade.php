@@ -1,23 +1,23 @@
 <p class="h3">Wyszuja adress</p>
 <div class="form-group">
     <label for="address_string" class="sr-only">Wyszukaj adres</label>
-    <input id="address_string" type="text" class="form-control" name="address_string" value="{{ old('address_string') }}" placeholder="Adres">
+    <input id="address_string" type="text" class="form-control" name="address_string" value="{{ old('address_string', $address_string ?? '') }}" placeholder="Adres">
 </div>
 <p class="h3">Lub wypełnij</p>
 <div>
     <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
         <label for="city" class="sr-only">Miasto</label>
-        <input id="city" type="text" class="form-control form-control-danger" name="city" value="{{ old('city') }}" placeholder="Miasto">
+        <input id="city" type="text" class="form-control form-control-danger" name="city" value="{{ old('city', $city ?? '') }}" placeholder="Miasto">
         <div class="form-control-feedback">{{ $errors->first('city') }}</div>
     </div>
     <div class="form-group{{ $errors->has('zip_code') ? ' has-danger' : '' }}">
         <label for="zip_code" class="sr-only">Kod pocztowy</label>
-        <input id="zip_code" type="text" class="form-control form-control-danger" name="zip_code" value="{{ old('zip_code') }}" placeholder="Kod pocztowy">
+        <input id="zip_code" type="text" class="form-control form-control-danger" name="zip_code" value="{{ old('zip_code', $zip_code ?? '') }}" placeholder="Kod pocztowy">
         <div class="form-control-feedback">{{ $errors->first('zip_code') }}</div>
     </div>
     <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
         <label for="street" class="sr-only">Ulica</label>
-        <input id="street" type="text" class="form-control form-control-danger" name="street" value="{{ old('street') }}" placeholder="Ulica">
+        <input id="street" type="text" class="form-control form-control-danger" name="street" value="{{ old('street', $street ?? '') }}" placeholder="Ulica">
         <div class="form-control-feedback">{{ $errors->first('street') }}</div>
     </div>
 </div>

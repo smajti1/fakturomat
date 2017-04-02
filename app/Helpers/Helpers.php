@@ -18,8 +18,9 @@ function spellOutAmount($price): string
     $price = number_format($price, 2);
     list($integer, $decimal) = explode('.', $price);
 
-    $price = $numberFormatter->format($integer) . ' ' . trans_choice('plurals.money.integer', $integer);
-    $price .= ' ' . $numberFormatter->format($decimal) . ' ' . trans_choice('plurals.money.decimal', $decimal);
+    $id = 'invoice.currency.' . config('invoice.currency');
+    $price = $numberFormatter->format($integer) . ' ' . trans_choice("$id.integer", $integer);
+    $price .= ' ' . $numberFormatter->format($decimal) . ' ' . trans_choice("$id.decimal", $decimal);
 
     return $price;
 }
@@ -35,7 +36,7 @@ function activeTaxes(): array
 
     foreach ($taxes as $tax) {
         if ($tax['from'] <= $now && (is_null($tax['to']) || $tax['to'] >= $now)) {
-            $activeTaxes[] = $tax;
+            $activeTaxes[$tax['percent']] = $tax;
         }
     }
 

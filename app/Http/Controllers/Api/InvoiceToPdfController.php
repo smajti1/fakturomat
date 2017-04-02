@@ -12,7 +12,10 @@ class InvoiceToPdfController extends Controller
     {
         $user = \Auth::user();
 
-//        abort_if(!$invoice->isOwner(), 404);
+        if (!$this->commandExist()) {
+            throw new \Exception('Brak wkhtmltopdf');
+        }
+
         $url = route('api.invoices.to.html', compact('invoice') + ['api_token' => $user->api_token]);
         $filename = "faktura-" . $invoice->company->slug . '-' . date('Y-m-d') . ".pdf";
         $uploadDir = public_path('uploads/users/' . $user->id . '/invoices');
@@ -31,7 +34,7 @@ class InvoiceToPdfController extends Controller
         $footer = '';//'--header-html ' . route('invoices.to.pdf.footer');//"--footer-line --footer-right 'strona [page]/[toPage]'";
         $code = "wkhtmltopdf $footer --title '$title' $url $pathToFile 2>&1";
 
-        exec($code, $op);
+        shell_exec($code);
         $headers = [
             'Content-Disposition' => "filename=\"$filename\"",
         ];
@@ -49,5 +52,10 @@ class InvoiceToPdfController extends Controller
     public function footer()
     {
         return view('api.invoices.pdf.footer');
+    }
+
+    function commandExist() {
+        $returnVal = shell_exec("which wkhtmltopdf");
+        return (empty($returnVal) ? false : true);
     }
 }
