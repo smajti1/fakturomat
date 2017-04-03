@@ -30,8 +30,23 @@ class InvoiceProduct extends Model
 
     public function calculateVat()
     {
-        $vat = 1 + $this->vat/100;
+        $vat = 1 + $this->tax_percent/100;
 
         return $vat;
+    }
+
+    public function grossPrice(): float
+    {
+        return $this->amount * $this->priceWithVat();
+    }
+
+    public function netPrice(): float
+    {
+        return $this->amount * $this->price;
+    }
+
+    public function taxAmount(): float
+    {
+        return $this->amount * $this->price * ($this->tax_percent / 100);
     }
 }

@@ -87,6 +87,7 @@ class InvoiceController extends Controller
     protected function rules()
     {
         return [
+            'number'  => 'required',
             'product' => 'required',
         ];
     }

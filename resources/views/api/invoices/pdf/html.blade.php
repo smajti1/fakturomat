@@ -23,7 +23,9 @@
                 {{ $invoice->company->name }}
             </div>
             <div id="company-address-placeholder">
-                {{ $invoice->company->address }}
+                @foreach($invoice->company->getAddress() as $address)
+                <div>{{ $address }}</div>
+                @endforeach
             </div>
         </div>
         <div class="col-xs-4 offset-xs-2s buyer padding-20">
@@ -32,7 +34,9 @@
                 {{ $invoice->buyer->name }}
             </div>
             <div id="buyer-address-placeholder">
-                {{ $invoice->buyer->address }}
+                @foreach($invoice->buyer->getAddress() as $address)
+                    <div>{{ $address }}</div>
+                @endforeach
             </div>
         </div>
     </div>
@@ -53,30 +57,57 @@
         </thead>
         <tbody>
         @foreach($invoice->invoice_products as $product)
-            <?php
-            $grossSum[$product->vat] = ($grossSum[$product->vat] ?? 0) + $product->price * $product->amount;
-            $netSum[$product->vat] = ($netSum[$product->vat] ?? 0) + $product->price * $product->amount;
-            ?>
             <tr>
                 <td>{{ $loop->iteration }}</td>
                 <td>{{ str_replace(' ', '&nbsp;', $product->name) }}</td>
                 <td>{{ $product->measure_unit }}</td>
                 <td>{{ $product->amount }}</td>
                 <td>{{ money_pl_format($product->price) }}&nbsp;zł</td>
-                <td>{{ money_pl_format($product->price * $product->amount)  }}&nbsp;zł</td>
-                <td>{{ $product->vat }}%</td>
-                <td>{{ money_pl_format($product->price * $product->amount * $product->vat / 100) }}&nbsp;zł</td>
-                <td>{{ money_pl_format($product->price * $product->amount * $product->calculateVat()) }}&nbsp;zł</td>
+                <td>{{ money_pl_format($product->netPrice())  }}&nbsp;zł</td>
+                <td>{{ $product->tax_percent }}%</td>
+                <td>{{ money_pl_format($product->taxAmount()) }}&nbsp;zł</td>
+                <td>{{ money_pl_format($product->grossPrice()) }}&nbsp;zł</td>
             </tr>
         @endforeach
         </tbody>
     </table>
 
     <div class="row">
+        <div class="col-6 offset-6">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Netto</th>
+                        <th>%</th>
+                        <th>VAT</th>
+                        <th>Brutto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($taxPercentsSum as $vat => $sum)
+                        <tr>
+                            <td>{{ money_pl_format($sum['netPrice']) }}&nbsp;zł</td>
+                            <td>{{ $vat }}%</td>
+                            <td>{{ money_pl_format($sum['amountVat']) }}&nbsp;zł</td>
+                            <td>{{ money_pl_format($sum['grossPrice']) }}&nbsp;zł</td>
+                        </tr>
+                    @endforeach
+                    <tr>
+                        <td>{{ money_pl_format($totalSum['net']) }}&nbsp;zł</td>
+                        <td>Razem</td>
+                        <td>{{ money_pl_format($totalSum['tax']) }}&nbsp;zł</td>
+                        <td>{{ money_pl_format($totalSum['gross']) }}&nbsp;zł</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-xs-6">
             <div>
                 <strong>Płatność:</strong>
-                {{ $invoice->payment }}
+                {{ $invoice->getPayment() }}
             </div>
             <div>
                 <strong>Kwota słownie:</strong>
@@ -101,41 +132,8 @@
 
             <div>
                 <label for="status">Status:</label>
-                {{ $invoice->status }}
+                {{ $invoice->getStatus() }}
             </div>
-        </div>
-        <div class="col-xs-6">
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Netto</th>
-                        <th>%</th>
-                        <th>VAT</th>
-                        <th>Brutto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                        $allNetSum = 0;
-                        $allSum = 0;
-                        $allVatSum = 0;
-                    ?>
-                    @foreach($grossSum as $vat => $sum)
-                        <tr>
-                            <td>{{ money_pl_format($allNetSum += $sum) }}&nbsp;zł</td>
-                            <td>{{ $vat }}%</td>
-                            <td>{{ money_pl_format($allVatSum  += $sum*$vat/100) }}&nbsp;zł</td>
-                            <td>{{ money_pl_format($allSum += $sum*(1 + $vat/100)) }}&nbsp;zł</td>
-                        </tr>
-                    @endforeach
-                    <tr>
-                        <td>{{ money_pl_format($allNetSum) }}&nbsp;zł</td>
-                        <td>Razem</td>
-                        <td>{{ money_pl_format($allVatSum) }}&nbsp;zł</td>
-                        <td>{{ money_pl_format($allSum) }}&nbsp;zł</td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>

@@ -15,7 +15,7 @@ function spellOutAmount($price): string
 {
     $numberFormatter = new \NumberFormatter(config('app.locale'), \NumberFormatter::SPELLOUT);
 
-    $price = number_format($price, 2);
+    $price = number_format($price, 2, '.', '');
     list($integer, $decimal) = explode('.', $price);
 
     $id = 'invoice.currency.' . config('invoice.currency');

@@ -45,8 +45,10 @@ class InvoiceToPdfController extends Controller
     public function toHtml(Invoice $invoice)
     {
         $spellOutAmount = spellOutAmount($invoice->price);
+        $taxPercentsSum = $invoice->getTaxPercentsSum();
+        $totalSum = $invoice->getTotalSum();
 
-        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount'));
+        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount', 'taxPercentsSum', 'totalSum'));
     }
 
     public function footer()

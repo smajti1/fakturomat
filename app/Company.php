@@ -40,9 +40,15 @@ class Company extends Model
         return 'slug';
     }
 
-    public function getAddressAttribute(): string
+    public function getAddress(): array
     {
-        $address = implode(' ', [$this->city, $this->zip_code, $this->street]);
+        $address = [];
+        if ($this->street) {
+            $address[] = $this->street;
+        }
+        if ($this->city || $this->zip_code) {
+            $address[] = implode(' ', [$this->city, $this->zip_code]);
+        }
 
         return $address;
     }

@@ -113,6 +113,8 @@ return [
         'company_name' => 'nazwa firmy',
         'password'     => 'hasło',
         'name'         => 'nazwa',
+        'number'       => 'numer',
+        'product'      => 'produkt',
     ],
 
 ];

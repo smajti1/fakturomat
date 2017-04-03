@@ -22,7 +22,7 @@
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->measure_unit }}</td>
                     <td>{{ $product->price }}</td>
-                    <td>{{ $product->vat }}</td>
+                    <td>{{ $product->tax_percent }}</td>
                     <td>
                         <a href="{{ route('product.edit', compact('product')) }}" class="inline-block">
                             <i class="fa fa-pencil-square-o"></i>
