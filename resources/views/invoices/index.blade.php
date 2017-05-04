@@ -14,8 +14,8 @@
                 <th>Nabywca</th>
                 <th>Płatność</th>
                 <th>Kwota</th>
-                <th>Ilość produktów</th>
-                <th>Wpłata</th>
+                <th class="hidden-sm-down">Ilość produktów</th>
+                <th class="hidden-sm-down">Wpłata</th>
                 <th>Data wystawienia</th>
                 <th></th>
             </tr>
@@ -28,8 +28,8 @@
                     <td>{{ $invoice->buyer['name'] }}</td>
                     <td>{{ $invoice->payment }}</td>
                     <td>{{ $invoice->price }} zł</td>
-                    <td>{{ $invoice->invoice_products->count() }}</td>
-                    <td>{{ $invoice->payment_at }}</td>
+                    <td class="hidden-sm-down">{{ $invoice->invoice_products->count() }}</td>
+                    <td class="hidden-sm-down">{{ $invoice->payment_at }}</td>
                     <td>{{ $invoice->issue_date }}</td>
                     <td>
                         <a href="{{ route('invoices.edit', compact('invoice')) }}" class="inline-block">

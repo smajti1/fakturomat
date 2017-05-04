@@ -12,11 +12,11 @@
                 <th>Nazwa</th>
                 <th>Adres</th>
                 <th>Nip</th>
-                <th>Regon</th>
-                <th>Email</th>
-                <th>Strona www</th>
-                <th>Telefon</th>
-                <th>Konto bankowe</th>
+                <th class="hidden-xs-down">Regon</th>
+                <th class="hidden-xs-down">Email</th>
+                <th class="hidden-sm-down">Strona www</th>
+                <th class="hidden-xs-down">Telefon</th>
+                <th class="hidden-md-down">Konto bankowe</th>
                 <th></th>
             </tr>
             </thead>
@@ -26,11 +26,11 @@
                     <td>{{ $company->name }}</td>
                     <td>{{ $company->address }}</td>
                     <td>{{ $company->tax_id_number }}</td>
-                    <td>{{ $company->regon }}</td>
-                    <td>{{ $company->email }}</td>
-                    <td>{{ $company->website }}</td>
-                    <td>{{ $company->phone }}</td>
-                    <td>{{ $company->bank_account }}</td>
+                    <td class="hidden-xs-down">{{ $company->regon }}</td>
+                    <td class="hidden-xs-down">{{ $company->email }}</td>
+                    <td class="hidden-sm-down">{{ $company->website }}</td>
+                    <td class="hidden-xs-down">{{ $company->phone }}</td>
+                    <td class="hidden-md-down">{{ $company->bank_account }}</td>
                     <td>
                         <a href="{{ route('company.edit', compact('company')) }}" class="inline-block">
                             <i class="fa fa-pencil-square-o"></i>

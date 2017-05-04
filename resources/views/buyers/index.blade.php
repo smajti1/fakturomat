@@ -13,9 +13,9 @@
                 <th>Adres</th>
                 <th>Nip</th>
                 <th>Regon</th>
-                <th>E-mail</th>
-                <th>Strona www</th>
-                <th>Telefon</th>
+                <th class="hidden-xs-down">E-mail</th>
+                <th class="hidden-sm-down">Strona www</th>
+                <th class="hidden-xs-down">Telefon</th>
                 <th></th>
             </tr>
             </thead>
@@ -26,9 +26,9 @@
                     <td>{{ $buyer->address }}</td>
                     <td>{{ $buyer->tax_id_number }}</td>
                     <td>{{ $buyer->regon }}</td>
-                    <td>{{ $buyer->email }}</td>
-                    <td>{{ $buyer->website }}</td>
-                    <td>{{ $buyer->phone }}</td>
+                    <td class="hidden-xs-down">{{ $buyer->email }}</td>
+                    <td class="hidden-sm-down">{{ $buyer->website }}</td>
+                    <td class="hidden-xs-down">{{ $buyer->phone }}</td>
                     <td>
                         <a href="{{ route('buyer.edit', compact('buyer')) }}" class="inline-block">
                             <i class="fa fa-pencil-square-o"></i>
