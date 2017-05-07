@@ -16,7 +16,7 @@
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                            <label for="email" class="sr-only">E-mail</label>
+                            <label for="email">E-mail</label>
                             <input id="email" type="text" class="form-control form-control-danger" name="email" value="{{ old('email', $email ?? '') }}" placeholder="E-mail">
                             <div class="form-control-feedback">{{ $errors->first('email') }}</div>
                         </div>

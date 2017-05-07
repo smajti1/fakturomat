@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -23,9 +23,9 @@ class User extends Authenticatable
 
     }
 
-    public function companies()
+    public function company()
     {
-        return $this->hasMany(Company::class);
+        return $this->hasOne(Company::class);
     }
 
     public function products()

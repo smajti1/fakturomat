@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Buyer;
-use App\Company;
-use App\Invoice;
-use App\Product;
+use App\Models\Buyer;
+use App\Models\Invoice;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -35,12 +34,12 @@ class InvoiceController extends Controller
 
             return redirect()->route('buyer.create');
         }
-        $companies = $user->companies;
+        $company = $user->company;
         $buyers = $user->buyers;
         $measureUnits = config('invoice.measure_units.' . config('app.locale'));
         $activeTaxes = activeTaxes();
 
-        return view('invoices.create', compact('companies', 'buyers', 'measureUnits', 'activeTaxes'));
+        return view('invoices.create', compact('company', 'buyers', 'measureUnits', 'activeTaxes'));
     }
 
     public function store(Request $request)
@@ -64,22 +63,19 @@ class InvoiceController extends Controller
         }
 
         $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
-        $invoice = Invoice::create(
+        $invoice = new Invoice(
             $invoiceData + compact('price')
         );
 
-        $invoice->invoice_products()->createMany($invoice_products);
-
         $user = \Auth::user();
         $invoice->user()->associate($user);
-
-        $company = Company::where('id', $request->company_id)->first();
-        $invoice->company()->associate($company);
+        $invoice->company()->associate($user->company);
 
         $buyer = Buyer::where('id', $request->buyer_id)->first();
         $invoice->buyer()->associate($buyer);
 
         $invoice->save();
+        $invoice->invoice_products()->createMany($invoice_products);
 
         return redirect()->route('invoices.index');
     }
@@ -87,7 +83,6 @@ class InvoiceController extends Controller
     protected function rules()
     {
         return [
-            'number'  => 'required',
             'product' => 'required',
         ];
     }

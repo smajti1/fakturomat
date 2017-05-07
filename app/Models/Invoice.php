@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,19 @@ class Invoice extends Model
     protected $casts = [
         'price' => 'float',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($invoice) {
+            if ($invoice->number == '') {
+                $invoice->number = $invoice->company->companyInvoiceNumber->getFormattedNextNumber();
+                $invoice->company->companyInvoiceNumber->increment('number');
+            }
+        });
+
+    }
 
     public function company()
     {
@@ -116,7 +129,6 @@ class Invoice extends Model
 
         return $statusList;
     }
-
 
     public function getPayment(): string
     {

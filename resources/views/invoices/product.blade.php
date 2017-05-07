@@ -12,30 +12,29 @@
         </tr>
         </thead>
         <tbody>
-        <tr id="product-placeholder">
-            <td>1</td>
-            <td>
-                <input id="select-product" placeholder="Wyszukaj lub dodaj produkt">
-            </td>
-            <td>
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td class="remove-product"><i class="fa fa-times"></i></td>
-        </tr>
         </tbody>
     </table>
     <div class="form-control-feedback">{{ $errors->first('product') }}</div>
-    <a href="#" id="add-product">Dodaj produkt <i class="fa fa-plus-square"></i></a>
+    <a id="add-product">Dodaj produkt <i class="fa fa-plus-square"></i></a>
 </div>
-
 
 @section('scripts')
     @parent
     <script>
         var selectProductList;
-
+        var productTemplate =
+            $("<tr>" +
+                "<td class='product_number'>1</td>" +
+                "<td class='select-product'>" +
+                    "<select autocomplete='off' placeholder='Wyszukaj lub dodaj produkt'>" +
+                    "</select>" +
+                "</td>" +
+                "<td class='measure_unit'></td>" +
+                "<td class='count'></td>" +
+                "<td class='price'></td>" +
+                "<td class='tax_percent'></td>" +
+                "<td class='remove-product'><i class='fa fa-times'></i></td>" +
+            "</tr>");
         $('#invoice-product-list').on('click', '.remove-product', function () {
             this.parentNode.remove();
         });
@@ -53,66 +52,58 @@
         }
 
         var productListSrc = $('[name=product-list-src]').val();
-        var $invoiceProductList = $('#invoice-product-list');
-
-        $('#select-product').selectize({
-            valueField: 'id',
-            labelField: 'name',
-            searchField: ['name'],
-            options: [],
-            create: false,
-            render: {
-                option: function(item, escape) {
-                    return '<div>' +
-                        '<span class="name">' + escape(item.name) + '</span>' +
-                        '<span class="small block grey-text">' + item.price + 'zł + ' + item.tax_percent + '%</span>' +
-                        '</div>';
-                }
-            },
-            load: function(query, callback) {
-                selectLoad(query, callback, productListSrc);
-            },
-            onChange : function(item) {
-                var selectedItem = null;
-                for (var i=0; i < selectProductList.length; i++) {
-                    if (selectProductList[i].id == item) {
-                        selectedItem = selectProductList[i];
-                    }
-                }
-
-                if (selectedItem) {
-                    var products = $invoiceProductList.find('tbody tr');
-                    var product = $(
-                        '<tr>' +
-                        '<td>' + products.length + '</td>' +
-                        '<td><input value="' + selectedItem.name + '"></td>' +
-                        '<td>' + selectedItem.measure_unit + '</td>' +
-                        '<td><input type="number" value="1" name="product[' + selectedItem.id + ']" class="price-input"></td>' +
-                        '<td>' + selectedItem.price + ' zł</td>' +
-                        '<td>' + selectedItem.tax_percent + '%</td>' +
-                        '<td class="remove-product"><i class="fa fa-times"></i></td>' +
-                        '</tr>'
-                    );
-
-                    $('#product-placeholder').before(product);
-                }
-            }
-        });
 
         $('#add-product').on('click', function () {
-            var product = $(
-                '<tr>' +
-                '<td>' + $('#invoice-product-list tr').length + '</td>' +
-                '<td><input ></td>' +
-                '<td></td>' +
-                '<td><input type="number" value="1" name="product[]" class="price-input"></td>' +
-                '<td></td>' +
-                '<td></td>' +
-                '<td class="remove-product"><i class="fa fa-times"></i></td>' +
-                '</tr>'
-            );
+            var productClone = productTemplate.clone();
+            $('#invoice-product-list tbody').append(productClone);
+            var product_number = $('#invoice-product-list tr').length - 1;
+            productClone.find('.product_number').html(product_number);
+            productClone.find('.select-product > select').selectize({
+                valueField: 'id',
+                labelField: 'name',
+                maxItem: 1,
+                create: true,
+                render: {
+                    option: function(item, escape) {
+                        var item_html = '<div>' +
+                            '<span class="name">' + escape(item.name) + '</span>';
+                        if (item.price) {
+                            item_html += '<span class="small block grey-text">' + item.price + 'zł + ' + item.tax_percent + '%</span>';
+                        }
+                        item_html += '</div>';
 
-            $('#invoice-product-list tbody tr:last-child').after(product);
+                        return item_html;
+                    },
+                    option_create: function(data, escape) {
+                        return '<div class="create">Dodaj produkt <strong>' + escape(data.input) + '</strong>&hellip;</div>';
+                    },
+                },
+                load: function(query, callback) {
+                    this.clearOptions();
+                    selectLoad(query, callback, productListSrc);
+                },
+                onChange : function(item) {
+                    var selectedItem = null;
+                    for (var i=0; i < selectProductList.length; i++) {
+                        if (selectProductList[i].id == item) {
+                            selectedItem = selectProductList[i];
+                        }
+                    }
+                    if (selectedItem) {
+                        productClone.find('.select-product').html(selectedItem.name);
+                        productClone.find('.measure_unit').html(selectedItem.measure_unit);
+                        productClone.find('.count').html('<input type="number" value="1" name="product[' + selectedItem.id + ']" class="price-input">');
+                        productClone.find('.price').html(selectedItem.price + ' zł');
+                        productClone.find('.tax_percent').html(selectedItem.tax_percent + ' %');
+                    }
+                },
+                score: function() {
+                    return function() {
+                        return 1;
+                    };
+                },
+            });
         });
+        $('#add-product').trigger('click');
     </script>
 @endsection

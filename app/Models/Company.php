@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
@@ -13,6 +13,16 @@ class Company extends Model
     protected $fillable = [
         'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_account',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($company) {
+            $company->companyInvoiceNumber()->create([]);
+        });
+
+    }
 
     public function user()
     {
@@ -51,5 +61,10 @@ class Company extends Model
         }
 
         return $address;
+    }
+
+    public function companyInvoiceNumber()
+    {
+        return $this->hasOne(CompanyInvoiceNumbers::class);
     }
 }

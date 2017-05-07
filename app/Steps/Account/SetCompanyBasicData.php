@@ -2,7 +2,7 @@
 
 namespace App\Steps\Account;
 
-use App\Company;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Smajti1\Laravel\Step;
 

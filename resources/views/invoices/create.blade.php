@@ -12,7 +12,7 @@
         
         <div class="{{ $errors->has('number') ? ' has-danger' : '' }}">
             <label for="number">Numer faktury</label>
-            <input id="number" name="number" type="text">
+            <input id="number" name="number" placeholder="Auto">
             <div class="form-control-feedback">{{ $errors->first('number') }}</div>
         </div>
 
@@ -20,23 +20,11 @@
             <div class="col-sm-6 company">
                 <strong>Sprzedawca</strong>
                 <div id="company-name-placeholder">
-                    {{ $companies->first()->name }}
+                    {{ $company->name }}
                 </div>
                 <div id="company-address-placeholder">
-                    {{ $companies->first()->address }}
+                    {{ $company->address }}
                 </div>
-
-                <label for="company_id">Zmień firmę</label>
-                <select name="company_id" id="company_id">
-                    @foreach($companies as $company)
-                        <option value="{{ $company->id }}"
-                            data-data="{{ json_encode($company->toArray()) }}"
-                            {{ $companies->first()->id === $company->id ? 'selected' : '' }}
-                        >
-                            {{ $company->name }}
-                        </option>
-                    @endforeach
-                </select>
             </div>
             <div class="col-sm-6">
                 <strong>Nabywca</strong>
@@ -75,16 +63,16 @@
         <div>
             <label for="payment">Płatność</label>
             <select name="payment" id="payment">
-                <option value="{{ \App\Invoice::PAYMENT_CASH }}">gotówką</option>
-                <option value="{{ \App\Invoice::PAYMENT_BANK_TRANSFER }}">przelewem</option>
+                <option value="{{ \App\Models\Invoice::PAYMENT_CASH }}">gotówką</option>
+                <option value="{{ \App\Models\Invoice::PAYMENT_BANK_TRANSFER }}">przelewem</option>
             </select>
         </div>
 
         <div>
             <label for="status">Status</label>
             <select name="status" id="status">
-                <option value="{{ \App\Invoice::STATUS_NOT_PAID }}">nie zapłacona</option>
-                <option value="{{ \App\Invoice::STATUS_PAID }}">zapłacona</option>
+                <option value="{{ \App\Models\Invoice::STATUS_NOT_PAID }}">nie zapłacona</option>
+                <option value="{{ \App\Models\Invoice::STATUS_PAID }}">zapłacona</option>
             </select>
         </div>
 

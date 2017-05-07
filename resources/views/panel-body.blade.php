@@ -1,16 +1,6 @@
 <div class="row panel-body">
     <div class="col-md-6 padding-bottom-1">
-        <h2>Firmy</h2>
-        <div>
-            <a href="{{ route('company.index') }}">Lista Firm</a>
-        </div>
-        <div>
-            <a href="{{ route('company.create') }}">Dodaj Firmę</a>
-        </div>
-    </div>
-
-    <div class="col-md-6 padding-bottom-1">
-        <h2>Kontrachenci</h2>
+        <h3>Kontrachenci</h3>
         <div>
             <a href="{{ route('buyer.index') }}">Lista Kontrachentów</a>
         </div>
@@ -20,7 +10,7 @@
     </div>
 
     <div class="col-md-6 padding-bottom-1">
-        <h2>Faktury</h2>
+        <h3>Faktury</h3>
         <div>
             <a href="{{ route('invoices.index') }}">Lista Faktur</a>
         </div>
@@ -30,12 +20,22 @@
     </div>
 
     <div class="col-md-6 padding-bottom-1">
-        <h2>Produkty</h2>
+        <h3>Produkty</h3>
         <div>
             <a href="{{ route('product.index') }}">Lista Produktów</a>
         </div>
         <div>
             <a href="{{ route('product.create') }}">Dodaj Produkt</a>
+        </div>
+    </div>
+
+    <div class="col-md-6 padding-bottom-1">
+        <h3>Ustawienia</h3>
+        <div>
+            <a href="{{ route('settings.company_invoice_number.edit') }}">Numeracja faktur</a>
+        </div>
+        <div>
+            <a href="{{ route('company.edit') }}">Ustawienia Firmy</a>
         </div>
     </div>
 

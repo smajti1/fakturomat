@@ -13,13 +13,13 @@
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
-                    <label for="name" class="sr-only">Nazwa produktu</label>
+                    <label for="name">Nazwa produktu</label>
                     <input id="name" type="text" class="form-control form-control-danger" placeholder="Nazwa produktu" name="name" value="{{ old('name') }}" required autofocus>
                     <div class="form-control-feedback">{{ $errors->first('name') }}</div>
                 </div>
 
                 <div class="form-group{{ $errors->has('measure_unit') ? ' has-danger' : '' }}">
-                    <label for="measure_unit" class="sr-only">Jednostka miary</label>
+                    <label for="measure_unit">Jednostka miary</label>
                     <select name="measure_unit" id="measure_unit" class="form-control form-control-danger">
                         @foreach($measureUnits as $key => $unit)
                             <option value="{{ $key }}"{{ old('measure_unit') === $key ? 'selected' : '' }}>{{ $unit }}</option>
@@ -29,13 +29,13 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
-                    <label for="price" class="sr-only">Cena</label>
+                    <label for="price">Cena</label>
                     <input id="price" type="text" class="form-control form-control-danger" placeholder="Cena" name="price" value="{{ old('price') }}" required>
                     <div class="form-control-feedback">{{ $errors->first('price') }}</div>
                 </div>
 
                 <div class="form-group{{ $errors->has('tax_percent') ? ' has-danger' : '' }}">
-                    <label for="tax_percent" class="sr-only">Vat</label>
+                    <label for="tax_percent">Vat</label>
                     <select name="tax_percent" id="tax_percent" class="form-control form-control-danger">
                     @foreach($activeTaxes as $tax)
                         <option value="{{ $tax['percent'] }}"{{ old('tax_percent') === $tax['percent'] ? 'selected' : '' }}>{{ $tax['label'] }}</option>

@@ -51,7 +51,7 @@
         </span>
     </nav>
 
-    <div class="container-fluid">
+    <div class="container">
         @if($flash = session('flash'))
             <div class="alert alert-{{ key($flash) }} alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">

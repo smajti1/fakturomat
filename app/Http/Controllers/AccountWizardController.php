@@ -41,11 +41,8 @@ class AccountWizardController extends Controller
         }
 
         $user = \Auth::user();
-        if ($user) {
-            $companies = $user->companies();
-        }
 
-        return view('wizard.account.base', compact('step', 'user', 'companies'));
+        return view('wizard.account.base', compact('step', 'user'));
     }
 
     public function wizardPost(Request $request, $step = null)

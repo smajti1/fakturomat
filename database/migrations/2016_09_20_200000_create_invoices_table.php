@@ -20,7 +20,7 @@ class CreateInvoicesTable extends Migration
             $table->date('payment_at');
             $table->string('number')->default('');
             $table->date('issue_date');
-            $table->integer('price')->default(0);
+            $table->float('price')->default(0);
             $table->string('path')->default('');
 
             $table->integer('company_id')->unsigned()->nullable();

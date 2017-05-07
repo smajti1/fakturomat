@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Invoice;
+use App\Models\Invoice;
 
 class InvoiceToPdfController extends Controller
 {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Buyer;
+use App\Models\Buyer;
 use Illuminate\Http\Request;
 
 class BuyerController extends Controller

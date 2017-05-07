@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Product;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    const JSON_LIST_LIMIT = 20;
+    const JSON_LIST_LIMIT = 10;
     protected $request;
 
     public function __construct(Request $request)
@@ -36,6 +36,12 @@ class ProductController extends Controller
             ->where('name', 'LIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
             ->get();
+        if (!$list->count()) {
+            $list = \Auth::user()
+                ->products()
+                ->limit(self::JSON_LIST_LIMIT)
+                ->get();
+        }
 
         return $list;
     }

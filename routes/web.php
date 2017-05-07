@@ -20,12 +20,8 @@ Auth::routes();
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/panel', 'PanelController@index')->name('panel');
 
-    Route::get('firma',                   'CompanyController@index')->name('company.index');
-    Route::get('firma/dodaj',             'CompanyController@create')->name('company.create');
-    Route::put('firma/dodaj',             'CompanyController@store')->name('company.store');
-    Route::get('firma/{company}/edytuj',  'CompanyController@edit')->name('company.edit');
-    Route::post('firma/{company}/edytuj', 'CompanyController@update')->name('company.update');
-    Route::delete('firma/{company}/usun', 'CompanyController@destroy')->name('company.destroy');
+    Route::get('firma/edytuj',  'CompanyController@edit')->name('company.edit');
+    Route::post('firma/edytuj', 'CompanyController@update')->name('company.update');
 
     Route::get('/produkt-lista', 'ProductController@jsonList')->name('product.json.list');
     Route::get('/firma-lista',   'CompanyController@jsonList')->name('company.json.list');
@@ -51,6 +47,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post(  '/kontrahent/{buyer}',       'BuyerController@update')->name(  'buyer.update');
     Route::delete('/kontrahent/{buyer}',       'BuyerController@destroy')->name('buyer.destroy');
 
+    Route::group(['namespace' => 'Settings', 'prefix' => 'ustawienia'], function () {
+        Route::get('/numeracja-faktur/edytuj', 'CompanyInvoiceNumberController@index')->name('settings.company_invoice_number.edit');
+        Route::post('/numeracja-faktur/edytuj', 'CompanyInvoiceNumberController@update')->name('settings.company_invoice_number.update');
+    });
 });
 
 Route::get('register',      'AccountWizardController@wizard')->name('register');

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
@@ -22,52 +22,19 @@ class CompanyController extends Controller
         return $list;
     }
 
-    public function index()
+    public function edit()
     {
-        $companies = \Auth::user()->companies;
-
-        return view('companies.index', compact('companies'));
-    }
-
-    public function create()
-    {
-        return view('companies.create');
-    }
-
-    public function store(Request $request)
-    {
-        $this->validate($request, $this->rules());
-
-        $company = Company::create($request->all());
-        $company->user()->associate(\Auth::user());
-        $company->save();
-
-        return redirect()->route('company.index');
-    }
-
-
-    public function edit(Company $company)
-    {
-        abort_if(!$company->isOwner(), 404);
+        $company = Auth::user()->company;
 
         return view('companies.edit', compact('company'));
     }
 
-    public function update(Company $company, Request $request)
+    public function update(Request $request)
     {
         $this->validate($request, $this->rules());
-        abort_if(!$company->isOwner(), 404);
-        $company->update($request->all());
+        Auth::user()->update($request->all());
 
-        return redirect()->route('company.index');
-    }
-
-    public function destroy(Company $company)
-    {
-        abort_if(!$company->isOwner(), 404);
-        $company->delete();
-
-        return redirect()->back();
+        return redirect()->route('company.edit');
     }
 
     protected function rules()
