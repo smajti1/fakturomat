@@ -32,15 +32,18 @@ class CompanyController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, $this->rules());
-        Auth::user()->update($request->all());
+        $company = Auth::user()->company;
+        $company->update($request->all());
+        $company->save();
 
         return redirect()->route('company.edit');
     }
 
     protected function rules()
     {
+        $company_id = Auth::user()->company->id;
         return [
-            'name'          => 'required|max:255|unique:companies,name',
+            'name'          => "required|max:255|unique:companies,name,$company_id",
             'address'       => 'max:255',
             'tax_id_number' => 'max:255',
             'regon'         => 'max:255',

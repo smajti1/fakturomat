@@ -39,8 +39,12 @@ class RegisterController extends Controller
 
     protected function validator(array $data)
     {
+        $company_unique_id = '';
+        if (Auth::check()) {
+            $company_unique_id = ',' . Auth::user()->company->id;
+        }
         return Validator::make($data, [
-            'company_name' => 'required|max:255|unique:companies,name',
+            'company_name' => "required|max:255|unique:companies,name$company_unique_id",
             'email'        => 'required|email|max:255|unique:users',
             'password'     => 'required|min:6|confirmed',
         ]);

@@ -23,7 +23,11 @@
             @foreach(Auth::user()->buyers as $buyer)
                 <tr>
                     <td><a href="{{ route('buyer.edit', compact('buyer')) }}">{{ $buyer->name }}</a></td>
-                    <td>{{ $buyer->address }}</td>
+                    <td>
+                        @foreach($buyer->getAddress() as $address)
+                            <div>{{ $address }}</div>
+                        @endforeach
+                    </td>
                     <td>{{ $buyer->tax_id_number }}</td>
                     <td>{{ $buyer->regon }}</td>
                     <td class="hidden-xs-down">{{ $buyer->email }}</td>

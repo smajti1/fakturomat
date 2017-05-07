@@ -4,6 +4,7 @@ namespace App\Steps\Account;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Smajti1\Laravel\Step;
 
 class SetCompanyBasicData extends Step
@@ -16,7 +17,7 @@ class SetCompanyBasicData extends Step
     public function process(Request $request)
     {
         $company = null;
-        $user = \Auth::user();
+        $user = Auth::user();
         $data = $request->all();
         if ($this->wizard->dataHas('company_id')) {
             $company = $this->wizard->dataGet('company_id');
@@ -50,8 +51,12 @@ class SetCompanyBasicData extends Step
 
     public function rules(Request $request = null)
     {
+        $company_unique_id = '';
+        if (Auth::user()->company) {
+            $company_unique_id = ',' . Auth::user()->company->id;
+        }
         return [
-            'company_name'  => 'required|max:255|unique:companies,name',
+            'company_name'  => "required|max:255|unique:companies,name$company_unique_id",
             'tax_id_number' => 'max:255',
             'regon'         => 'max:255',
             'bank_account'  => 'max:255',

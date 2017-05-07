@@ -8,7 +8,7 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form class="form-horizontal" role="form" action="{{ route('company.update', compact('company')) }}" method="POST">
+            <form class="form-horizontal" role="form" action="{{ route('company.update') }}" method="POST">
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
@@ -17,10 +17,15 @@
                     <div class="form-control-feedback">{{ $errors->first('name') }}</div>
                 </div>
 
-                @include('helpers.google_address')
+                @include('helpers.google_address', [
+                    'address_string' => old('address_string'),
+                    'city' => old('city', $company->city),
+                    'zip_code' => old('zip_code', $company->zip_code),
+                    'street' => old('street', $company->street),
+                ])
 
                 <div class="form-group{{ $errors->has('tax_id_number') ? ' has-danger' : '' }}">
-                    <label for="tax_id_number">nip</label>
+                    <label for="tax_id_number">Nip</label>
                     <input id="tax_id_number" type="text" class="form-control form-control-danger" name="tax_id_number" value="{{ old('tax_id_number', $company->tax_id_number) }}" placeholder="nip">
                     <div class="form-control-feedback">{{ $errors->first('tax_id_number') }}</div>
                 </div>

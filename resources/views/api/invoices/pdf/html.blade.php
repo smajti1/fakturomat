@@ -11,13 +11,13 @@
 
 <div class="container">
     <div class="row">
-        <div id="invoice-number" class="col-xs-12">
-            <h1>Faktura {{ $invoice->number }}</h1>
+        <div id="invoice-number" class="col-12">
+            <h1>FAKTURA VAT NR {{ $invoice->number }}</h1>
         </div>
     </div>
 
     <div class="row border-box-content">
-        <div class="col-xs-4 offset-xs-1 company padding-20">
+        <div class="col-6 company">
             <strong>Sprzedawca</strong>
             <div id="company-name-placeholder">
                 {{ $invoice->company->name }}
@@ -28,7 +28,7 @@
                 @endforeach
             </div>
         </div>
-        <div class="col-xs-4 offset-xs-2s buyer padding-20">
+        <div class="col-6 buyer">
             <strong>Nabywca</strong>
             <div id="buyer-name-placeholder">
                 {{ $invoice->buyer->name }}
@@ -104,10 +104,9 @@
     </div>
 
     <div class="row">
-        <div class="col-xs-6">
-            <div>
-                <strong>Płatność:</strong>
-                {{ $invoice->getPayment() }}
+        <div id="summary" class="col-6">
+            <div class="to-pay">
+                Do zapłaty: {{ $invoice->price }} zł
             </div>
             <div>
                 <strong>Kwota słownie:</strong>
@@ -121,19 +120,15 @@
             @endif
 
             <div>
-                <label for="issue_date">Data&nbsp;wystawienia:</label>
+                <strong>Data&nbsp;wystawienia:</strong>
                 {{ $invoice->issue_date }}
             </div>
 
             <div>
-                <label for="payment_at">Data&nbsp;płatności:</label>
+                <strong>Data&nbsp;płatności:</strong>
                 {{ $invoice->payment_at }}
             </div>
 
-            <div>
-                <label for="status">Status:</label>
-                {{ $invoice->getStatus() }}
-            </div>
         </div>
     </div>
 </div>
