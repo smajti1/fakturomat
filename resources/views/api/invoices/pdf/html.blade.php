@@ -21,13 +21,13 @@
             <h4>Sprzedawca</h4>
             <div class="padding-left-20">
                 <div id="company-name-placeholder">
-                    <strong>Nazwa</strong>
+                    <strong>Nazwa:</strong>
                     <div class="padding-left-20">
                         {{ $invoice->company->name }}
                     </div>
                 </div>
                 <div id="company-address-placeholder">
-                    <strong>Adres</strong>
+                    <strong>Adres:</strong>
                     @foreach($invoice->company->getAddress() as $address)
                         <div class="padding-left-20">{{ $address }}</div>
                     @endforeach
@@ -46,13 +46,13 @@
             <h4>Nabywca</h4>
             <div class="padding-left-20">
                 <div id="buyer-name-placeholder">
-                    <strong>Nazwa</strong>
+                    <strong>Nazwa:</strong>
                     <div class="padding-left-20">
                         {{ $invoice->buyer->name }}
                     </div>
                 </div>
                 <div id="buyer-address-placeholder">
-                    <strong>Adres</strong>
+                    <strong>Adres:</strong>
                     @foreach($invoice->buyer->getAddress() as $address)
                         <div class="padding-left-20">{{ $address }}</div>
                     @endforeach
