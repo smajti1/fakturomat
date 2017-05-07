@@ -17,26 +17,46 @@
     </div>
 
     <div class="row border-box-content">
-        <div class="col-6 company">
-            <strong>Sprzedawca</strong>
-            <div id="company-name-placeholder">
-                {{ $invoice->company->name }}
-            </div>
-            <div id="company-address-placeholder">
-                @foreach($invoice->company->getAddress() as $address)
-                <div>{{ $address }}</div>
-                @endforeach
+        <div class="col-6 company padding-left-20">
+            <h4>Sprzedawca</h4>
+            <div class="padding-left-20">
+                <div id="company-name-placeholder">
+                    <strong>Nazwa</strong>
+                    <div class="padding-left-20">
+                        {{ $invoice->company->name }}
+                    </div>
+                </div>
+                <div id="company-address-placeholder">
+                    <strong>Adres</strong>
+                    @foreach($invoice->company->getAddress() as $address)
+                        <div class="padding-left-20">{{ $address }}</div>
+                    @endforeach
+                </div>
+                @if(strlen($invoice->company->bank_account) > 0)
+                    <div>
+                        <strong>Konto bankowe:</strong>
+                        <div class="padding-left-20">
+                            {{ $invoice->company->bank_account}}
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
         <div class="col-6 buyer">
-            <strong>Nabywca</strong>
-            <div id="buyer-name-placeholder">
-                {{ $invoice->buyer->name }}
-            </div>
-            <div id="buyer-address-placeholder">
-                @foreach($invoice->buyer->getAddress() as $address)
-                    <div>{{ $address }}</div>
-                @endforeach
+            <h4>Nabywca</h4>
+            <div class="padding-left-20">
+                <div id="buyer-name-placeholder">
+                    <strong>Nazwa</strong>
+                    <div class="padding-left-20">
+                        {{ $invoice->buyer->name }}
+                    </div>
+                </div>
+                <div id="buyer-address-placeholder">
+                    <strong>Adres</strong>
+                    @foreach($invoice->buyer->getAddress() as $address)
+                        <div class="padding-left-20">{{ $address }}</div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -103,33 +123,25 @@
         </div>
     </div>
 
-    <div class="row">
-        <div id="summary" class="col-6">
-            <div class="to-pay">
-                Do zapłaty: {{ money_pl_format($invoice->price) }} zł
-            </div>
-            <div>
-                <strong>Kwota słownie:</strong>
-                {{ $spellOutAmount }}
-            </div>
-            @if(strlen($invoice->company->bank_account) > 0)
-                <div>
-                    <strong>Konto bankowe:</strong>
-                    {{ $invoice->company->bank_account}}
-                </div>
-            @endif
-
-            <div>
-                <strong>Data&nbsp;wystawienia:</strong>
-                {{ $invoice->issue_date }}
-            </div>
-
-            <div>
-                <strong>Data&nbsp;płatności:</strong>
-                {{ $invoice->payment_at }}
-            </div>
-
+    <div id="row summary">
+        <div class="to-pay">
+            Do zapłaty: {{ money_pl_format($invoice->price) }} zł
         </div>
+        <div>
+            <strong>Kwota słownie:</strong>
+            {{ $spellOutAmount }}
+        </div>
+
+        <div>
+            <strong>Data&nbsp;wystawienia:</strong>
+            {{ $invoice->issue_date }}
+        </div>
+
+        <div>
+            <strong>Data&nbsp;płatności:</strong>
+            {{ $invoice->payment_at }}
+        </div>
+
     </div>
 </div>
 
