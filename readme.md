@@ -18,11 +18,13 @@ all what [laravel](https://laravel.com/docs/5.4) 5.4 required
     
     $ sudo unxz wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
     
-    $ sudo tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
+    $ sudo tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar
     
-    $ cd /wkhtmltox/bin
+    $ cd wkhtmltox/bin
     
     $ sudo mv wkhtmltopdf  /usr/bin/wkhtmltopdf
+    
+    $ sudo rm -rf wkhtmltox wkhtmltox-0.12.4_linux-generic-amd64.tar
     
 ## Download and set up project
 

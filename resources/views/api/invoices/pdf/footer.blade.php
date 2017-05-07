@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html>
+<html lang="pl">
 <head>
     <script>
         function subst() {
@@ -14,7 +15,7 @@
     </script>
 </head>
 <body style="border:0; margin: 0;" onload="subst()">
-<table style="border-bottom: 1px solid black; width: 100%; color:red">
+<table style="border-top: 1px solid black; width: 100%;">
     <tr>
         <td class="section"></td>
         <td style="text-align:right">

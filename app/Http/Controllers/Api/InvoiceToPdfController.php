@@ -15,8 +15,8 @@ class InvoiceToPdfController extends Controller
         if (!$this->commandExist()) {
             throw new \Exception('Brak wkhtmltopdf');
         }
-
-        $url = route('api.invoices.to.html', compact('invoice') + ['api_token' => $user->api_token]);
+        $route_parameters = compact('invoice') + ['api_token' => $user->api_token];
+        $url = route('api.invoices.to.html', $route_parameters);
         $filename = "faktura-" . $invoice->company->slug . '-' . date('Y-m-d') . ".pdf";
         $uploadDir = public_path('uploads/users/' . $user->id . '/invoices');
 
@@ -30,9 +30,9 @@ class InvoiceToPdfController extends Controller
             unlink($pathToFile);
         }
 
-        $title = 'Faktura ' . $invoice->company->slug . ' nr ' . $invoice->number;
-        $footer = '';//'--header-html ' . route('invoices.to.pdf.footer');//"--footer-line --footer-right 'strona [page]/[toPage]'";
-        $code = "wkhtmltopdf $footer --title '$title' $url $pathToFile 2>&1";
+        $title = 'FV_' . date('Y-m') . '_' . $invoice->company->slug . '_' . $invoice->number;
+        $footer = '--footer-html ' . route('api.invoices.to.pdf.footer', $route_parameters);
+        $code = "wkhtmltopdf --margin-top 10 --margin-bottom 10 $footer --title '$title' $url $pathToFile 2>&1";
 
         shell_exec($code);
         $headers = [

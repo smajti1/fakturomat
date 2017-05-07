@@ -106,7 +106,7 @@
     <div class="row">
         <div id="summary" class="col-6">
             <div class="to-pay">
-                Do zapłaty: {{ $invoice->price }} zł
+                Do zapłaty: {{ money_pl_format($invoice->price) }} zł
             </div>
             <div>
                 <strong>Kwota słownie:</strong>
