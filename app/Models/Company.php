@@ -11,7 +11,7 @@ class Company extends Model
     use Sluggable, SoftDeletes;
 
     protected $fillable = [
-        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_account',
+        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_name', 'bank_account',
     ];
 
     protected static function boot()
@@ -53,11 +53,17 @@ class Company extends Model
     public function getAddress(): array
     {
         $address = [];
-        if ($this->street) {
-            $address[] = $this->street;
+        if ($street = $this->street) {
+            if (
+                strpos($street, 'ul.') === false &&
+                strpos($street, 'Aleje') !== false
+            ) {
+                $street = 'ul. ' . $street;
+            }
+            $address[] = $street;
         }
         if ($this->city || $this->zip_code) {
-            $address[] = implode(' ', [$this->city, $this->zip_code]);
+            $address[] = implode(' ', [$this->zip_code, $this->city]);
         }
 
         return $address;

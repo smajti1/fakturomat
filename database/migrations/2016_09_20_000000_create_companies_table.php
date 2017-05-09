@@ -24,6 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->string('email')->default('');
             $table->string('website')->default('');
             $table->string('phone')->default('');
+            $table->string('bank_name')->default('');
             $table->string('bank_account')->default('');
             $table->string('slug')->default('');
 

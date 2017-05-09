@@ -26,6 +26,12 @@
                         {{ $invoice->company->name }}
                     </div>
                 </div>
+                <div>
+                    <strong>Nip:</strong>
+                    <div class="padding-left-20">
+                        {{ $invoice->company->tax_id_number }}
+                    </div>
+                </div>
                 <div id="company-address-placeholder">
                     <strong>Adres:</strong>
                     @foreach($invoice->company->getAddress() as $address)
@@ -35,6 +41,9 @@
                 @if(strlen($invoice->company->bank_account) > 0)
                     <div>
                         <strong>Konto bankowe:</strong>
+                        <div class="padding-left-20">
+                            {{ $invoice->company->bank_name }}
+                        </div>
                         <div class="padding-left-20">
                             {{ $invoice->company->bank_account}}
                         </div>
@@ -49,6 +58,12 @@
                     <strong>Nazwa:</strong>
                     <div class="padding-left-20">
                         {{ $invoice->buyer->name }}
+                    </div>
+                </div>
+                <div>
+                    <strong>Nip:</strong>
+                    <div class="padding-left-20">
+                        {{ $invoice->buyer->tax_id_number }}
                     </div>
                 </div>
                 <div id="buyer-address-placeholder">
