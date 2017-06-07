@@ -36,7 +36,7 @@ function activeTaxes(): array
 
     foreach ($taxes as $tax) {
         if ($tax['from'] <= $now && (is_null($tax['to']) || $tax['to'] >= $now)) {
-            $activeTaxes[$tax['percent']] = $tax;
+            $activeTaxes[$tax['id']] = $tax;
         }
     }
 

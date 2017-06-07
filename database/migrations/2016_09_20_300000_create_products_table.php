@@ -18,11 +18,14 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('measure_unit');
             $table->float('price')->unsigned();
-            $table->tinyInteger('tax_percent')->unsigned();
+            $table->string('tax_percent')->default('');
             $table->string('slug');
 
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            $table->string('imported_from_id')->nullable();
+            $table->integer('imported_id')->nullable();
 
             $table->timestamps();
         });
@@ -32,7 +35,7 @@ class CreateProductsTable extends Migration
             $table->string('name');
             $table->string('measure_unit');
             $table->float('price')->unsigned();
-            $table->tinyInteger('tax_percent')->unsigned();
+            $table->string('tax_percent')->default('');
             $table->tinyInteger('amount')->unsigned();
 
             $table->integer('invoice_id')->unsigned()->nullable();

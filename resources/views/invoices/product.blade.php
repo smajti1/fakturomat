@@ -68,7 +68,8 @@
                         var item_html = '<div>' +
                             '<span class="name">' + escape(item.name) + '</span>';
                         if (item.price) {
-                            item_html += '<span class="small block grey-text">' + item.price + 'zł + ' + item.tax_percent + '%</span>';
+                            var tax_percent = $.isNumeric(item.tax_percent) ? item.tax_percent + '%' : item.tax_percent;
+                            item_html += '<span class="small block grey-text">' + item.price + 'zł + ' + tax_percent + '</span>';
                         }
                         item_html += '</div>';
 
@@ -90,11 +91,12 @@
                         }
                     }
                     if (selectedItem) {
+                        var tax_percent = $.isNumeric(selectedItem.tax_percent) ? selectedItem.tax_percent + '%' : selectedItem.tax_percent;
                         productClone.find('.select-product').html(selectedItem.name);
                         productClone.find('.measure_unit').html(selectedItem.measure_unit);
                         productClone.find('.count').html('<input type="number" value="1" name="product[' + selectedItem.id + ']" class="price-input">');
                         productClone.find('.price').html(selectedItem.price + ' zł');
-                        productClone.find('.tax_percent').html(selectedItem.tax_percent + ' %');
+                        productClone.find('.tax_percent').html(tax_percent);
                     }
                 },
                 score: function() {

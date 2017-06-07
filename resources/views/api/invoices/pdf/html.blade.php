@@ -99,7 +99,7 @@
                 <td>{{ $product->amount }}</td>
                 <td>{{ money_pl_format($product->price) }}&nbsp;zł</td>
                 <td>{{ money_pl_format($product->netPrice())  }}&nbsp;zł</td>
-                <td>{{ $product->tax_percent }}%</td>
+                <td>{{ is_numeric($product->tax_percent) ? ($product->tax_percent . '%') : $activeTaxes[$product->tax_percent]['label'] }}</td>
                 <td>{{ money_pl_format($product->taxAmount()) }}&nbsp;zł</td>
                 <td>{{ money_pl_format($product->grossPrice()) }}&nbsp;zł</td>
             </tr>
@@ -122,7 +122,7 @@
                     @foreach($taxPercentsSum as $vat => $sum)
                         <tr>
                             <td>{{ money_pl_format($sum['netPrice']) }}&nbsp;zł</td>
-                            <td>{{ $vat }}%</td>
+                            <td>{{ is_numeric($vat) ? ($vat . '%') : $activeTaxes[$vat]['label'] }}</td>
                             <td>{{ money_pl_format($sum['amountVat']) }}&nbsp;zł</td>
                             <td>{{ money_pl_format($sum['grossPrice']) }}&nbsp;zł</td>
                         </tr>

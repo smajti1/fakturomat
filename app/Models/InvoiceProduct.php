@@ -21,7 +21,7 @@ class InvoiceProduct extends Model
         return $this->price * $this->calculateVat();
     }
 
-    public function isOwner(User $user = null):bool
+    public function isOwner(User $user = null): bool
     {
         $user = $user ?: \Auth::user();
 
@@ -30,7 +30,10 @@ class InvoiceProduct extends Model
 
     public function calculateVat()
     {
-        $vat = 1 + $this->tax_percent/100;
+        $vat = 1;
+        if (is_numeric($this->tax_percent)) {
+            $vat = 1 + $this->tax_percent / 100;
+        }
 
         return $vat;
     }
@@ -47,6 +50,11 @@ class InvoiceProduct extends Model
 
     public function taxAmount(): float
     {
-        return $this->amount * $this->price * ($this->tax_percent / 100);
+        $tax_percent = 0;
+        if (is_numeric($this->tax_percent)) {
+            $tax_percent = ($this->tax_percent / 100);
+        }
+
+        return $this->amount * $this->price * $tax_percent;
     }
 }

@@ -52,7 +52,8 @@ class InvoiceController extends Controller
         $invoice_products = [];
         foreach ($products as $product) {
             $amount = $request->product[$product->id];
-            $price += $product->price * $product->calculateVat() * $amount;
+            $tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;
+            $price += $product->price * $tax_percent * $amount;
             $invoice_products[] = [
                 'name'         => $product->name,
                 'measure_unit' => $product->measure_unit,

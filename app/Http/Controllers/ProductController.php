@@ -17,7 +17,9 @@ class ProductController extends Controller
 
     public function index()
     {
-        return view('products.index');
+        $activeTaxes = activeTaxes();
+
+        return view('products.index', compact('activeTaxes'));
     }
 
     public function create()
@@ -65,15 +67,16 @@ class ProductController extends Controller
             'name'         => 'required|max:255',
             'measure_unit' => 'max:255',
             'price'        => 'required|numeric',
-            'tax_percent'  => 'required|integer',
+            'tax_percent'  => 'required',
         ];
     }
 
     public function edit(Product $product)
     {
         abort_if(!$product->isOwner(), 404);
+        $activeTaxes = activeTaxes();
 
-        return view('products.edit', compact('product'));
+        return view('products.edit', compact('product', 'activeTaxes'));
     }
 
     public function update(Product $product, Request $request)

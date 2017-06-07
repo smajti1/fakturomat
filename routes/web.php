@@ -51,6 +51,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/numeracja-faktur/edytuj', 'CompanyInvoiceNumberController@index')->name('settings.company_invoice_number.edit');
         Route::post('/numeracja-faktur/edytuj', 'CompanyInvoiceNumberController@update')->name('settings.company_invoice_number.update');
     });
+    Route::group(['namespace' => 'Imports', 'prefix' => 'import'], function () {
+        Route::get('/', 'ImportController@index')->name('import.index');
+        Route::post('/z_mega_faktura', 'ImportController@fromMegaFaktura')->name('import.from_mega_faktura');
+    });
+
 });
 
 Route::get('register',      'AccountWizardController@wizard')->name('register');

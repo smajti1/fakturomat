@@ -8,43 +8,50 @@ return [
     'tax_rates' => [
         'PLN' => [
             [
+                'id'      => '23',
                 'label'   => '23%',
                 'percent' => 23,
                 'from'    => '2011-01-01',
                 'to'      => null,
             ],
             [
+                'id'      => '8',
                 'label'   => '8%',
                 'percent' => 8,
                 'from'    => '2011-01-01',
                 'to'      => null,
             ],
             [
+                'id'      => '5',
                 'label'   => '5%',
                 'percent' => 5,
                 'from'    => '2011-01-01',
                 'to'      => null,
             ],
             [
+                'id'      => '4',
                 'label'   => '4%',
                 'percent' => 4,
                 'from'    => '2011-01-01',
                 'to'      => null,
             ],
             [
+                'id'      => '0',
                 'label'   => '0%',
                 'percent' => 0,
                 'from'    => '2011-01-01',
                 'to'      => null,
             ],
             [
-                'label'   => 'zw',
+                'id'      => 'zwolniony',
+                'label'   => 'zwolniony',
                 'percent' => 0,
                 'from'    => '2011-01-01',
                 'to'      => null,
             ],
             [
-                'label'   => 'np',
+                'id'      => 'nie_podlega',
+                'label'   => 'nie podlega',
                 'percent' => 0,
                 'from'    => '2011-01-01',
                 'to'      => null,

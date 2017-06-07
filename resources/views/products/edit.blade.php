@@ -8,31 +8,35 @@
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <form class="form-horizontal" role="form" action="{{ route('product.update', compact('product')) }}" method="POST">
+            <form class="form-horizontal" action="{{ route('product.update', compact('product')) }}" method="POST">
                 {{ csrf_field() }}
 
                 <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
                     <label for="name">Nazwa produktu</label>
-                    <input id="name" type="text" class="form-control form-control-danger" placeholder="Nazwa produktu" name="name" value="{{ old('name', $product->name) }}" required autofocus>
+                    <input id="name" class="form-control form-control-danger" placeholder="Nazwa produktu" name="name" value="{{ old('name', $product->name) }}" required autofocus>
                     <div class="form-control-feedback">{{ $errors->first('name') }}</div>
                 </div>
 
                 <div class="form-group{{ $errors->has('measure_unit') ? ' has-danger' : '' }}">
                     <label for="measure_unit">Jednostka miary</label>
-                    <input id="measure_unit" type="text" class="form-control form-control-danger" placeholder="Jednostka miary" name="measure_unit" value="{{ old('measure_unit', $product->measure_unit) }}">
+                    <input id="measure_unit" class="form-control form-control-danger" placeholder="Jednostka miary" name="measure_unit" value="{{ old('measure_unit', $product->measure_unit) }}">
                     <div class="form-control-feedback">{{ $errors->first('measure_unit') }}</div>
                 </div>
 
                 <div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
                     <label for="price">Cena</label>
-                    <input id="price" type="text" class="form-control form-control-danger" placeholder="Cena" name="price" value="{{ old('price', $product->price) }}" required>
+                    <input id="price" class="form-control form-control-danger" placeholder="Cena" name="price" value="{{ old('price', $product->price) }}" required>
                     <div class="form-control-feedback">{{ $errors->first('price') }}</div>
                 </div>
 
-                <div class="form-group{{ $errors->has('vat') ? ' has-danger' : '' }}">
-                    <label for="vat">Vat</label>
-                    <input id="vat" type="text" class="form-control form-control-danger" placeholder="Vat" name="vat" value="{{ old('vat', $product->vat) }}" required>
-                    <div class="form-control-feedback">{{ $errors->first('vat') }}</div>
+                <div class="form-group{{ $errors->has('tax_percent') ? ' has-danger' : '' }}">
+                    <label for="tax_percent">Vat</label>
+                    <select name="tax_percent" id="tax_percent" class="form-control form-control-danger">
+                        @foreach($activeTaxes as $tax)
+                            <option value="{{ $tax['id'] }}"{{ old('tax_percent', $product->tax_percent) === $tax['id'] ? 'selected' : '' }}>{{ $tax['label'] }}</option>
+                        @endforeach
+                    </select>
+                    <div class="form-control-feedback">{{ $errors->first('tax_percent') }}</div>
                 </div>
 
                 <button type="submit" class="btn btn-primary">

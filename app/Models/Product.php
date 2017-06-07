@@ -10,7 +10,7 @@ class Product extends Model
     use Sluggable;
 
     protected $fillable = [
-        'name', 'measure_unit', 'price', 'tax_percent',
+        'name', 'measure_unit', 'price', 'tax_percent', 'imported_from_id', 'imported_id',
     ];
 
     public function user()
@@ -39,10 +39,13 @@ class Product extends Model
         return 'slug';
     }
 
-    public function calculateVat(): float
+    public function calculateVat(): string
     {
-        $vat = 1 + $this->tax_percent / 100;
+        $vat = $this->tax_percent;
+        if (is_numeric($this->tax_percent)) {
+            $vat = 1 + $this->tax_percent / 100;
+        }
 
-        return $vat;
+        return (string)$vat;
     }
 }

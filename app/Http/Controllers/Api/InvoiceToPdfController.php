@@ -47,8 +47,9 @@ class InvoiceToPdfController extends Controller
         $spellOutAmount = spellOutAmount($invoice->price);
         $taxPercentsSum = $invoice->getTaxPercentsSum();
         $totalSum = $invoice->getTotalSum();
+        $activeTaxes = activeTaxes();
 
-        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount', 'taxPercentsSum', 'totalSum'));
+        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount', 'taxPercentsSum', 'totalSum', 'activeTaxes'));
     }
 
     public function footer()

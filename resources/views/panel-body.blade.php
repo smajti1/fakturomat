@@ -37,6 +37,9 @@
         <div>
             <a href="{{ route('company.edit') }}">Ustawienia Firmy</a>
         </div>
+        <div>
+            <a href="{{ route('import.index') }}">Import</a>
+        </div>
     </div>
 
 </div>
