@@ -10,7 +10,7 @@ class Product extends Model
     use Sluggable;
 
     protected $fillable = [
-        'name', 'measure_unit', 'price', 'tax_percent', 'imported_from_id', 'imported_id',
+        'name', 'measure_unit', 'price', 'tax_percent'
     ];
 
     public function user()

@@ -24,9 +24,6 @@ class CreateProductsTable extends Migration
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            $table->string('imported_from_id')->nullable();
-            $table->integer('imported_id')->nullable();
-
             $table->timestamps();
         });
 

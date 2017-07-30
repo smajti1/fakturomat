@@ -86,4 +86,14 @@ class SimpleCsv
 
         return $new;
     }
+
+    public function copy(): SimpleCsv
+    {
+        return clone $this;
+    }
+
+    public function unset($key)
+    {
+        unset($this->lines[$key]);
+    }
 }

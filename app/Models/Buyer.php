@@ -10,8 +10,7 @@ class Buyer extends Model
     use Sluggable;
 
     protected $fillable = [
-        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'imported_from_id',
-        'imported_id',
+        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone'
     ];
 
     public function user()
