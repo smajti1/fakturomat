@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use Illuminate\View\View;
 
 class InvoiceToPdfController extends Controller
 {
@@ -15,8 +16,6 @@ class InvoiceToPdfController extends Controller
         if (!$this->commandExist()) {
             throw new \Exception('Brak wkhtmltopdf');
         }
-        $route_parameters = compact('invoice') + ['api_token' => $user->api_token];
-        $url = route('api.invoices.to.html', $route_parameters);
         $filename = "faktura-" . $invoice->company->slug . '-' . date('Y-m-d') . ".pdf";
         $uploadDir = public_path('uploads/users/' . $user->id . '/invoices');
 
@@ -31,9 +30,11 @@ class InvoiceToPdfController extends Controller
         }
 
         $title = 'FV_' . date('Y-m') . '_' . $invoice->company->slug . '_' . $invoice->number;
-        $footer = '--footer-html ' . route('api.invoices.to.pdf.footer', $route_parameters);
-        $code = "wkhtmltopdf --margin-top 10 --margin-bottom 10 $footer --title '$title' $url $pathToFile 2>&1";
 
+        $htmlTmpFilePath = $this->createHtmlTmpFile($this->toHtml($invoice));
+        $htmlFooterTmpFilePath = $this->createHtmlTmpFile($this->footer());
+
+        $code = "wkhtmltopdf --margin-top 10 --margin-bottom 10 --footer-html $htmlFooterTmpFilePath --title '$title' $htmlTmpFilePath $pathToFile 2>&1";
         shell_exec($code);
         $headers = [
             'Content-Disposition' => "filename=\"$filename\"",
@@ -57,8 +58,20 @@ class InvoiceToPdfController extends Controller
         return view('api.invoices.pdf.footer');
     }
 
-    function commandExist() {
+    private function commandExist()
+    {
         $returnVal = shell_exec("which wkhtmltopdf");
+
         return (empty($returnVal) ? false : true);
     }
+
+    private function createHtmlTmpFile(View $view)
+    {
+        $htmlContent = $view->render();
+        $htmlTmpFilePath = sys_get_temp_dir() . '/' . uniqid() . '.html';
+        file_put_contents($htmlTmpFilePath, $htmlContent);
+
+        return $htmlTmpFilePath;
+    }
+
 }
