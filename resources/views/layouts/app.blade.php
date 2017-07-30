@@ -14,7 +14,7 @@
         <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar-header" aria-controls="navbar-header" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a href="{{ url('/') }}" class="navbar-brand">Fakturomat</a>
+        <a href="{{ url('/') }}" class="webpage-link navbar-brand">Fakturomat</a>
         <div class="collapse navbar-collapse" id="navbar-header" aria-expanded="false">
             <ul class="navbar-nav mr-auto">
                 @if (Auth::guest())
@@ -36,13 +36,14 @@
                     </li>
                 @endif
             </ul>
-            <form id="logout-form" action="{{ url('/logout') }}" method="POST">
-                {{ csrf_field() }}
-                <button type="submit" class="nav-link">
-                    Wyloguj
-                </button>
-            </form>
-            </form>
+            @if (!Auth::guest())
+                <form id="logout-form" action="{{ url('/logout') }}" method="POST">
+                    {{ csrf_field() }}
+                    <button class="btn btn-outline-secondary btn-color-636b6f nav-link pull-right">
+                        Wyloguj
+                    </button>
+                </form>
+            @endif
         </div>
         <span class="btn nohover pull-right hidden-sm-down">
             @if (Auth::check())

@@ -55,7 +55,7 @@ html, body {
 
 #welcome-page {
   .title {
-    font-size: 6rem;
+    font-size: 4em;
   }
 }
 
@@ -79,7 +79,7 @@ html, body {
 }
 
 .btn.nohover:hover {
-  cursor:default !important;
+  cursor: default !important;
 }
 
 ul.nav-list {
@@ -89,10 +89,6 @@ ul.nav-list {
 
 .breadcrumb {
   margin-top: 1rem;
-}
-
-.container {
-  padding: 0;
 }
 
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
@@ -138,4 +134,9 @@ ul.nav-list {
 
 .padding-20 {
   padding: 20px;
+}
+
+.webpage-link.navbar-brand {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: bold;
 }
