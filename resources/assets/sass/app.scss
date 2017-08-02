@@ -11,7 +11,6 @@ a {
 html, body {
   background-color: #fff;
   color: #636b6f;
-  font-family: 'Raleway';
   font-weight: 200;
   height: 100vh;
   margin: 0;
@@ -139,4 +138,8 @@ ul.nav-list {
 .webpage-link.navbar-brand {
   color: rgba(0, 0, 0, 0.5);
   font-weight: bold;
+}
+
+.table th, .table td {
+  padding: .3rem .75rem;
 }

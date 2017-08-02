@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
-    <link href="{{ asset('/css/app.css') }}" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    <link href="{{ mix('/css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>
 
@@ -65,7 +64,7 @@
         @yield('content')
     </div>
 
-    <script src="{{ asset('/js/app.js') }}"></script>
+    <script src="{{ mix('/js/app.js') }}"></script>
     @yield('scripts')
 </body>
 </html>

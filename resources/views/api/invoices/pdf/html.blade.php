@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
-    <link href="{{ asset('/css/invoice-pdf.css') }}" rel="stylesheet">
+    <link href="{{ mix('/css/invoice-pdf.css') }}" rel="stylesheet">
 </head>
 <body class="pdf invoice-pdf" onload="subst()">
 

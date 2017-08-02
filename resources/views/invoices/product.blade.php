@@ -58,7 +58,7 @@
             $('#invoice-product-list tbody').append(productClone);
             var product_number = $('#invoice-product-list tr').length - 1;
             productClone.find('.product_number').html(product_number);
-            productClone.find('.select-product > select').selectize({
+            var productCloneSelectize = productClone.find('.select-product > select').selectize({
                 valueField: 'id',
                 labelField: 'name',
                 maxItem: 1,
@@ -105,6 +105,8 @@
                     };
                 },
             });
+            productCloneSelectize[0].selectize.focus();
+            $(window).scrollTop(window.pageYOffset + $('#invoice-product-list tr td').outerHeight() + 20);
         });
         $('#add-product').trigger('click');
     </script>
