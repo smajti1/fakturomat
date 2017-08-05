@@ -29,9 +29,17 @@
                 </div>
 
                 <div class="form-group{{ $errors->has('price') ? ' has-danger' : '' }}">
-                    <label for="price">Cena</label>
-                    <input id="price" class="form-control form-control-danger" placeholder="Cena" name="price" value="{{ old('price') }}" required>
-                    <div class="form-control-feedback">{{ $errors->first('price') }}</div>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="price">Cena netto</label>
+                            <input id="price" class="form-control form-control-danger" placeholder="Cena netto" name="price" value="{{ old('price') }}" required>
+                            <div class="form-control-feedback">{{ $errors->first('price') }}</div>
+                        </div>
+                        <div class="col-6">
+                            <label for="price_gross">Cena brutto</label>
+                            <input id="price_gross" class="form-control form-control-danger" placeholder="Cena brutto" disabled>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="form-group{{ $errors->has('tax_percent') ? ' has-danger' : '' }}">
@@ -44,10 +52,12 @@
                     <div class="form-control-feedback">{{ $errors->first('tax_percent') }}</div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">
+                <button class="btn btn-primary">
                     Dodaj produkt
                 </button>
             </form>
         </div>
     </div>
 @endsection
+
+@include('products.scripts')
