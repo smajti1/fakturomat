@@ -84,6 +84,10 @@ return [
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'Format :attribute jest nieprawidłowy.',
 
+    'tax_id_number'               => 'Nieprawidłowy nip:allowedChars:maxChars',
+    'tax_id_number_allowed_chars' => ' dopuszczalne znaki to :attribute',
+    'tax_id_number_max_chars'     => ' musi zawierać :attribute liczb',
+
     /*
     |--------------------------------------------------------------------------
     | Custom Validation Language Lines

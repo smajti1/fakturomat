@@ -45,7 +45,7 @@ class CompanyController extends Controller
         return [
             'name'          => "required|max:255|unique:companies,name,$company_id",
             'address'       => 'max:255',
-            'tax_id_number' => 'max:255',
+            'tax_id_number' => 'max:255|tax_id_number: -,9',
             'regon'         => 'max:255',
             'email'         => 'max:255',
             'website'       => 'max:255',
