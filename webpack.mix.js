@@ -14,7 +14,8 @@ const mix = require('laravel-mix');
 mix.webpackConfig({
     resolve: {
         alias: {
-            jquery: "jquery/src/jquery"
+            jquery: "jquery/src/jquery",
+            'popper.js' : "popper.js/dist/umd/popper.js"
         }
     }
 });
@@ -27,13 +28,14 @@ mix
         'node_modules/microplugin/src/microplugin.js',
         'node_modules/sifter/sifter.js',
         'node_modules/selectize/dist/js/selectize.js',
-        'resources/assets/js/app.js',
+        'resources/assets/js/app.js'
     ], 'public/js/app.js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .sass('resources/assets/sass/invoice-pdf.scss', 'public/css')
     .autoload({
         jquery: ['$', 'jQuery', 'window.jQuery'],
-        tether: ['Tether', 'window.Tether']
+        tether: ['Tether', 'window.Tether'],
+        'popper.js': ['Popper', 'window.Popper']
     })
     .version();
 
