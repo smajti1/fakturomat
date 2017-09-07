@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-6">
                             <label for="price">Cena netto</label>
-                            <input id="price" class="form-control form-control-danger" placeholder="Cena netto" name="price" value="{{ old('price') }}" required>
+                            <input id="price" class="form-control form-control-danger" placeholder="Cena netto" name="price" value="{{ old('price', $product->price) }}" required>
                             <div class="form-control-feedback">{{ $errors->first('price') }}</div>
                         </div>
                         <div class="col-6">

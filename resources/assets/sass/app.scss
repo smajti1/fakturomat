@@ -2,9 +2,11 @@ a {
   cursor: pointer;
 }
 
-@import '../../../vendor/bower_components/bootstrap/scss/bootstrap';
-@import '../../../vendor/bower_components/font-awesome/css/font-awesome';
-@import '../../../vendor/bower_components/selectize/dist/css/selectize';
+$fa-font-path: '../../../public/fonts';
+
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import '../../../node_modules/font-awesome/scss/font-awesome';
+@import '../../../node_modules/selectize/dist/css/selectize';
 
 @import "wizard";
 
@@ -143,3 +145,5 @@ ul.nav-list {
 .table th, .table td {
   padding: .3rem .75rem;
 }
+
+@import "invoice";

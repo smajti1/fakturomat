@@ -21,6 +21,7 @@ mix.webpackConfig({
 });
 
 mix
+    .copy('node_modules/font-awesome/fonts/*', 'public/fonts')
     .js([
         'node_modules/jquery/dist/jquery.js',
         'node_modules/tether/dist/js/tether.js',

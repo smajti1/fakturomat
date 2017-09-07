@@ -9,7 +9,9 @@ Fakturomat is a system to create and manage your invoices
 [php Internationalization Functions  extension](http://php.net/manual/en/book.intl.php) php7.0-intl
 
 
-all what [laravel](https://laravel.com/docs/5.4) 5.4 required
+and all what [laravel](https://laravel.com/docs/5.4) 5.4 required
+
+[nodejs](https://nodejs.org) and [npm](https://www.npmjs.com/)
 
 ##### download and install wkhtmltopdf
 [wkhtmltopdf](http://wkhtmltopdf.org) recommended v0.12.4.^ version
@@ -25,6 +27,10 @@ all what [laravel](https://laravel.com/docs/5.4) 5.4 required
     $ sudo mv wkhtmltopdf  /usr/bin/wkhtmltopdf
     
     $ sudo rm -rf wkhtmltox wkhtmltox-0.12.4_linux-generic-amd64.tar
+
+##### to install frontend run command/s
+
+    $ sudo apt install nodejs npm
     
 ## Download and set up project
 
@@ -34,21 +40,21 @@ all what [laravel](https://laravel.com/docs/5.4) 5.4 required
     
     $ composer install
     
-    $ npm install
-    
-    $ bower install
-    
-    $ gulp
+    $ npm run start
     
     $ cp .env.example .env
     
     $ php artisan key:generate
     
 next set up .env file
+    
+    $ nano .env
+
+next setup database
 
     $ php artisan migrate
 
-test run
+test run server
     
     $ php artisan serve
 

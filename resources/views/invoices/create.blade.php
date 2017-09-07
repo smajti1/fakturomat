@@ -48,7 +48,7 @@
                 </select>
             </div>
         </div>
-        @include('invoices.product')
+        @include('invoices.product-list')
 
         <div>
             <label for="issue_date">Data wystawienia</label>
