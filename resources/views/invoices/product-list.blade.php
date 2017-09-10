@@ -12,6 +12,24 @@
         </tr>
         </thead>
         <tbody>
+        @isset($invoice)
+            @php
+                $i = 1
+            @endphp
+            @foreach($invoice->invoice_products as $invoice_product)
+                <tr class="invoice_product">
+                    <td class='product_number'>{{ $i++ }}</td>
+                    <td class='select-product'>{{ $invoice_product->name }}</td>
+                    <td class='measure_unit'>{{ $invoice_product->measure_unit }}</td>
+                    <td class='count'>
+                        <input type="number" value="{{ $invoice_product->amount }}" min="0.01" name="invoice_products[{{ $invoice_product->id }}]" step="any" class="amount_input">
+                    </td>
+                    <td class='price'>{{ $invoice_product->price }} zł</td>
+                    <td class='tax_percent'>{{ $invoice_product->tax_percent }}</td>
+                    <td class='remove-product'><i class='fa fa-times'></i></td>
+                </tr>
+            @endforeach
+        @endisset
         </tbody>
         <tfoot>
         <tr>
@@ -35,14 +53,14 @@
         var selectProductList;
         var selectedProductList = [];
         var productTemplate =
-            $("<tr>" +
+            $("<tr class='product'>" +
                 "<td class='product_number'>1</td>" +
                 "<td class='select-product'>" +
                 "<select autocomplete='off' placeholder='Wyszukaj lub dodaj produkt'>" +
                 "</select>" +
                 "</td>" +
                 "<td class='measure_unit'></td>" +
-                "<td class='count' onautocomplete='0'></td>" +
+                "<td class='count'></td>" +
                 "<td class='price'></td>" +
                 "<td class='tax_percent'></td>" +
                 "<td class='remove-product'><i class='fa fa-times'></i></td>" +
@@ -107,7 +125,7 @@
                         var tax_percent = $.isNumeric(selectedItem.tax_percent) ? selectedItem.tax_percent + '%' : selectedItem.tax_percent;
                         productClone.find('.select-product').html(selectedItem.name);
                         productClone.find('.measure_unit').html(selectedItem.measure_unit);
-                        productClone.find('.count').html('<input type="number" value="1" min="1" name="product[' + selectedItem.id + ']" step="any" class="price-input">');
+                        productClone.find('.count').html('<input type="number" value="1" min="0.01" name="product[' + selectedItem.id + ']" step="any" autocomplete="off" class="amount_input">');
                         productClone.find('.price').html(selectedItem.price + ' zł');
                         productClone.find('.tax_percent').html(tax_percent);
                     }
@@ -128,13 +146,22 @@
 
         function calculateProductsSum() {
             productsSum = 0;
-            $('#invoice-product-list tbody .price-input').each(function (index, element) {
-                var count = element.value;
-                var productId = /[0-9]+/.exec(element.name)[0];
-                productsSum += +count * +selectedProductList[productId].price;
+            $('#invoice-product-list tbody tr').each(function (index, element) {
+                var element_input = $(element).find('.amount_input')[0];
+                if (element_input) {
+                    var amount = parseFloat(element_input.value);
+                    var productId = /[0-9]+/.exec(element_input.name)[0];
+                    if (!isNaN(amount) && element.className == 'product') {
+                        productsSum += amount * +selectedProductList[productId].price;
+                    } else if (!isNaN(amount) && element.className == 'invoice_product') {
+                        var invoice_price =  /[0-9]+.?[0-9]*/.exec($(element).find('.price').html());
+                        productsSum += amount * parseFloat(invoice_price);
+                    }
+                }
             });
             $('#invoice-product-sum').text(parseFloat(productsSum).toFixed(2) + ' zł');
         }
+        calculateProductsSum();
         $('#invoice-product-list').on('input', 'tbody .count', calculateProductsSum);
 
     </script>
