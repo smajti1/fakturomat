@@ -54,6 +54,16 @@ body.invoice-pdf {
   border-bottom: 1px solid black;
 }
 
-#summary > div {
-  padding: 0 10px;
+.tax-table {
+  page-break-inside: avoid;
+}
+
+.summary {
+  & {
+    page-break-inside: avoid;
+  }
+
+  & > div {
+    padding: 0 10px;
+  }
 }

@@ -107,7 +107,7 @@
         </tbody>
     </table>
 
-    <div class="row">
+    <div class="row tax-table">
         <div class="col-6 offset-6">
             <table class="table table-bordered table-striped">
                 <thead>
@@ -138,7 +138,7 @@
         </div>
     </div>
 
-    <div id="row summary">
+    <div class="summary">
         <div class="to-pay">
             Do zapłaty: {{ money_pl_format($invoice->price) }} zł
         </div>

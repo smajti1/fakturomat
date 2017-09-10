@@ -34,7 +34,7 @@ class InvoiceToPdfController extends Controller
         $htmlTmpFilePath = $this->createHtmlTmpFile($this->toHtml($invoice));
         $htmlFooterTmpFilePath = $this->createHtmlTmpFile($this->footer());
 
-        $code = "wkhtmltopdf --margin-top 10 --margin-bottom 10 --footer-html $htmlFooterTmpFilePath --title '$title' $htmlTmpFilePath $pathToFile 2>&1";
+        $code = "wkhtmltopdf --margin-top 8 --margin-bottom 12 --footer-html $htmlFooterTmpFilePath --title '$title' $htmlTmpFilePath $pathToFile 2>&1";
         shell_exec($code);
         $headers = [
             'Content-Disposition' => "filename=\"$filename\"",
