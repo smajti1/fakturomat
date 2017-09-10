@@ -107,7 +107,7 @@
                         var tax_percent = $.isNumeric(selectedItem.tax_percent) ? selectedItem.tax_percent + '%' : selectedItem.tax_percent;
                         productClone.find('.select-product').html(selectedItem.name);
                         productClone.find('.measure_unit').html(selectedItem.measure_unit);
-                        productClone.find('.count').html('<input type="number" value="1" min="1" name="product[' + selectedItem.id + ']" class="price-input">');
+                        productClone.find('.count').html('<input type="number" value="1" min="1" name="product[' + selectedItem.id + ']" step="any" class="price-input">');
                         productClone.find('.price').html(selectedItem.price + ' zł');
                         productClone.find('.tax_percent').html(tax_percent);
                     }

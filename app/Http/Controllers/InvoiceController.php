@@ -20,6 +20,7 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::where('user_id', \Auth::user()->id)
             ->with(['buyer', 'invoice_products', 'company'])
+            ->orderBy('created_at', 'desc')
             ->get();
 
         return view('invoices.index', compact('invoices'));

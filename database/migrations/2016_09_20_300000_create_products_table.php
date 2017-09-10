@@ -33,7 +33,7 @@ class CreateProductsTable extends Migration
             $table->string('measure_unit');
             $table->float('price')->unsigned();
             $table->string('tax_percent')->default('');
-            $table->tinyInteger('amount')->unsigned();
+            $table->float('amount')->unsigned();
 
             $table->integer('invoice_id')->unsigned()->nullable();
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
