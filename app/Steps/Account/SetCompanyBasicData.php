@@ -57,7 +57,7 @@ class SetCompanyBasicData extends Step
         }
         return [
             'company_name'  => "required|max:255|unique:companies,name$company_unique_id",
-            'tax_id_number' => 'max:255',
+            'tax_id_number' => 'max:255|tax_id_number: -,9',
             'regon'         => 'max:255',
             'bank_account'  => 'max:255',
         ];

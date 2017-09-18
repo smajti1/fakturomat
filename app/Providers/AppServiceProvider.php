@@ -41,7 +41,7 @@ class AppServiceProvider extends ServiceProvider
                     $checksum = $taxIdParts[0] * 6 + $taxIdParts[1] * 5 + $taxIdParts[2] * 7 + $taxIdParts[3] * 2
                         + $taxIdParts[4] * 3 + $taxIdParts[5] * 4 + $taxIdParts[6] * 5 + $taxIdParts[7] * 6 + $taxIdParts[8] * 7;
 
-                    $result = $checksum % 11 == $taxIdParts[9];
+                    $result = $checksum % 11 == $taxIdParts[8];
                     break;
                 default:
                     $result = false;
