@@ -49,7 +49,7 @@ class SetCompanyBasicData extends Step
 
     }
 
-    public function rules(Request $request = null)
+    public function rules(Request $request = null): array
     {
         $company_unique_id = '';
         if (Auth::user()->company) {

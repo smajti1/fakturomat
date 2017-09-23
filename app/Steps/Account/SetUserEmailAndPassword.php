@@ -25,7 +25,7 @@ class SetUserEmailAndPassword extends Step
 
             if ($request->has('password')) {
                 $user->update([
-                    'email' => bcrypt($data['password']),
+                    'password' => bcrypt($data['password']),
                 ]);
             }
         } else {
@@ -38,7 +38,7 @@ class SetUserEmailAndPassword extends Step
         }
     }
 
-    public function rules(Request $request = null)
+    public function rules(Request $request = null): array
     {
         $user = \Auth::user();
 
