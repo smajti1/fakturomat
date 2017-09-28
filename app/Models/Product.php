@@ -48,4 +48,14 @@ class Product extends Model
 
         return (string)$vat;
     }
+
+    public function formattedPriceWithVat(): float
+    {
+        $price = $this->price;
+        $vat = $this->calculateVat();
+        if (is_numeric($vat)) {
+            $price *= $vat;
+        }
+        return $price;
+    }
 }

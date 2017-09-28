@@ -13,6 +13,7 @@
                 <th>Jednostka miary</th>
                 <th>Cena</th>
                 <th>Vat</th>
+                <th>Cena z vatem</th>
                 <th></th>
             </tr>
             </thead>
@@ -21,8 +22,9 @@
                 <tr>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->measure_unit }}</td>
-                    <td>{{ $product->price }}</td>
+                    <td>{{ money_pl_format($product->price) }} zł</td>
                     <td>{{ $activeTaxes[$product->tax_percent]['label'] }}</td>
+                    <td>{{ money_pl_format($product->formattedPriceWithVat()) }} zł</td>
                     <td>
                         <a href="{{ route('product.edit', compact('product')) }}" class="inline-block">
                             <i class="fa fa-pencil-square-o"></i>

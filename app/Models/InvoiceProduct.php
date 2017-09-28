@@ -57,4 +57,14 @@ class InvoiceProduct extends Model
 
         return $this->amount * $this->price * $tax_percent;
     }
+
+    public function formattedPriceWithVat(): float
+    {
+        $price = $this->price;
+        $vat = $this->calculateVat();
+        if (is_numeric($vat)) {
+            $price *= $vat;
+        }
+        return $price;
+    }
 }
