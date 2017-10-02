@@ -1,4 +1,4 @@
-a {
+a, button {
   cursor: pointer;
 }
 
@@ -18,10 +18,6 @@ html, body {
   margin: 0;
 }
 
-.fa-color-hover:hover {
-  color: silver;
-}
-
 .btn-like-link {
   background: transparent;
   border: 0;
@@ -38,10 +34,6 @@ html, body {
 
 .small {
   font-size: .6rem;
-}
-
-.grey-text {
-  color: grey;
 }
 
 .selectize-dropdown {
@@ -147,3 +139,4 @@ ul.nav-list {
 }
 
 @import "invoice";
+@import "colours";

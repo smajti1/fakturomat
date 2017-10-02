@@ -26,7 +26,7 @@
                     </td>
                     <td class='price'>{{ $invoice_product->price }} zł</td>
                     <td class='tax_percent'>{{ $invoice_product->tax_percent }}</td>
-                    <td class='remove-product'><i class='fa fa-times'></i></td>
+                    <td class='remove-product'><i class='fa fa-trash-o color-danger'></i></td>
                 </tr>
             @endforeach
         @endisset
@@ -63,7 +63,7 @@
                 "<td class='count'></td>" +
                 "<td class='price'></td>" +
                 "<td class='tax_percent'></td>" +
-                "<td class='remove-product'><i class='fa fa-times'></i></td>" +
+                "<td class='remove-product'><i class='fa fa-trash-o color-danger'></i></td>" +
                 "</tr>");
         $('#invoice-product-list').on('click', '.remove-product', function () {
             this.parentNode.remove();
@@ -128,6 +128,7 @@
                         productClone.find('.count').html('<input type="number" value="1" min="0.01" name="product[' + selectedItem.id + ']" step="any" autocomplete="off" class="amount_input">');
                         productClone.find('.price').html(selectedItem.price + ' zł');
                         productClone.find('.tax_percent').html(tax_percent);
+                        productClone.find('.count input').focus();
                     }
                     calculateProductsSum();
                 },

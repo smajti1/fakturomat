@@ -33,7 +33,7 @@
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="DELETE">
                             <button type="submit" class="btn-like-link">
-                                <i class="fa fa-trash fa-color-hover" aria-hidden="true"></i>
+                                <i class="fa fa-trash-o color-danger" aria-hidden="true"></i>
                             </button>
                         </form>
                     </td>
