@@ -40,7 +40,7 @@
                         <form action="{{ route('buyer.destroy', compact('buyer')) }}" method="POST" class="inline-block">
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn-like-link">
+                            <button type="submit" class="btn-like-link" onclick="return confirm('Jesteś pewien, że chcesz usunąć kontrachenta [{{ $buyer->name }}]?');">
                                 <i class="fa fa-trash-o color-danger" aria-hidden="true"></i>
                             </button>
                         </form>

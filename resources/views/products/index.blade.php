@@ -32,7 +32,7 @@
                         <form action="{{ route('product.destroy', compact('product')) }}" method="POST" class="inline-block">
                             {{ csrf_field() }}
                             <input type="hidden" name="_method" value="DELETE">
-                            <button type="submit" class="btn-like-link">
+                            <button type="submit" class="btn-like-link" onclick="return confirm('Jesteś pewien, że chcesz usunąć produkt [{{ $product->name }}]?');">
                                 <i class="fa fa-trash-o color-danger" aria-hidden="true"></i>
                             </button>
                         </form>
