@@ -16,7 +16,10 @@ class InvoiceToPdfController extends Controller
         if (!$this->commandExist()) {
             throw new \Exception('Brak wkhtmltopdf');
         }
-        $filename = "faktura-" . $invoice->company->slug . '-' . date('Y-m-d') . ".pdf";
+        $date = $invoice->issue_date;
+        $companySlug = mb_convert_case($invoice->company->slug, MB_CASE_TITLE, "UTF-8");
+        $title = "FV_{$companySlug}_{$date}";
+        $filename = "{$title}.pdf";
         $uploadDir = public_path('uploads/users/' . $user->id . '/invoices');
 
         if (!file_exists($uploadDir)) {
@@ -29,7 +32,6 @@ class InvoiceToPdfController extends Controller
             unlink($pathToFile);
         }
 
-        $title = 'FV_' . date('Y-m') . '_' . $invoice->company->slug . '_' . $invoice->number;
 
         $htmlTmpFilePath = $this->createHtmlTmpFile($this->toHtml($invoice));
         $htmlFooterTmpFilePath = $this->createHtmlTmpFile($this->footer());
