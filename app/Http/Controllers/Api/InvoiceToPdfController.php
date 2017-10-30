@@ -62,7 +62,7 @@ class InvoiceToPdfController extends Controller
 
     private function commandExist()
     {
-        $returnVal = shell_exec("which wkhtmltopdf");
+        $returnVal = shell_exec("type -P wkhtmltopdf");
 
         return (empty($returnVal) ? false : true);
     }
