@@ -22,8 +22,8 @@
                 <tr>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->measure_unit }}</td>
-                    <td>{{ money_pl_format($product->price) }} zł</td>
-                    <td>{{ $activeTaxes[$product->tax_percent]['label'] }}</td>
+                    <td class="space-nowrap">{{ money_pl_format($product->price) }} zł</td>
+                    <td class="space-nowrap">{{ $activeTaxes[$product->tax_percent]['label'] }}</td>
                     <td>{{ money_pl_format($product->formattedPriceWithVat()) }} zł</td>
                     <td>
                         <a href="{{ route('product.edit', compact('product')) }}" class="inline-block">

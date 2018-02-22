@@ -28,10 +28,10 @@
                         <input type="number" value="{{ $invoice_product->amount }}" min="0.01" name="invoice_products[{{ $invoice_product->id }}]" step="any" class="amount_input">
                     </td>
                     <td class='price'>{{ $invoice_product->price }} zł</td>
-                    <td class='amount-price'>{{ money_pl_format($invoice_product->amount*$invoice_product->price) }} zł</td>
+                    <td class='amount-price space-nowrap'>{{ money_pl_format($invoice_product->amount*$invoice_product->price) }} zł</td>
                     <td class='tax_percent'>{{ $invoice_product->tax_percent }}</td>
-                    <td class='price-with-vat'>{{ money_pl_format($invoice_product->priceWithVat()) }} zł</td>
-                    <td class='amount-price-with-vat'>{{ money_pl_format($invoice_product->amount*$invoice_product->priceWithVat()) }} zł</td>
+                    <td class='price-with-vat space-nowrap'>{{ money_pl_format($invoice_product->priceWithVat()) }} zł</td>
+                    <td class='amount-price-with-vat space-nowrap'>{{ money_pl_format($invoice_product->amount*$invoice_product->priceWithVat()) }} zł</td>
                     <td class='remove-product'><i class='fa fa-trash-o color-danger'></i></td>
                 </tr>
             @endforeach

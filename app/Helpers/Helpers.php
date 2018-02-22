@@ -5,7 +5,7 @@
  */
 function money_pl_format($number): string
 {
-    return number_format($number, 2, ',', '&nbsp;');
+    return number_format($number, 2, ',', ' ');
 }
 
 /*

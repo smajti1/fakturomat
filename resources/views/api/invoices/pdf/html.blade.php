@@ -94,14 +94,14 @@
         @foreach($invoice->invoice_products as $product)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ str_replace(' ', '&nbsp;', $product->name) }}</td>
+                <td class="space-nowrap">>{{ $product->name }}</td>
                 <td>{{ $product->measure_unit }}</td>
                 <td>{{ $product->amount }}</td>
-                <td>{{ money_pl_format($product->price) }}&nbsp;zł</td>
-                <td>{{ money_pl_format($product->netPrice())  }}&nbsp;zł</td>
+                <td class="space-nowrap">{{ money_pl_format($product->price) }} zł</td>
+                <td class="space-nowrap">{{ money_pl_format($product->netPrice())  }} zł</td>
                 <td>{{ is_numeric($product->tax_percent) ? ($product->tax_percent . '%') : $activeTaxes[$product->tax_percent]['label'] }}</td>
-                <td>{{ money_pl_format($product->taxAmount()) }}&nbsp;zł</td>
-                <td>{{ money_pl_format($product->grossPrice()) }}&nbsp;zł</td>
+                <td class="space-nowrap">{{ money_pl_format($product->taxAmount()) }} zł</td>
+                <td class="space-nowrap">{{ money_pl_format($product->grossPrice()) }} zł</td>
             </tr>
         @endforeach
         </tbody>
@@ -121,17 +121,17 @@
                 <tbody>
                     @foreach($taxPercentsSum as $vat => $sum)
                         <tr>
-                            <td>{{ money_pl_format($sum['netPrice']) }}&nbsp;zł</td>
+                            <td class="space-nowrap">{{ money_pl_format($sum['netPrice']) }} zł</td>
                             <td>{{ is_numeric($vat) ? ($vat . '%') : $activeTaxes[$vat]['label'] }}</td>
-                            <td>{{ money_pl_format($sum['amountVat']) }}&nbsp;zł</td>
-                            <td>{{ money_pl_format($sum['grossPrice']) }}&nbsp;zł</td>
+                            <td class="space-nowrap">{{ money_pl_format($sum['amountVat']) }} zł</td>
+                            <td class="space-nowrap">{{ money_pl_format($sum['grossPrice']) }} zł</td>
                         </tr>
                     @endforeach
                     <tr>
-                        <td>{{ money_pl_format($totalSum['net']) }}&nbsp;zł</td>
+                        <td class="space-nowrap">{{ money_pl_format($totalSum['net']) }} zł</td>
                         <td>Razem</td>
-                        <td>{{ money_pl_format($totalSum['tax']) }}&nbsp;zł</td>
-                        <td>{{ money_pl_format($totalSum['gross']) }}&nbsp;zł</td>
+                        <td class="space-nowrap">{{ money_pl_format($totalSum['tax']) }} zł</td>
+                        <td class="space-nowrap">{{ money_pl_format($totalSum['gross']) }} zł</td>
                     </tr>
                 </tbody>
             </table>
@@ -148,12 +148,12 @@
         </div>
 
         <div>
-            <strong>Data&nbsp;wystawienia:</strong>
+            <strong>Data wystawienia:</strong>
             {{ $invoice->issue_date }}
         </div>
 
         <div>
-            <strong>Data&nbsp;płatności:</strong>
+            <strong>Data płatności:</strong>
             {{ $invoice->payment_at }}
         </div>
 
