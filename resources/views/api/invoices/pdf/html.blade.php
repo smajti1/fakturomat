@@ -94,7 +94,7 @@
         @foreach($invoice->invoice_products as $product)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td class="space-nowrap">>{{ $product->name }}</td>
+                <td class="space-nowrap">{{ $product->name }}</td>
                 <td>{{ $product->measure_unit }}</td>
                 <td>{{ $product->amount }}</td>
                 <td class="space-nowrap">{{ money_pl_format($product->price) }} zł</td>
