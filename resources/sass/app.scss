@@ -4,9 +4,9 @@ a, button {
 
 $fa-font-path: '../../../public/fonts';
 
-@import '../../../node_modules/bootstrap/scss/bootstrap';
-@import '../../../node_modules/font-awesome/scss/font-awesome';
-@import '../../../node_modules/selectize/dist/css/selectize';
+@import '../../node_modules/bootstrap/scss/bootstrap';
+@import '../../node_modules/font-awesome/scss/font-awesome';
+@import '../../node_modules/selectize/dist/css/selectize.css';
 
 @import "wizard";
 

@@ -4,29 +4,23 @@ Fakturomat is a system to create and manage your invoices
 
 ## environment require
 
-[php](http://www.php.net/) php7+
+[php](http://www.php.net/) php7.3+
 
 [php Internationalization Functions  extension](http://php.net/manual/en/book.intl.php) php7.0-intl
 
 
-and all what [laravel](https://laravel.com/docs/5.4) 5.4 required
+and all what [laravel](https://laravel.com/docs/5.7) 5.7 required
 
 [nodejs](https://nodejs.org) and [npm](https://www.npmjs.com/)
 
 ##### download and install wkhtmltopdf
-[wkhtmltopdf](http://wkhtmltopdf.org) recommended v0.12.4.^ version
+[wkhtmltopdf](http://wkhtmltopdf.org) recommended v0.12.5-1.^ version
 
-    $ sudo wget https://downloads.wkhtmltopdf.org/0.12/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-    
-    $ sudo unxz wkhtmltox-0.12.4_linux-generic-amd64.tar.xz
-    
-    $ sudo tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar
-    
-    $ cd wkhtmltox/bin
-    
-    $ sudo mv wkhtmltopdf  /usr/bin/wkhtmltopdf
-    
-    $ sudo rm -rf wkhtmltox wkhtmltox-0.12.4_linux-generic-amd64.tar
+^tip check ubuntu version by command "lsb_release -a" for exmple ubuntu 18.04 has codename: bionic
+
+    $ wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
+        
+    $ sudo dpkg -i wkhtmltox_0.12.5-1.bionic_amd64.deb
 
 ##### to install frontend run command/s
 
