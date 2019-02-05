@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use Illuminate\View\View;
+use Storage;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class InvoiceToPdfController extends Controller
 {
@@ -36,8 +39,24 @@ class InvoiceToPdfController extends Controller
         $htmlTmpFilePath = $this->createHtmlTmpFile($this->toHtml($invoice));
         $htmlFooterTmpFilePath = $this->createHtmlTmpFile($this->footer());
 
-        $code = "wkhtmltopdf --margin-top 15mm --margin-bottom 18mm --footer-html $htmlFooterTmpFilePath --title '$title' $htmlTmpFilePath $pathToFile 2>&1";
-        shell_exec($code);
+        $process = new Process([
+            "wkhtmltopdf",
+            "--margin-top",
+            "15mm",
+            "--margin-bottom",
+            "18mm",
+            "--footer-html",
+            "$htmlFooterTmpFilePath",
+            "--title",
+            $title,
+            $htmlTmpFilePath,
+            $pathToFile,
+        ]);
+        $process->run();
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
         $headers = [
             'Content-Disposition' => "filename=\"$filename\"",
         ];

@@ -17,31 +17,24 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Validator::extend('tax_id_number', function ($attribute, $value, $paramters, $validator) {
-            $allowedChars = '';
-            $maxChars = null;
             $parametersNumber = count($paramters);
-            if ($parametersNumber === 1 && is_numeric($paramters[0])) {
-                $maxChars = $paramters[0] ?? -1;
-            } else if ($parametersNumber === 1) {
+            if ($parametersNumber === 1) {
                 $allowedChars = $paramters[0] ?? '';
             } else if ($parametersNumber == 2) {
                 $allowedChars = $paramters[0] ?? '';
-                $maxChars = $paramters[1] ?? -1;
             } else {
                 throw new InvalidArgumentException("Invalid number/content of \$parameters variable");
             }
             $taxIdParts = str_replace(str_split($allowedChars), '', $value);
             $taxIdParts = str_split($taxIdParts);
 
-            if (!is_null($maxChars) && count($taxIdParts) != $maxChars) {
-                return false;
-            }
             switch (App::getLocale()) {
                 case 'pl':
+                    $controlSumNumberIndex = 9;
                     $checksum = $taxIdParts[0] * 6 + $taxIdParts[1] * 5 + $taxIdParts[2] * 7 + $taxIdParts[3] * 2
                         + $taxIdParts[4] * 3 + $taxIdParts[5] * 4 + $taxIdParts[6] * 5 + $taxIdParts[7] * 6 + $taxIdParts[8] * 7;
 
-                    $result = $checksum % 11 == $taxIdParts[8];
+                    $result = $checksum % 11 == $taxIdParts[$controlSumNumberIndex];
                     break;
                 default:
                     $result = false;
@@ -58,11 +51,6 @@ class AppServiceProvider extends ServiceProvider
                 $text = trans('validation.tax_id_number_allowed_chars', ['attribute' => "[$allowedChars]"]);
             }
             $message = str_replace(':allowedChars', $text, $message);
-            $text = '';
-            if (isset($parameters[1])) {
-                $text = trans('validation.tax_id_number_max_chars', ['attribute' => $parameters[1]]);
-            }
-            $message = str_replace(':maxChars', $text, $message);
 
             return $message;
         });

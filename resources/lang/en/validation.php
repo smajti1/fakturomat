@@ -82,9 +82,8 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'url'                  => 'The :attribute format is invalid.',
 
-    'tax_id_number'               => 'Invalid tax identification number:allowedChars:maxChars',
-    'tax_id_number_allowed_chars' => ' acceptable chars :attribute',
-    'tax_id_number_max_chars'     => ' max :attribute chars',
+    'tax_id_number'               => 'Invalid tax identification number:allowedChars',
+    'tax_id_number_allowed_chars' => ' acceptable number and chars :attribute',
 
     /*
     |--------------------------------------------------------------------------
