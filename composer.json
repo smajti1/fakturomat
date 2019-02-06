@@ -1,9 +1,18 @@
 {
-    "name": "laravel/laravel",
-    "description": "The Laravel Framework.",
-    "keywords": ["framework", "laravel"],
+    "name": "smajti1/fakturomat",
+    "description": "Fakturomat system to create and manage invoices",
+    "keywords": [
+        "faktura",
+        "invoice",
+        "laravel"
+    ],
     "license": "MIT",
-    "type": "project",
+    "authors": [
+        {
+            "name": "Hubert Dziubiński",
+            "email": "smajti1@gmail.com"
+        }
+    ],
     "require": {
         "php": "~7.3",
         "fideloper/proxy": "~4.1",
