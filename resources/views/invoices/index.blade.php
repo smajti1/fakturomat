@@ -10,12 +10,12 @@
             <thead>
             <tr>
                 <th>Nr.</th>
-                <th>Status</th>
+                <th class="d-none d-lg-table-cell d-xl-table-cell">Status</th>
                 <th>Nabywca</th>
-                <th>Płatność</th>
+                <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Płatność</th>
                 <th>Kwota</th>
-                <th class="hidden-sm-down">Ilość produktów</th>
-                <th class="hidden-sm-down">Wpłata</th>
+                <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Ilość produktów</th>
+                <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Wpłata</th>
                 <th>Data wystawienia</th>
                 <th></th>
             </tr>
@@ -24,12 +24,12 @@
             @foreach($invoices as $invoice)
                 <tr>
                     <td>{{ $invoice->number }}</td>
-                    <td>{{ $invoice->status }}</td>
+                    <td class="d-none d-lg-table-cell d-xl-table-cell">{{ $invoice->status }}</td>
                     <td>{{ $invoice->buyer['name'] }}</td>
-                    <td>{{ $invoice->payment }}</td>
+                    <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->payment }}</td>
                     <td>{{ $invoice->price }} zł</td>
-                    <td class="hidden-sm-down">{{ $invoice->invoice_products->count() }}</td>
-                    <td class="hidden-sm-down">{{ $invoice->payment_at }}</td>
+                    <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->invoice_products->count() }}</td>
+                    <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->payment_at }}</td>
                     <td>{{ $invoice->issue_date }}</td>
                     <td>
                         <a href="{{ route('invoices.edit', compact('invoice')) }}" class="inline-block">

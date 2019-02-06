@@ -44,7 +44,7 @@
                 </form>
             @endif
         </div>
-        <span class="btn nohover pull-right hidden-sm-down">
+        <span class="btn nohover pull-right d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">
             @if (Auth::check())
                 {{ Auth::user()->email }}
             @endif

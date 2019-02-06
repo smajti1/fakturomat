@@ -13,9 +13,9 @@
                 <th>Adres</th>
                 <th>Nip</th>
                 <th>Regon</th>
-                <th class="hidden-xs-down">E-mail</th>
-                <th class="hidden-sm-down">Strona www</th>
-                <th class="hidden-xs-down">Telefon</th>
+                <th class="d-none d-lg-table-cell d-xl-table-cell">E-mail</th>
+                <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Strona www</th>
+                <th class="d-none d-lg-table-cell d-xl-table-cell">Telefon</th>
                 <th></th>
             </tr>
             </thead>
@@ -30,9 +30,9 @@
                     </td>
                     <td>{{ $buyer->tax_id_number }}</td>
                     <td>{{ $buyer->regon }}</td>
-                    <td class="hidden-xs-down">{{ $buyer->email }}</td>
-                    <td class="hidden-sm-down">{{ $buyer->website }}</td>
-                    <td class="hidden-xs-down">{{ $buyer->phone }}</td>
+                    <td class="d-none d-lg-table-cell d-xl-table-cell">{{ $buyer->email }}</td>
+                    <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $buyer->website }}</td>
+                    <td class="d-none d-lg-table-cell d-xl-table-cell">{{ $buyer->phone }}</td>
                     <td>
                         <a href="{{ route('buyer.edit', compact('buyer')) }}" class="inline-block">
                             <i class="fa fa-pencil-square-o"></i>

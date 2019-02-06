@@ -1,5 +1,5 @@
 <div class="table-responsive{{ $errors->has('product') ? ' has-danger' : '' }}">
-    <table id="invoice-product-list" class="table">
+    <table id="invoice-product-list" class="table table-striped">
         <thead>
         <tr>
             <th>Lp</th>
