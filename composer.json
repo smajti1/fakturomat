@@ -15,12 +15,13 @@
     ],
     "require": {
         "php": "~7.3",
+        "cviebrock/eloquent-sluggable": "^4.6",
         "fideloper/proxy": "~4.1",
+        "guzzlehttp/guzzle": "^6.3",
         "laravel/framework": "5.7.*",
         "laravel/tinker": "~1.0",
-        "cviebrock/eloquent-sluggable": "^4.6",
         "smajti1/laravel-wizard": "^1.1",
-        "guzzlehttp/guzzle": "^6.3"
+        "webonyx/graphql-php": "^0.13.0"
     },
     "require-dev": {
         "filp/whoops": "~2.3",

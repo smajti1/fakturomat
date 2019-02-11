@@ -18,10 +18,6 @@ Route::group(['middleware' => ['auth:api']], function()
     Route::get('/faktura/{invoice}/html', 'Api\InvoiceToPdfController@toHtml')->name('api.invoices.to.html');
     Route::get('/faktura/{invoice}/pdf',  'Api\InvoiceToPdfController@toPdf')->name('api.invoices.to.pdf');
     Route::get('/faktura/{invoice}/pdf-footer',  'Api\InvoiceToPdfController@footer')->name('api.invoices.to.pdf.footer');
-});
 
-Route::group(['middleware' => ['auth:basic']], function () {
-    Route::get('/test', function (Request $request) {
-        return response()->json(['name' => 'test']);
-    });
+    Route::post('graphql', 'Api\GraphQLController@execute')->name('api.graphql.endpoint');
 });

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "cd2bc0f2fb146a20ded9db6e5333c6be",
+    "content-hash": "4516cae34195e2c131143180cb2843cd",
     "packages": [
         {
             "name": "cocur/slugify",
@@ -1368,16 +1368,16 @@
         },
         {
             "name": "nexmo/client",
-            "version": "1.6.1",
+            "version": "1.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Nexmo/nexmo-php.git",
-                "reference": "3dc03ca1dab726a23b757110897740e54304fc65"
+                "reference": "2f79f67f24225ea627ee14578e98c96276cdd4c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/3dc03ca1dab726a23b757110897740e54304fc65",
-                "reference": "3dc03ca1dab726a23b757110897740e54304fc65",
+                "url": "https://api.github.com/repos/Nexmo/nexmo-php/zipball/2f79f67f24225ea627ee14578e98c96276cdd4c5",
+                "reference": "2f79f67f24225ea627ee14578e98c96276cdd4c5",
                 "shasum": ""
             },
             "require": {
@@ -1412,7 +1412,7 @@
                 }
             ],
             "description": "PHP Client for using Nexmo's API.",
-            "time": "2019-01-02T09:06:47+00:00"
+            "time": "2019-02-07T11:14:34+00:00"
         },
         {
             "name": "nikic/php-parser",
@@ -3281,6 +3281,57 @@
             "time": "2019-01-29T11:11:52+00:00"
         },
         {
+            "name": "webonyx/graphql-php",
+            "version": "v0.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webonyx/graphql-php.git",
+                "reference": "9bb8e7327748fdc828f801001161e6b586ca96e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/9bb8e7327748fdc828f801001161e6b586ca96e5",
+                "reference": "9bb8e7327748fdc828f801001161e6b586ca96e5",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "ext-mbstring": "*",
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "doctrine/coding-standard": "^5.0",
+                "phpbench/phpbench": "^0.14.0",
+                "phpstan/phpstan": "0.10.5",
+                "phpstan/phpstan-phpunit": "0.10.0",
+                "phpstan/phpstan-strict-rules": "0.10.1",
+                "phpunit/phpunit": "^7.2",
+                "psr/http-message": "^1.0",
+                "react/promise": "2.*"
+            },
+            "suggest": {
+                "psr/http-message": "To use standard GraphQL server",
+                "react/promise": "To leverage async resolving on React PHP platform"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "GraphQL\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "A PHP port of GraphQL reference implementation",
+            "homepage": "https://github.com/webonyx/graphql-php",
+            "keywords": [
+                "api",
+                "graphql"
+            ],
+            "time": "2018-11-27T10:23:58+00:00"
+        },
+        {
             "name": "zendframework/zend-diactoros",
             "version": "1.8.6",
             "source": {
@@ -3595,16 +3646,16 @@
         },
         {
             "name": "composer/composer",
-            "version": "1.8.3",
+            "version": "1.8.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/composer.git",
-                "reference": "a6a3b44581398b7135c7baa0557b7c5b10808b47"
+                "reference": "bc364c2480c17941e2135cfc568fa41794392534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/composer/zipball/a6a3b44581398b7135c7baa0557b7c5b10808b47",
-                "reference": "a6a3b44581398b7135c7baa0557b7c5b10808b47",
+                "url": "https://api.github.com/repos/composer/composer/zipball/bc364c2480c17941e2135cfc568fa41794392534",
+                "reference": "bc364c2480c17941e2135cfc568fa41794392534",
                 "shasum": ""
             },
             "require": {
@@ -3671,7 +3722,7 @@
                 "dependency",
                 "package"
             ],
-            "time": "2019-01-30T07:31:34+00:00"
+            "time": "2019-02-11T09:52:10+00:00"
         },
         {
             "name": "composer/semver",
@@ -4182,16 +4233,16 @@
         },
         {
             "name": "mockery/mockery",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mockery/mockery.git",
-                "reference": "100633629bf76d57430b86b7098cd6beb996a35a"
+                "reference": "dc4f10b6b1148744facb784015e4b339d7feec23"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mockery/mockery/zipball/100633629bf76d57430b86b7098cd6beb996a35a",
-                "reference": "100633629bf76d57430b86b7098cd6beb996a35a",
+                "url": "https://api.github.com/repos/mockery/mockery/zipball/dc4f10b6b1148744facb784015e4b339d7feec23",
+                "reference": "dc4f10b6b1148744facb784015e4b339d7feec23",
                 "shasum": ""
             },
             "require": {
@@ -4200,7 +4251,7 @@
                 "php": ">=5.6.0"
             },
             "require-dev": {
-                "phpunit/phpunit": "~5.7.10|~6.5|~7.0"
+                "phpunit/phpunit": "~5.7.10|~6.5|~7.0|~8.0"
             },
             "type": "library",
             "extra": {
@@ -4243,7 +4294,7 @@
                 "test double",
                 "testing"
             ],
-            "time": "2018-10-02T21:52:37+00:00"
+            "time": "2019-02-08T14:43:54+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -4864,16 +4915,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "8.0.1",
+            "version": "8.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "753a192050133fc649234de34d1993d87785b134"
+                "reference": "d64e502503bcfab5d46c0b74ffd41f4986831dc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/753a192050133fc649234de34d1993d87785b134",
-                "reference": "753a192050133fc649234de34d1993d87785b134",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/d64e502503bcfab5d46c0b74ffd41f4986831dc7",
+                "reference": "d64e502503bcfab5d46c0b74ffd41f4986831dc7",
                 "shasum": ""
             },
             "require": {
@@ -4942,7 +4993,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2019-02-03T17:34:56+00:00"
+            "time": "2019-02-07T14:17:09+00:00"
         },
         {
             "name": "sebastian/code-unit-reverse-lookup",
