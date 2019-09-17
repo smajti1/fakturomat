@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:11.5
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql/data:z
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - ${DB_PORT}:${DB_PORT}
+
+  web:
+    build:
+      context: .
+      dockerfile: docker/web/Dockerfile
+      args:
+        - DOCKER_WORK_DIR=${DOCKER_WORK_DIR}
+    working_dir: ${DOCKER_WORK_DIR}
+    volumes:
+      - ./:${DOCKER_WORK_DIR}
+    environment:
+      DB_HOST: db
+
+  nginx:
+    image: nginx:1.17
+    restart: always
+    working_dir: ${DOCKER_WORK_DIR}
+    volumes:
+      - ./docker/nginx/:/etc/nginx/conf.d/
+      - ./storage/docker/nginx/:/var/log/nginx:z
+      - ./:${DOCKER_WORK_DIR}
+    depends_on:
+      - web
+    ports:
+      - 80:80
+
+volumes:
+  postgres:
