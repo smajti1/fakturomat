@@ -15,6 +15,7 @@ RUN apt update -yqq && apt install -y \
     libfreetype6-dev \
     libpng-dev \
     libxml2-dev \
+    zip \
     # wkhtmltopdf dependencies
     fontconfig \
     libjpeg62-turbo \
@@ -30,7 +31,7 @@ RUN apt update -yqq && apt install -y \
     && apt remove --purge --auto-remove -y
 
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) pgsql gd soap pdo_pgsql mbstring intl
+    && docker-php-ext-install -j$(nproc) pgsql gd soap pdo_pgsql mbstring zip intl
 RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 RUN locale-gen en_US.utf8 pl_PL.utf8
