@@ -51,4 +51,11 @@ class Buyer extends Model
 
         return $address;
     }
+
+    public function getAddressString(): string
+    {
+        $address = $this->getAddress();
+
+        return implode(', ', $address);
+    }
 }

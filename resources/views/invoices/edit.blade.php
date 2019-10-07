@@ -26,25 +26,18 @@
                 </div>
             </div>
             <div class="col-sm-6">
-                <strong>Nabywca</strong>
-                <div id="buyer-name-placeholder">
-                    {{ $invoice->buyer->name }}
-                </div>
-                <div id="buyer-address-placeholder">
-                    {{ $invoice->buyer->address }}
-                </div>
-
-                <label for="buyer_id">Zmień firmę</label>
+                <label for="buyer_id">Nabywca</label>
+                <br/>
                 <select name="buyer_id" id="buyer_id">
                     @foreach($buyers as $buyer)
-                        <option value="{{ $buyer->id }}"
-                                data-data="{{ json_encode($buyer->toArray()) }}"
-                                {{ $invoice->buyer->id === $buyer->id ? 'selected' : '' }}
-                        >
-                            {{ $buyer->name }}
-                        </option>
+                    <option value="{{ $buyer->id }}" data-buyer-data="{{ json_encode($buyer->toArray()) }}" >
+                        {{ $buyer->name }}
+                    </option>
                     @endforeach
                 </select>
+                <div id="buyer-address-placeholder">
+                    {{ $buyers->first()->getAddressString() }}
+                </div>
             </div>
         </div>
         @include('invoices.product-list')
@@ -86,22 +79,10 @@
 @section('scripts')
     @parent
     <script>
-        $('#company_id').selectize({
-            onChange : function(item) {
-                $('#company-name-placeholder').html(this.options[item].name);
-                $('#company-address-placeholder').html(this.options[item].address);
-            }
-        });
-
-        $('#buyer_id').selectize({
-            onChange : function(item) {
-                $('#buyer-name-placeholder').html(this.options[item].name);
-                $('#buyer-address-placeholder').html(this.options[item].address);
-            }
-        });
-
-        $('#invoice-product-list').on('click', '.remove-product', function () {
-            this.parentNode.remove();
-        });
+        $('#buyer_id').select2()
+            .on("select2:select", function (e) {
+                const buyerData = $(e.params.data.element).data('buyerData');
+                $('#buyer-address-placeholder').html([buyerData.street, buyerData.city, buyerData.zip_code].join(', '));
+            });
     </script>
 @endsection

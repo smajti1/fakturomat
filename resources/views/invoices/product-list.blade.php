@@ -47,13 +47,12 @@
 @section('scripts')
     @parent
     <script>
-        var selectProductList = [];
         var selectedProductList = [];
         var productTemplate =
             $("<tr class='product search-product'>" +
                 "<td class='product_number'>1</td>" +
                 "<td class='select-product'>" +
-                "<select autocomplete='off' placeholder='Wyszukaj lub dodaj produkt'>" +
+                "<select autocomplete='off' multiple='multiple'>" +
                 "</select>" +
                 "</td>" +
                 "<td class='measure_unit'></td>" +
@@ -90,59 +89,47 @@
             $('#invoice-product-list tbody').append(productClone);
             var product_number = $('#invoice-product-list tbody tr').length;
             productClone.find('.product_number').html(product_number);
-            var productCloneSelectize = productClone.find('.select-product > select').selectize({
-                valueField: 'id',
-                labelField: 'name',
-                maxItem: 1,
-                create: true,
-                render: {
-                    option: function (item, escape) {
-                        selectedProductList[item.id] = item;
-                        var item_html = '<div>' +
-                            '<span class="name">' + escape(item.name) + '</span>';
-                        if (item.price) {
-                            var tax_percent = $.isNumeric(item.tax_percent) ? item.tax_percent + '%' : item.tax_percent;
-                            item_html += '<span class="small block grey-text">' + item.price + 'zł + ' + tax_percent + '</span>';
-                        }
-                        item_html += '</div>';
-
-                        return item_html;
-                    },
-                    option_create: function (data, escape) {
-                        return '<div class="create">Dodaj produkt <strong>' + escape(data.input) + '</strong>&hellip;</div>';
-                    },
+            productClone.find('.select-product > select').select2({
+                placeholder: 'Wyszukaj produkt',
+                ajax: {
+                    url: productListSrc,
+                    dataType: 'json',
+                    delay: 100,
+                    data: params => ({searchText: params.term}),
+                    processResults: (data) => ({results: data}),
+                    cache: true
                 },
-                load: function (query, callback) {
-                    this.clearOptions();
-                    selectLoad(query, callback, productListSrc);
-                },
-                onChange: function (item) {
-                    const selectedItem = selectProductList[item];
-
-                    if (selectedItem) {
-                        const taxPercentText = $.isNumeric(selectedItem.tax_percent) ? selectedItem.tax_percent + '%' : selectedItem.tax_percent;
-                        productClone.find('.select-product').html(selectedItem.name);
-                        productClone.find('.measure_unit').html(selectedItem.measure_unit);
-                        productClone.find('.count').html('<input type="number" value="1" min="0.01" name="product[' + selectedItem.id + ']" step="any" autocomplete="off" class="amount_input">');
-                        productClone.find('.price').html(selectedItem.price + ' zł');
-                        productClone.find('.tax_percent').html(taxPercentText);
-                        productClone.find('.count input').focus();
-
-                        let taxPercent = $.isNumeric(selectedItem.tax_percent) ? parseFloat('1.' + selectedItem.tax_percent) : 1;
-                        taxPercent = (selectedItem.price * taxPercent).toFixed(2) + ' zł';
-                        productClone.find('.price-with-vat').html(taxPercent);
-                        productClone.removeClass('search-product');
-                        amountChange(null, { selectedItem, productClone });
+                templateResult: function (state) {
+                    if (!state.id) {
+                        return state.text;
                     }
-                    calculateProductsSum();
+                    return $(
+                        '<div>' + state.name + ' <span class="small block">' + state.price + 'zł + ' + state.tax_percent + '%</span></div>'
+                    );
                 },
-                score: function () {
-                    return function () {
-                        return 1;
-                    };
-                },
-            });
-            productCloneSelectize[0].selectize.focus();
+            })
+            .on("select2:select", function (e) {
+                const selectedItem = e.params.data;
+                selectedProductList[e.params.data.id] = selectedItem;
+
+                if (selectedItem) {
+                    const taxPercentText = $.isNumeric(selectedItem.tax_percent) ? selectedItem.tax_percent + '%' : selectedItem.tax_percent;
+                    productClone.find('.select-product').html(selectedItem.name);
+                    productClone.find('.measure_unit').html(selectedItem.measure_unit);
+                    productClone.find('.count').html('<input type="number" value="1" min="0.01" name="product[' + selectedItem.id + ']" step="any" autocomplete="off" class="amount_input">');
+                    productClone.find('.price').html(selectedItem.price + ' zł');
+                    productClone.find('.tax_percent').html(taxPercentText);
+                    productClone.find('.count input').focus();
+
+                    let taxPercent = $.isNumeric(selectedItem.tax_percent) ? parseFloat('1.' + selectedItem.tax_percent) : 1;
+                    taxPercent = (selectedItem.price * taxPercent).toFixed(2) + ' zł';
+                    productClone.find('.price-with-vat').html(taxPercent);
+                    productClone.removeClass('search-product');
+                    amountChange(null, { selectedItem, productClone });
+                }
+                calculateProductsSum();
+            })
+            [0].focus();
             $(window).scrollTop(window.pageYOffset + $('#invoice-product-list tr td').outerHeight() + 20);
         });
         $('#add-product').trigger('click');
@@ -227,12 +214,11 @@
             calculateProductsSum();
         });
         $('#invoice-product-list').on('input', 'tbody .count input', function () {
-            console.log(this, this.name);
             if (this.name.indexOf('invoice_products') !== -1) {
                 amountChange(this);
             } else {
                 const productId = /[0-9]+/.exec(this.name)[0];
-                const selectedItem = selectProductList[productId];
+                const selectedItem = selectedProductList[productId];
                 const productClone = $(this).parents('tr');
                 amountChange(null, { selectedItem, productClone });
             }

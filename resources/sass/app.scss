@@ -6,7 +6,7 @@ $fa-font-path: '../../../public/fonts';
 
 @import '../../node_modules/bootstrap/scss/bootstrap';
 @import '../../node_modules/font-awesome/scss/font-awesome';
-@import '../../node_modules/selectize/dist/css/selectize.css';
+@import '../../node_modules/select2/dist/css/select2.css';
 
 @import "wizard";
 
@@ -36,10 +36,8 @@ html, body {
   font-size: .6rem;
 }
 
-.selectize-dropdown {
-  margin: -7px 0 0 0;
-  position: relative;
-  top: 0 !important;
+.select2-container {
+  min-width: 200px;
 }
 
 .amount_input {

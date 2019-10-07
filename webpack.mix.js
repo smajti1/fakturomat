@@ -26,9 +26,7 @@ mix
         'node_modules/jquery/dist/jquery.js',
         'node_modules/tether/dist/js/tether.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
-        'node_modules/microplugin/src/microplugin.js',
-        'node_modules/sifter/sifter.js',
-        'node_modules/selectize/dist/js/selectize.js',
+        'node_modules/select2/dist/js/select2.js',
         'resources/js/app.js'
     ], 'public/js/app.js')
     .sass('resources/sass/app.scss', 'public/css')
