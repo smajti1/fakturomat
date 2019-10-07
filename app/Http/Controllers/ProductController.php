@@ -35,7 +35,7 @@ class ProductController extends Controller
         $search = $this->request->searchText;
         $list = \Auth::user()
             ->products()
-            ->where('name', 'LIKE', $search . '%')
+            ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
             ->get();
         if (!$list->count()) {

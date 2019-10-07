@@ -15,7 +15,7 @@ class CompanyController extends Controller
         $search = $request->searchText;
         $list = \Auth::user()
             ->companies()
-            ->where('name', 'LIKE', $search . '%')
+            ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
             ->get();
 
