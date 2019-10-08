@@ -43,8 +43,8 @@ class SetUserEmailAndPassword extends Step
         $user = \Auth::user();
 
         return [
-            'email'    => 'required|email|max:255|unique:users' . ($user ? ',id,' . $user->id : ''),
-            'password' => ($request->has('password') ? 'required|' : '') . 'min:6|confirmed',
+            'email'    => 'required|email|max:255|unique:users' . ($user ? ",email,$user->id,id" : ''),
+            'password' => (!$user ? 'required|' : '') . 'min:8|confirmed',
         ];
     }
 }

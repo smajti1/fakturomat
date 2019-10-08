@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Notifications\ResetPasswordNotification;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -18,7 +19,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::creating(function ($user) {
-            $user['api_token'] = str_random(60);
+            $user['api_token'] = Str::random(60);
         });
 
     }
