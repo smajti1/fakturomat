@@ -14,6 +14,5 @@ class VerifyCsrfToken extends Middleware
     protected $except = [
         '/faktura/{invoice}/pdf',
         '/faktura/{invoice}/html',
-        '/graphql'
     ];
 }
