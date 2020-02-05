@@ -1,10 +1,10 @@
-FROM php:7.3-fpm-stretch
+FROM php:7.4-fpm
 
 ARG DOCKER_WORK_DIR
 
 RUN usermod -u 1000 www-data --home="${DOCKER_WORK_DIR}/storage/docker/home/www-data"
 
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
 
 RUN apt update -yqq && apt install -y \
     git \
@@ -26,15 +26,15 @@ RUN apt update -yqq && apt install -y \
     xfonts-75dpi \
     xfonts-base \
     # end wkhtmltopdf dependencies
+    # libonig-dev = php-mbstring
+    libonig-dev \
     nodejs \
-    npm \
     && apt remove --purge --auto-remove -y
 
 RUN npm update && npm install -g npm@6.*
 
-RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-png-dir=/usr/include/ \
-    && docker-php-ext-install -j$(nproc) pgsql gd soap pdo_pgsql mbstring zip intl
-RUN curl --insecure https://getcomposer.org/composer.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
+RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl
+RUN curl --insecure https://getcomposer.org/composer-stable.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 RUN locale-gen en_US.utf8 pl_PL.utf8
 
