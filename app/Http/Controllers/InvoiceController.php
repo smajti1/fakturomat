@@ -7,10 +7,11 @@ use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
-    protected $request;
+    protected Request $request;
 
     public function __construct(Request $request)
     {
@@ -19,7 +20,7 @@ class InvoiceController extends Controller
 
     public function index()
     {
-        $invoices = Invoice::where('user_id', \Auth::user()->id)
+        $invoices = Invoice::where('user_id', Auth::user()->id)
             ->with(['buyer', 'invoice_products', 'company'])
             ->orderBy('created_at', 'desc')
             ->get();
@@ -29,7 +30,7 @@ class InvoiceController extends Controller
 
     public function create()
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         if ($user->buyers->isEmpty()) {
             //message = Aby dodać fakturę musisz dodać kontrachenta
             //ToDo in the future add some dialog or wizard
@@ -70,7 +71,7 @@ class InvoiceController extends Controller
             $invoiceData + compact('price')
         );
 
-        $user = \Auth::user();
+        $user = Auth::user();
         $invoice->user()->associate($user);
         $invoice->company()->associate($user->company);
 
@@ -83,7 +84,7 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index');
     }
 
-    protected function rules()
+    protected function rules(): array
     {
         return [
             'product' => 'required',
@@ -92,7 +93,7 @@ class InvoiceController extends Controller
 
     public function edit(Invoice $invoice)
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         $company = $user->company;
         $buyers = $user->buyers;
         $measureUnits = config('invoice.measure_units.' . config('app.locale'));

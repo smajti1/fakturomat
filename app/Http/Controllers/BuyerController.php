@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Buyer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BuyerController extends Controller
 {
-    protected $request;
+    protected Request $request;
 
     public function __construct(Request $request)
     {
@@ -29,7 +30,7 @@ class BuyerController extends Controller
         $this->validate($this->request, $this->rules());
 
         $buyer = Buyer::create($this->request->all());
-        $buyer->user()->associate(\Auth::user());
+        $buyer->user()->associate(Auth::user());
         $buyer->save();
 
         $this->request->session()->flash('flash', ['success' => 'Dodano nowego kontrahenta!']);
@@ -37,9 +38,9 @@ class BuyerController extends Controller
         return redirect()->route('buyer.index');
     }
 
-    protected function rules()
+    protected function rules(): array
     {
-        $rules = [
+        return [
             'name'          => 'required|max:255',
             'city'          => 'max:255',
             'zip_code'      => 'max:255',
@@ -51,8 +52,6 @@ class BuyerController extends Controller
             'phone'         => 'max:255',
             'bank_account'  => 'max:255',
         ];
-
-        return $rules;
     }
 
     public function edit(Buyer $buyer)

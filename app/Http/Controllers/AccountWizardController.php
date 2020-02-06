@@ -9,17 +9,18 @@ use App\Steps\Account\SetUserEmailAndPassword;
 use Illuminate\Http\Request;
 use Smajti1\Laravel\Exceptions\StepNotFoundException;
 use Smajti1\Laravel\Wizard;
+use Illuminate\Support\Facades\Auth;
 
 class AccountWizardController extends Controller
 {
-    public $steps = [
+    public array $steps = [
         SetUserEmailAndPassword::class,
         SetCompanyBasicData::class,
         SetAddress::class,
         SetCompanySecondaryData::class,
     ];
 
-    protected $wizard;
+    protected Wizard $wizard;
 
     public function __construct()
     {
@@ -40,7 +41,7 @@ class AccountWizardController extends Controller
             abort(404);
         }
 
-        $user = \Auth::user();
+        $user = Auth::user();
 
         return view('wizard.account.base', compact('step', 'user'));
     }
@@ -56,7 +57,7 @@ class AccountWizardController extends Controller
         $this->validate($request, $step->rules($request));
         $step->process($request);
 
-        if ($step->index == ($this->wizard->limit() - 1)) {
+        if ($step->index === ($this->wizard->limit() - 1)) {
 
             return redirect()->route('panel');
         }

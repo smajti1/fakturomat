@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CompanyInvoiceNumbers extends Model
 {
@@ -14,12 +15,12 @@ class CompanyInvoiceNumbers extends Model
         'show_year'            => 'boolean',
     ];
 
-    public function company()
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function getPieces()
+    public function getPieces(): array
     {
         $number = [];
 

@@ -4,7 +4,10 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Company extends Model
 {
@@ -18,25 +21,25 @@ class Company extends Model
     {
         parent::boot();
 
-        static::created(function ($company) {
+        static::created(static function (self $company) {
             $company->companyInvoiceNumber()->create([]);
         });
 
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     public function isOwner(User $user = null): bool
     {
-        $user = $user ?: \Auth::user();
+        $user = $user ?: Auth::user();
 
         return $user->id === $this->user->id;
     }
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -45,7 +48,7 @@ class Company extends Model
         ];
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }
@@ -69,7 +72,7 @@ class Company extends Model
         return $address;
     }
 
-    public function companyInvoiceNumber()
+    public function companyInvoiceNumber(): HasOne
     {
         return $this->hasOne(CompanyInvoiceNumbers::class);
     }

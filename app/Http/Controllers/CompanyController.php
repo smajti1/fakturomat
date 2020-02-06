@@ -8,12 +8,12 @@ use Illuminate\Support\Facades\Auth;
 class CompanyController extends Controller
 {
 
-    const JSON_LIST_LIMIT = 20;
+    private const JSON_LIST_LIMIT = 20;
 
     public function jsonList(Request $request)
     {
         $search = $request->searchText;
-        $list = \Auth::user()
+        $list = Auth::user()
             ->companies()
             ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
@@ -39,7 +39,7 @@ class CompanyController extends Controller
         return redirect()->route('company.edit');
     }
 
-    protected function rules()
+    protected function rules(): array
     {
         $company_id = Auth::user()->company->id;
         return [

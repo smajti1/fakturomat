@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Validator;
 
 class RegisterController extends Controller
 {
@@ -50,11 +50,11 @@ class RegisterController extends Controller
         ]);
     }
 
-    protected function create(array $data)
+    protected function create(array $data): ?User
     {
         $user = null;
 
-        DB::transaction(function () use (&$user, $data) {
+        DB::transaction(static function () use (&$user, $data) {
             $user = User::create([
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),

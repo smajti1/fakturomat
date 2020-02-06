@@ -4,6 +4,7 @@ namespace App\Steps\Account;
 
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Smajti1\Laravel\Step;
 
 class SetCompanySecondaryData extends Step
@@ -15,7 +16,7 @@ class SetCompanySecondaryData extends Step
 
     public function process(Request $request)
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         $data = $request->all();
 
         if ($user && $this->wizard->dataHas('company_id')) {

@@ -11,13 +11,16 @@
 |
 */
 
-Route::get('/', function () {
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', static function () {
     return view('welcome');
 });
 
 Auth::routes();
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['auth']], static function () {
     Route::get('/panel', 'PanelController@index')->name('panel');
 
     Route::get('firma/edytuj',  'CompanyController@edit')->name('company.edit');
@@ -47,7 +50,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post(  '/kontrahent/{buyer}',       'BuyerController@update')->name(  'buyer.update');
     Route::delete('/kontrahent/{buyer}',       'BuyerController@destroy')->name('buyer.destroy');
 
-    Route::group(['namespace' => 'Settings', 'prefix' => 'ustawienia'], function () {
+    Route::group(['namespace' => 'Settings', 'prefix' => 'ustawienia'], static function () {
         Route::get('/numeracja-faktur/edytuj', 'CompanyInvoiceNumberController@index')->name('settings.company_invoice_number.edit');
         Route::post('/numeracja-faktur/edytuj', 'CompanyInvoiceNumberController@update')->name('settings.company_invoice_number.update');
     });

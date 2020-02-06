@@ -4,6 +4,7 @@ namespace App\Steps\Account;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Smajti1\Laravel\Step;
 
 class SetUserEmailAndPassword extends Step
@@ -15,7 +16,7 @@ class SetUserEmailAndPassword extends Step
 
     public function process(Request $request)
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         $data = $request->all();
 
         if ($user) {
@@ -34,13 +35,13 @@ class SetUserEmailAndPassword extends Step
                 'password' => bcrypt($data['password']),
             ]);
 
-            \Auth::login($user);
+            Auth::login($user);
         }
     }
 
     public function rules(Request $request = null): array
     {
-        $user = \Auth::user();
+        $user = Auth::user();
 
         return [
             'email'    => 'required|email|max:255|unique:users' . ($user ? ",email,$user->id,id" : ''),

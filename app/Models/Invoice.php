@@ -3,14 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class Invoice extends Model
 {
 
-    const PAYMENT_CASH = 1;
-    const PAYMENT_BANK_TRANSFER = 2;
-    const STATUS_NOT_PAID = 1;
-    const STATUS_PAID = 2;
+    public const PAYMENT_CASH = 1;
+    public const PAYMENT_BANK_TRANSFER = 2;
+    public const STATUS_NOT_PAID = 1;
+    public const STATUS_PAID = 2;
     protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
     protected $casts = [
         'price' => 'float',
@@ -20,8 +23,8 @@ class Invoice extends Model
     {
         parent::boot();
 
-        static::creating(function ($invoice) {
-            if ($invoice->number == '') {
+        static::creating(static function (self $invoice) {
+            if ($invoice->number === '') {
                 $invoice->number = $invoice->company->companyInvoiceNumber->getFormattedNextNumber();
                 $invoice->company->companyInvoiceNumber->increment('number');
             }
@@ -29,29 +32,29 @@ class Invoice extends Model
 
     }
 
-    public function company()
+    public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function invoice_products()
+    public function invoice_products(): HasMany
     {
         return $this->hasMany(InvoiceProduct::class);
     }
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function buyer()
+    public function buyer(): BelongsTo
     {
         return $this->belongsTo(Buyer::class);
     }
 
     public function isOwner(User $user = null): bool
     {
-        $user = $user ?: \Auth::user();
+        $user = $user ?: Auth::user();
 
         return $user->id === $this->user->id;
     }
@@ -116,37 +119,27 @@ class Invoice extends Model
 
     public function getStatus(): string
     {
-        $statusList = $this->statusList();
-        $statusText = $statusList[$this->status];
-
-        return $statusText;
+        return $this->statusList()[$this->status];
     }
 
     public function statusList(): array
     {
-        $statusList = [
+        return [
             self::STATUS_NOT_PAID => 'nie zapłacona',
             self::STATUS_PAID     => 'zapłacona',
         ];
-
-        return $statusList;
     }
 
     public function getPayment(): string
     {
-        $paymentList = $this->getPaymentList();
-        $paymentText = $paymentList[$this->payment];
-
-        return $paymentText;
+        return $this->getPaymentList()[$this->payment];
     }
 
     public function getPaymentList(): array
     {
-        $paymentList = [
+        return [
             self::PAYMENT_CASH          => 'gotówka',
             self::PAYMENT_BANK_TRANSFER => 'przelew',
         ];
-
-        return $paymentList;
     }
 }

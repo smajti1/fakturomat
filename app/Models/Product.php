@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class Product extends Model
 {
@@ -13,19 +15,19 @@ class Product extends Model
         'name', 'measure_unit', 'price', 'tax_percent'
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     public function isOwner(User $user = null): bool
     {
-        $user = $user ?: \Auth::user();
+        $user = $user ?: Auth::user();
 
         return $user->id === $this->user->id;
     }
 
-    public function sluggable()
+    public function sluggable(): array
     {
         return [
             'slug' => [
@@ -34,7 +36,7 @@ class Product extends Model
         ];
     }
 
-    public function getRouteKeyName()
+    public function getRouteKeyName(): string
     {
         return 'slug';
     }

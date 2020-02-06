@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 class InvoiceProduct extends Model
 {
@@ -11,7 +13,7 @@ class InvoiceProduct extends Model
         'name', 'measure_unit', 'price', 'tax_percent', 'vat', 'amount',
     ];
 
-    public function invoice()
+    public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
     }
@@ -23,7 +25,7 @@ class InvoiceProduct extends Model
 
     public function isOwner(User $user = null): bool
     {
-        $user = $user ?: \Auth::user();
+        $user = $user ?: Auth::user();
 
         return $user->id === $this->user->id;
     }

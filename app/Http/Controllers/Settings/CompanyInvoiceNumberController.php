@@ -32,12 +32,10 @@ class CompanyInvoiceNumberController extends Controller
         return redirect()->route('settings.company_invoice_number.edit');
     }
 
-    protected function rules()
+    protected function rules(): array
     {
-        $rules = [
+        return [
             'number' => 'required|integer',
         ];
-
-        return $rules;
     }
 }
