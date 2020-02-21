@@ -5,8 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
-    <style>{{ file_get_contents('css/invoice-pdf.css') }}</style>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+        <style>
+        @page{
+            size: A4;
+            counter-increment: page;
+
+            @bottom-left {
+                content: "FAKTURA VAT NR {{ $invoice->number }}";
+                border-top: 1px solid black;
+                width: 50%;
+            }
+            @bottom-right {
+                content: "Strona " counter(page) " z " counter(pages);
+                border-top: 1px solid black;
+                width: 50%;
+            }
+
+        }
+    </style>
 </head>
 <body class="pdf invoice-pdf" onload="subst()">
 

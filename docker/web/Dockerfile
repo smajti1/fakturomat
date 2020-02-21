@@ -16,16 +16,6 @@ RUN apt update -yqq && apt install -y \
     libpng-dev \
     libxml2-dev \
     zip \
-    # wkhtmltopdf dependencies
-    fontconfig \
-    libjpeg62-turbo \
-    libx11-6 \
-    libxcb1 \
-    libxext6 \
-    libxrender1 \
-    xfonts-75dpi \
-    xfonts-base \
-    # end wkhtmltopdf dependencies
     # libonig-dev = php-mbstring
     libonig-dev \
     nodejs \
@@ -44,6 +34,26 @@ RUN echo Europe/Warsaw >/etc/timezone && \
 
 RUN mkdir -p public/uploads
 
-# tip check linux codename by running command "lsb_release -a" for exmple debian 9.9 has codename: stretch
-RUN curl -sOSL https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb && \
-    dpkg -i wkhtmltox_0.12.5-1.stretch_amd64.deb
+# https://github.com/Kozea/WeasyPrint
+RUN apt install -y \
+    build-essential \
+    python3-dev \
+    python3-pip \
+    python3-setuptools \
+    python3-wheel \
+    python3-cffi \
+    libcairo2 \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libgdk-pixbuf2.0-0 \
+    libffi-dev \
+    shared-mime-info \
+	python3-venv
+
+RUN python3 -m venv ./venv
+RUN . ./venv/bin/activate
+RUN pip3 install WeasyPrint
+
+# end of WeasyPrint
+
+

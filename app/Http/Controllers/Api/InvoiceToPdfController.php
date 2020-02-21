@@ -19,7 +19,7 @@ class InvoiceToPdfController extends Controller
         $user = Auth::user();
 
         if (!$this->commandExist()) {
-            throw new LogicException('Brak wkhtmltopdf');
+            throw new LogicException('Brak weasyprint');
         }
         $date = $invoice->issue_date;
         $companySlug = mb_convert_case($invoice->company->slug, MB_CASE_TITLE, "UTF-8");
@@ -42,15 +42,9 @@ class InvoiceToPdfController extends Controller
         $htmlFooterTmpFilePath = $this->createHtmlTmpFile($this->footer());
 
         $process = new Process([
-            "wkhtmltopdf",
-            "--margin-top",
-            "15mm",
-            "--margin-bottom",
-            "18mm",
-            "--footer-html",
-            "$htmlFooterTmpFilePath",
-            "--title",
-            $title,
+            'weasyprint',
+            '--stylesheet',
+            public_path('css/invoice-pdf.css'),
             $htmlTmpFilePath,
             $pathToFile,
         ]);
@@ -83,7 +77,7 @@ class InvoiceToPdfController extends Controller
 
     private function commandExist(): bool
     {
-        $returnVal = shell_exec("type -P wkhtmltopdf");
+        $returnVal = shell_exec('type -P weasyprint');
 
         return (empty($returnVal) ? false : true);
     }
