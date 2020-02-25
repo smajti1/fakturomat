@@ -8,6 +8,7 @@
         <style>
         @page{
             size: A4;
+            margin: 15mm 10mm;
             counter-increment: page;
 
             @bottom-left {
@@ -25,16 +26,12 @@
     </style>
 </head>
 <body class="pdf invoice-pdf" onload="subst()">
-
-<div class="container">
-    <div class="row">
-        <div id="invoice-number" class="col-12">
-            <h1>FAKTURA VAT NR {{ $invoice->number }}</h1>
-        </div>
+    <div id="invoice-number" class="col-12">
+        <h1>FAKTURA VAT NR {{ $invoice->number }}</h1>
     </div>
 
-    <div class="row border-box-content">
-        <div class="col-6 company padding-left-20">
+    <div class="border-box-content">
+        <div class="company padding-left-20">
             <h4>Sprzedawca</h4>
             <div class="padding-left-20">
                 <div id="company-name-placeholder">
@@ -68,7 +65,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-6 buyer">
+        <div class="buyer">
             <h4>Nabywca</h4>
             <div class="padding-left-20">
                 <div id="buyer-name-placeholder">
@@ -93,7 +90,7 @@
         </div>
     </div>
 
-    <table id="invoice-product-list" class="table table-bordered table-striped">
+    <table id="invoice-product-list">
         <thead>
             <tr>
                 <th>Lp</th>
@@ -124,35 +121,33 @@
         </tbody>
     </table>
 
-    <div class="row tax-table">
-        <div class="col-6 offset-6">
-            <table class="table table-bordered table-striped">
-                <thead>
+    <div class="tax-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Netto</th>
+                    <th>%</th>
+                    <th>VAT</th>
+                    <th>Brutto</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($taxPercentsSum as $vat => $sum)
                     <tr>
-                        <th>Netto</th>
-                        <th>%</th>
-                        <th>VAT</th>
-                        <th>Brutto</th>
+                        <td class="space-nowrap">{{ money_pl_format($sum['netPrice']) }} zł</td>
+                        <td>{{ is_numeric($vat) ? ($vat . '%') : $activeTaxes[$vat]['label'] }}</td>
+                        <td class="space-nowrap">{{ money_pl_format($sum['amountVat']) }} zł</td>
+                        <td class="space-nowrap">{{ money_pl_format($sum['grossPrice']) }} zł</td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach($taxPercentsSum as $vat => $sum)
-                        <tr>
-                            <td class="space-nowrap">{{ money_pl_format($sum['netPrice']) }} zł</td>
-                            <td>{{ is_numeric($vat) ? ($vat . '%') : $activeTaxes[$vat]['label'] }}</td>
-                            <td class="space-nowrap">{{ money_pl_format($sum['amountVat']) }} zł</td>
-                            <td class="space-nowrap">{{ money_pl_format($sum['grossPrice']) }} zł</td>
-                        </tr>
-                    @endforeach
-                    <tr>
-                        <td class="space-nowrap">{{ money_pl_format($totalSum['net']) }} zł</td>
-                        <td>Razem</td>
-                        <td class="space-nowrap">{{ money_pl_format($totalSum['tax']) }} zł</td>
-                        <td class="space-nowrap">{{ money_pl_format($totalSum['gross']) }} zł</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+                @endforeach
+                <tr>
+                    <td class="space-nowrap">{{ money_pl_format($totalSum['net']) }} zł</td>
+                    <td>Razem</td>
+                    <td class="space-nowrap">{{ money_pl_format($totalSum['tax']) }} zł</td>
+                    <td class="space-nowrap">{{ money_pl_format($totalSum['gross']) }} zł</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <div class="summary">
@@ -175,7 +170,5 @@
         </div>
 
     </div>
-</div>
-
 </body>
 </html>

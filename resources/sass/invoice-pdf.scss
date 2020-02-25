@@ -1,7 +1,24 @@
-body.invoice-pdf {
-  .border-box {
-    border: 1px solid #e0e0e0;
-  }
+h1 {
+  font-weight: normal;
+  margin-top: 0;
+  margin-left: 10px;
+  margin-bottom: 8px;
+}
+
+h4 {
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-family: inherit;
+  font-weight: normal;
+  line-height: 1.2;
+}
+
+body {
+  font-family: Arial, sans-serif !important;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 1.5;
+  margin: 0;
 
   .border-box-content {
     display: flex;
@@ -11,18 +28,12 @@ body.invoice-pdf {
     }
   }
 
-  thead {
-    display: table-header-group
-  }
-  tfoot {
-    display: table-row-group
-  }
   tr {
     page-break-inside: avoid
   }
 
   .table {
-    font-size: 12px
+    font-size: 11px
   }
 
   .table th, .table td {
@@ -47,20 +58,59 @@ body.invoice-pdf {
 }
 
 #invoice-number {
-  margin-bottom: 10px;
   border-bottom: 1px solid black;
+}
+
+.summary {
+  page-break-inside: avoid;
+
+  div {
+    padding: 0 10px;
+  }
+}
+
+.border-box-content {
+  display: flex;
+
+  .company, .buyer {
+    width: 50%;
+  }
+}
+
+$border-width: 1px !default;
+$gray-300: #dee2e6 !default;
+$table-accent-bg: rgba(#000, .05) !default;
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th,
+  td {
+    vertical-align: top;
+    border: $border-width solid $gray-300;
+  }
+
+  thead th {
+    vertical-align: bottom;
+    border-bottom-width: 2 * $border-width;
+  }
+
+  tbody tr:nth-child(odd) {
+    background-color: $table-accent-bg;
+  }
 }
 
 .tax-table {
   page-break-inside: avoid;
+  margin-top: 14px;
+
+  table {
+    float: right;
+    width: 50%;
+  }
 }
 
 .summary {
-  & {
-    page-break-inside: avoid;
-  }
-
-  & > div {
-    padding: 0 10px;
-  }
+  clear: both;
 }
