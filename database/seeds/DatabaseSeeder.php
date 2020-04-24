@@ -11,5 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+    	if (app()->environment() !== 'production') {
+			$this->call([
+				UserSmajtiSeeder::class,
+			]);
+		}
     }
 }
