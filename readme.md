@@ -34,3 +34,6 @@ get into docker container and install dependencies
 ## Config
 
 currency and taxes set in config/invoice.php
+
+## Docs
+- [postgres](docs/postgres.md)
