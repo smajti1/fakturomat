@@ -29,7 +29,7 @@ class BuyerController extends Controller
     {
         $this->validate($this->request, $this->rules());
 
-        $buyer = Buyer::create($this->request->all());
+        $buyer = Buyer::make($this->request->all());
         $buyer->user()->associate(Auth::user());
         $buyer->save();
 

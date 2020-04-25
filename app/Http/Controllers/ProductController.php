@@ -55,7 +55,7 @@ class ProductController extends Controller
 
         $user = Auth::user();
         $productData = $this->request->only('name', 'measure_unit', 'price', 'tax_percent');
-        $product = Product::create($productData);
+        $product = Product::make($productData);
         $product->user()->associate($user);
         $product->save();
 

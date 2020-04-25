@@ -17,29 +17,20 @@ class UserSmajtiSeeder extends Seeder
 			'password' => bcrypt('qwerty'),
 		 ]);
 
-		$company = factory(Company::class)
-			->create()
-			->each(fn (Company $company) =>	$company->user()->associate($user)->save());
-
-		$buyer_list = factory(Buyer::class, 4)
-			->create()
-			->each(fn(Buyer $buyer) => $buyer->user()->associate($user)->save());
-
-		$product_number = 10;
-		$product_list = factory(Product::class, $product_number)
-			->create()
-			->each(fn(Product $product) => $product->user()->associate($user)->save());
+		$company = factory(Company::class)->create(['user_id' => $user]);
+		$buyer_list = factory(Buyer::class, 4)->create(['user_id' => $user]);
+		$product_list = factory(Product::class, 10)->create(['user_id' => $user]);
 
 		factory(Invoice::class, 6)
-			->create()
-			->each(static function(Invoice $invoice) use ($user, $company, $buyer_list, $product_list, $product_number) {
-				$invoice->user()->associate($user)->save();
-				$invoice->company()->associate($company)->save();
-				$invoice->buyer()->associate($buyer_list->random())->save();
-
+			->create([
+				'user_id' => $user,
+				'company_id' => $company,
+				'buyer_id' => $buyer_list->random(),
+			 ])
+			->each(static function(Invoice $invoice) use ($product_list) {
 				$invoice_total_price = 0;
 				$tmp_product_list = [];
-				foreach ($product_list->random(random_int(0, $product_number - 1)) as $product) {
+				foreach ($product_list->random(random_int(1, count($product_list) - 1)) as $product) {
 					$amount = random_int(0, 2_000);
 					$tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;
 					$invoice_total_price += $product->price * $tax_percent * $amount;

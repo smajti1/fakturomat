@@ -13,7 +13,7 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('companies', static function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->default('')->unique();
             $table->string('city')->default('');
@@ -28,8 +28,8 @@ class CreateCompaniesTable extends Migration
             $table->string('bank_account')->default('');
             $table->string('slug')->default('');
 
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+            $table->integer('user_id')->unsigned()->nullable(false);
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
             $table->softDeletes();

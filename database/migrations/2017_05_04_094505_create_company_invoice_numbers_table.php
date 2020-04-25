@@ -13,9 +13,9 @@ class CreateCompanyInvoiceNumbersTable extends Migration
      */
     public function up()
     {
-        Schema::create('company_invoice_numbers', function (Blueprint $table) {
+        Schema::create('company_invoice_numbers', static function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('company_id')->unsigned()->nullable(false);
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
             $table->integer('number')->unsigned()->default(0);

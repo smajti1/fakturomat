@@ -13,7 +13,7 @@ class CreateBuyersTable extends Migration
      */
     public function up()
     {
-        Schema::create('buyers', function (Blueprint $table) {
+        Schema::create('buyers', static function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->default('');
             $table->string('city')->default('');
@@ -28,7 +28,7 @@ class CreateBuyersTable extends Migration
             $table->string('bank_account')->default('');
             $table->string('slug')->default('');
 
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();

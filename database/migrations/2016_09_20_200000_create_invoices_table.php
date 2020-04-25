@@ -13,7 +13,7 @@ class CreateInvoicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('invoices', function (Blueprint $table) {
+        Schema::create('invoices', static function (Blueprint $table) {
             $table->increments('id');
             $table->tinyInteger('payment')->unsigned();
             $table->tinyInteger('status')->unsigned();
@@ -23,13 +23,13 @@ class CreateInvoicesTable extends Migration
             $table->float('price')->default(0);
             $table->string('path')->default('');
 
-            $table->integer('company_id')->unsigned()->nullable();
+            $table->integer('company_id')->unsigned()->nullable(false);
             $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
-            $table->integer('buyer_id')->unsigned()->nullable();
+            $table->integer('buyer_id')->unsigned()->nullable(false);
             $table->foreign('buyer_id')->references('id')->on('buyers')->onDelete('cascade');
 
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();

@@ -46,7 +46,7 @@ $factory->define(App\Models\Product::class, static fn (Faker $faker) => [
 	'name' => $faker->name,
 	'measure_unit' => array_rand(config('invoice.measure_units.' . config('app.locale'))),
 	'price' => $faker->randomFloat(null, 0.01, 100_000),
-	'tax_percent' => $faker->numberBetween(0, 23),
+	'tax_percent' => $faker->randomElement(config('invoice.tax_rates.' . config('invoice.currency')))['id'],
 ]);
 $factory->define(App\Models\Invoice::class, static function (Faker $faker) {
 	$payment_at = $faker->dateTimeBetween('-1 month');

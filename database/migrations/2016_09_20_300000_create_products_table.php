@@ -13,7 +13,7 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('products', static function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('measure_unit');
@@ -21,13 +21,13 @@ class CreateProductsTable extends Migration
             $table->string('tax_percent')->default('');
             $table->string('slug');
 
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned()->nullable(false);
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
         });
 
-        Schema::create('invoice_products', function (Blueprint $table) {
+        Schema::create('invoice_products', static function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('measure_unit');
@@ -35,7 +35,7 @@ class CreateProductsTable extends Migration
             $table->string('tax_percent')->default('');
             $table->float('amount')->unsigned();
 
-            $table->integer('invoice_id')->unsigned()->nullable();
+            $table->integer('invoice_id')->unsigned()->nullable(false);
             $table->foreign('invoice_id')->references('id')->on('invoices')->onDelete('cascade');
 
             $table->timestamps();

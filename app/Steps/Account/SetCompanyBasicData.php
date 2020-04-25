@@ -33,7 +33,7 @@ class SetCompanyBasicData extends Step
                     'bank_account'  => $data['bank_account'],
                 ]);
             } else {
-                $company = Company::create([
+                $company = Company::make([
                     'name'          => $data['company_name'],
                     'tax_id_number' => $data['tax_id_number'],
                     'regon'         => $data['regon'],
