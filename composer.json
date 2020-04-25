@@ -15,14 +15,15 @@
     ],
     "require": {
         "php": "^7.4",
-        "ext-pdo": "*",
         "ext-intl": "*",
-        "cviebrock/eloquent-sluggable": "^6.0",
+        "ext-pdo": "*",
+        "cviebrock/eloquent-sluggable": "^7.0",
         "fideloper/proxy": "~4.2",
         "guzzlehttp/guzzle": "^6.3",
-        "laravel/framework": "^6.4",
+        "laravel/framework": "^7.8",
         "laravel/tinker": "~2.1",
-        "smajti1/laravel-wizard": "^1.2"
+        "laravel/ui": "^2.0",
+        "smajti1/laravel-wizard": "^1.4"
     },
     "require-dev": {
         "filp/whoops": "~2.5",
