@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
+    <style>{{ file_get_contents('css/bootstrap.css') }}</style>
     <style>{{ file_get_contents('css/invoice-pdf.css') }}</style>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 </head>
 <body class="pdf invoice-pdf" onload="subst()">
 
@@ -18,7 +18,7 @@
     </div>
 
     <div class="row border-box-content">
-        <div class="col-6 company padding-left-20">
+        <div class="company padding-left-20">
             <h4>Sprzedawca</h4>
             <div class="padding-left-20">
                 <div id="company-name-placeholder">
@@ -52,7 +52,7 @@
                 @endif
             </div>
         </div>
-        <div class="col-6 buyer">
+        <div class="buyer">
             <h4>Nabywca</h4>
             <div class="padding-left-20">
                 <div id="buyer-name-placeholder">

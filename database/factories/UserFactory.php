@@ -50,11 +50,13 @@ $factory->define(App\Models\Product::class, static fn (Faker $faker) => [
 ]);
 $factory->define(App\Models\Invoice::class, static function (Faker $faker) {
 	$payment_at = $faker->dateTimeBetween('-1 month');
+	static $i;
 
 	return [
 		'payment' => [Invoice::PAYMENT_CASH, Invoice::PAYMENT_BANK_TRANSFER][$faker->numberBetween(0, 1)],
 		'status' => [Invoice::STATUS_NOT_PAID, Invoice::STATUS_PAID][$faker->numberBetween(0, 1)],
 		'payment_at' => $payment_at,
 		'issue_date' => $payment_at,
+		'number' => (++$i ?? $i = 1) . '/' . $payment_at->format('M') . '/' . $payment_at->format('Y'),
 	];
 });

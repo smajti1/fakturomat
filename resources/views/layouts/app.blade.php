@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
+    <link href="{{ mix('/css/bootstrap.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 <body>

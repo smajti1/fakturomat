@@ -29,6 +29,7 @@ mix
         'node_modules/select2/dist/js/select2.js',
         'resources/js/app.js'
     ], 'public/js/app.js')
+    .copy('node_modules/bootstrap/dist/css/bootstrap.css', 'public/css')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/invoice-pdf.scss', 'public/css')
     .autoload({
