@@ -12,6 +12,9 @@ services:
       POSTGRES_DB: ${DB_DATABASE}
     ports:
       - ${DB_PORT}:${DB_PORT}
+    networks:
+      - default
+      - fakturomat
 
   web:
     build:
@@ -24,19 +27,45 @@ services:
       - ./:${DOCKER_WORK_DIR}
     environment:
       DB_HOST: db
+    networks:
+      - fakturomat
 
   nginx:
     image: nginx:1.17
     restart: always
     working_dir: ${DOCKER_WORK_DIR}
     volumes:
-      - ./docker/nginx/:/etc/nginx/conf.d/
-      - ./storage/docker/nginx/:/var/log/nginx:z
+      - ./:/app:ro
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./:${DOCKER_WORK_DIR}
     depends_on:
       - web
-    ports:
-      - 80:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fakturomat.rule=Host(`${WEBPAGE_DOMAIN}`)"
+      - "traefik.http.routers.fakturomat.entryPoints=web"
+      - "traefik.http.middlewares.fakturomat-https-redirect.redirectscheme.scheme=websecure"
+      - "traefik.http.routers.fakturomat.middlewares=fakturomat-https-redirect"
+
+      - "traefik.http.routers.fakturomat-secure.rule=Host(`${WEBPAGE_DOMAIN}`)"
+      - "traefik.http.routers.fakturomat-secure.entryPoints=websecure"
+      - "traefik.http.routers.fakturomat-secure.tls=true"
+      - "traefik.http.routers.fakturomat-secure.service=fakturomat"
+      - "traefik.http.services.fakturomat.loadbalancer.server.port=80"
+      - "traefik.http.routers.fakturomat.tls.certresolver=myresolver"
+    networks:
+      - default
+      - fakturomat
+#    ports:
+#      - 80:80
 
 volumes:
   postgres:
+
+networks:
+  default:
+    external:
+      name: gateway
+
+  fakturomat:
+    internal: true
