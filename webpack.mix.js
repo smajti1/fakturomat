@@ -21,17 +21,17 @@ mix.webpackConfig({
 });
 
 mix
-    .copy('./node_modules/font-awesome/fonts/*', './public/fonts')
+    .copy('node_modules/font-awesome/fonts/*', 'public/fonts')
     .js([
-        './node_modules/jquery/dist/jquery.js',
-        './node_modules/tether/dist/js/tether.js',
-        './node_modules/bootstrap/dist/js/bootstrap.js',
-        './node_modules/select2/dist/js/select2.js',
-        './resources/js/app.js'
-    ], './public/js/app.js')
-    .copy('./node_modules/bootstrap/dist/css/bootstrap.css', './public/css')
-    .sass('./resources/sass/app.scss', './public/css')
-    .sass('./resources/sass/invoice-pdf.scss', './public/css')
+        'node_modules/jquery/dist/jquery.js',
+        'node_modules/tether/dist/js/tether.js',
+        'node_modules/bootstrap/dist/js/bootstrap.js',
+        'node_modules/select2/dist/js/select2.js',
+        'resources/js/app.js'
+    ], 'public/js/app.js')
+    .copy('node_modules/bootstrap/dist/css/bootstrap.css', 'public/css')
+    .sass('resources/sass/app.scss', 'public/css')
+    .sass('resources/sass/invoice-pdf.scss', 'public/css')
     .autoload({
         jquery: ['$', 'jQuery', 'window.jQuery'],
         tether: ['Tether', 'window.Tether'],

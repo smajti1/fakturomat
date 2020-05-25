@@ -23,8 +23,7 @@ jobs:
 
     - name: Npm install
       run: |
-        mkdir -p public/css public/fonts public/js
-        npm install
+        npm ci
         npm run build-for-test
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
