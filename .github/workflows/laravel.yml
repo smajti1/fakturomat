@@ -22,7 +22,10 @@ jobs:
       run: chmod -R 777 storage bootstrap/cache
 
     - name: Npm install
-      run: npm install && npm run build-for-test
+      run: |
+        mkdir -p public/css public/fonts public/js
+        npm install
+        npm run build-for-test
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
