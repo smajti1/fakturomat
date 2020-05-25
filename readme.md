@@ -22,12 +22,12 @@ get into docker container and install dependencies
 
     # you may need run attach.sh as root 
     $ ./attach.sh
-
+    
+    $ composer install --no-dev
+    
     $ ./artisan key:generate
 
     $ ./artisan migrate
-    
-    $ composer install --no-dev
 
     $ npm run start
 
