@@ -21,9 +21,10 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
 
-    - name: Npm install
+    - name: Npm install and build
       run: |
         npm ci
+        mkdir -p public/fonts && cp node_modules/font-awesome/fonts/* public/fonts
         npm run build-for-test
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
