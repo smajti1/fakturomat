@@ -23,7 +23,7 @@ jobs:
 
     - name: Npm install and build
       run: |
-        npm ci
+        npm ci --prefer-offline --no-audit
         mkdir -p public/fonts && cp node_modules/font-awesome/fonts/* public/fonts
         npm run build-for-test
 
