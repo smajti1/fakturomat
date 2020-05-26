@@ -37,3 +37,7 @@ currency and taxes set in config/invoice.php
 
 ## Docs
 - [postgres](docs/postgres.md)
+
+## Traefik
+- docs https://docs.traefik.io
+- revers proxy https://github.com/smajti1/traefik-reverse-proxy
