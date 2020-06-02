@@ -13,7 +13,6 @@ services:
       - ${DB_PORT}:${DB_PORT}
     networks:
       - default
-      - fakturomat
 
   web:
     build:
@@ -25,9 +24,9 @@ services:
     volumes:
       - ./:${DOCKER_WORK_DIR}
     environment:
-      DB_HOST: db
+      DB_HOST: db #override env
     networks:
-      - fakturomat
+      - default
 
   nginx:
     image: nginx:1.17
@@ -42,18 +41,17 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.fakturomat.rule=Host(`${WEBPAGE_DOMAIN}`)"
       - "traefik.http.routers.fakturomat.entryPoints=web"
-      - "traefik.http.middlewares.fakturomat-https-redirect.redirectscheme.scheme=websecure"
-      - "traefik.http.routers.fakturomat.middlewares=fakturomat-https-redirect"
+#      - "traefik.http.middlewares.fakturomat-https-redirect.redirectScheme.scheme=websecure"
+#      - "traefik.http.routers.fakturomat.middlewares=fakturomat-https-redirect"
+      - "traefik.http.services.fakturomat.loadBalancer.server.port=80"
 
       - "traefik.http.routers.fakturomat-secure.rule=Host(`${WEBPAGE_DOMAIN}`)"
       - "traefik.http.routers.fakturomat-secure.entryPoints=websecure"
       - "traefik.http.routers.fakturomat-secure.tls=true"
       - "traefik.http.routers.fakturomat-secure.service=fakturomat"
-      - "traefik.http.services.fakturomat.loadbalancer.server.port=80"
-      - "traefik.http.routers.fakturomat.tls.certresolver=myresolver"
+      - "traefik.http.routers.fakturomat-secure.tls.certResolver=myresolver"
     networks:
       - default
-      - fakturomat
 #    ports:
 #      - 80:80
 
@@ -64,6 +62,3 @@ networks:
   default:
     external:
       name: gateway
-
-  fakturomat:
-    internal: true

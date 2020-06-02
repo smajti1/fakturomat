@@ -16,7 +16,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-		\URL::forceScheme('https');
+		if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+			|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] === '443')
+		) {
+			\URL::forceScheme('https');
+		}
 
         Validator::extend('tax_id_number', function ($attribute, $value, $paramters, $validator) {
             $parametersNumber = count($paramters);
