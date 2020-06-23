@@ -26,12 +26,13 @@
         "smajti1/laravel-wizard": "^1.4"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "~3.2",
+        "barryvdh/laravel-ide-helper": "~2.6",
         "filp/whoops": "~2.5",
         "fzaninotto/faker": "~1.8",
         "mockery/mockery": "~1.2",
-        "phpunit/phpunit": "~9.0",
-        "barryvdh/laravel-debugbar": "~3.2",
-        "barryvdh/laravel-ide-helper": "~2.6"
+        "phpstan/phpstan": "^0.12.30",
+        "phpunit/phpunit": "~9.0"
     },
     "autoload": {
         "classmap": [

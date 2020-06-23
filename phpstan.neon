@@ -1,0 +1,7 @@
+# vendor/bin/phpstan analyse --configuration=phpstan.neon
+parameters:
+	level: 0
+	paths:
+		- app
+		- config
+		- tests
