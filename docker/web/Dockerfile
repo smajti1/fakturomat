@@ -34,6 +34,13 @@ RUN apt update -yqq && apt install -y \
 RUN npm update && npm install -g npm@6.*
 
 RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl
+## xdebug
+RUN pecl install xdebug \
+    && docker-php-ext-enable xdebug \
+    && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_connect_back=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
+    && echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+## end xdebug
 RUN curl --insecure https://getcomposer.org/composer-stable.phar -o /usr/bin/composer && chmod +x /usr/bin/composer
 
 RUN locale-gen en_US.utf8 pl_PL.utf8
