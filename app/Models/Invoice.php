@@ -7,6 +7,45 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * App\Models\Invoice
+ *
+ * @property int $id
+ * @property int $payment
+ * @property int $status
+ * @property string $payment_at
+ * @property string $number
+ * @property string $issue_date
+ * @property float $price
+ * @property string $path
+ * @property int $company_id
+ * @property int $buyer_id
+ * @property int $user_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Buyer $buyer
+ * @property-read \App\Models\Company $company
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InvoiceProduct[] $invoice_products
+ * @property-read int|null $invoice_products_count
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereBuyerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCompanyId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereIssueDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePath($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePayment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePaymentAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUserId($value)
+ * @mixin \Eloquent
+ */
 class Invoice extends Model
 {
 
