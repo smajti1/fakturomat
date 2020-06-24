@@ -56,6 +56,7 @@ class RegisterController extends Controller
         $user = null;
 
         DB::transaction(static function () use (&$user, $data) {
+        	/** @var User $user */
             $user = User::create([
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
@@ -74,7 +75,7 @@ class RegisterController extends Controller
                 'bank_account'  => $data['bank_account'],
             ]);
 
-            $company->user()->associate($user);
+            $company->user->associate($user);
             $company->save();
         });
 
