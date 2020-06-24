@@ -30,6 +30,7 @@ class SetUserEmailAndPassword extends Step
                 ]);
             }
         } else {
+        	/** @var User $user */
             $user = User::create([
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),

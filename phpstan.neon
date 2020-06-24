@@ -1,7 +1,13 @@
 # vendor/bin/phpstan analyse --configuration=phpstan.neon
 parameters:
-	level: 0
-	paths:
-		- app
-		- config
-		- tests
+    bootstrapFiles:
+        - _ide_helper.php
+    ignoreErrors:
+        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::[$a-zA-Z0-9\\_]+#'
+        - '#Access to an undefined property Illuminate\\Http\\Request::[$a-zA-Z0-9\\_]+#'
+        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::[$a-zA-Z0-9\\_]+#'
+    level: 5
+    paths:
+        - app
+        - config
+        - tests

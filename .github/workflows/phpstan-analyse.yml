@@ -21,5 +21,8 @@ jobs:
     - name: Directory Permissions
       run: chmod -R 777 storage bootstrap/cache
 
+    - name: Generate model helpers for laravel Facades
+      run: php artisan ide-helper:generate --no-interaction && php artisan ide-helper:model --no-interaction --write
+
     - name: Run phpstan analyse code
-      run: vendor/bin/phpstan analyse --configuration=phpstan.neon
+      run: vendor/bin/phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=1G

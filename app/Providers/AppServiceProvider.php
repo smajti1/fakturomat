@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
                 throw new InvalidArgumentException("Invalid number/content of \$parameters variable");
             }
             $taxIdParts = str_replace(str_split($allowedChars), '', $value);
-            $taxIdParts = str_split($taxIdParts);
+            $taxIdParts = array_map('intval', str_split($taxIdParts));
 
             switch (App::getLocale()) {
                 case 'pl':

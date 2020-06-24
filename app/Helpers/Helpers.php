@@ -1,22 +1,16 @@
 <?php
 
-/*
- * Format $number to PL money format
- */
 function money_pl_format($number): string
 {
     return number_format($number, 2, ',', ' ');
 }
 
-/*
- * Spell out the amount
- */
 function spellOutAmount($price): string
 {
     $numberFormatter = new \NumberFormatter(config('app.locale'), \NumberFormatter::SPELLOUT);
 
     $price = number_format($price, 2, '.', '');
-    list($integer, $decimal) = explode('.', $price);
+    [$integer, $decimal] = array_map('intval', explode('.', $price));
 
     $id = 'invoice.currency.' . config('invoice.currency');
     $price = $numberFormatter->format($integer) . ' ' . trans_choice("$id.integer", $integer);
@@ -25,9 +19,6 @@ function spellOutAmount($price): string
     return $price;
 }
 
-/*
- * filter and return active taxes
- */
 function activeTaxes(): array
 {
     $taxes = config('invoice.tax_rates.' . config('invoice.currency'));
