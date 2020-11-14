@@ -12,5 +12,6 @@ Create and seed database tables
 #### phpstan
 Before commit file run php analyse to find errors in code without running it
 
-    vendor/bin/phpstan analyse --configuration=phpstan.neon
+    ./artisan ide-helper:generate
+    composer phpstan
 read more on https://github.com/phpstan/phpstan

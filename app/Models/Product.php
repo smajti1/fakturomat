@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
@@ -37,7 +38,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class Product extends Model
 {
-    use Sluggable;
+    use Sluggable, HasFactory;
 
     protected $fillable = [
         'name', 'measure_unit', 'price', 'tax_percent'

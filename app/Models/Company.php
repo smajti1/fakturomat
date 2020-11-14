@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -59,7 +60,7 @@ use Illuminate\Support\Facades\Auth;
  */
 class Company extends Model
 {
-    use Sluggable, SoftDeletes;
+    use Sluggable, SoftDeletes, HasFactory;
 
     protected $fillable = [
         'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_name', 'bank_account',

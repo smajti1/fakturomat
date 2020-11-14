@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -48,6 +49,8 @@ use Illuminate\Support\Facades\Auth;
  */
 class Invoice extends Model
 {
+
+	use HasFactory;
 
     public const PAYMENT_CASH = 1;
     public const PAYMENT_BANK_TRANSFER = 2;

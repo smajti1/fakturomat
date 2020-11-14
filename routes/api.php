@@ -1,6 +1,8 @@
 <?php
 
-use Illuminate\Http\Request;
+declare(strict_types=1);
+
+use App\Http\Controllers\Api\InvoiceToPdfController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +17,7 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => ['auth:api']], function()
 {
-    Route::get('/faktura/{invoice}/html', 'Api\InvoiceToPdfController@toHtml')->name('api.invoices.to.html');
-    Route::get('/faktura/{invoice}/pdf',  'Api\InvoiceToPdfController@toPdf')->name('api.invoices.to.pdf');
-    Route::get('/faktura/{invoice}/pdf-footer',  'Api\InvoiceToPdfController@footer')->name('api.invoices.to.pdf.footer');
+    Route::get('/faktura/{invoice}/html', [InvoiceToPdfController::class, 'toHtml'])->name('api.invoices.to.html');
+    Route::get('/faktura/{invoice}/pdf',  [InvoiceToPdfController::class, 'toPdf'])->name('api.invoices.to.pdf');
+    Route::get('/faktura/{invoice}/pdf-footer',  [InvoiceToPdfController::class, 'footer'])->name('api.invoices.to.pdf.footer');
 });
