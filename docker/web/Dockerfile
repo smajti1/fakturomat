@@ -4,7 +4,7 @@ ARG DOCKER_WORK_DIR
 
 RUN usermod -u 1000 www-data --home="${DOCKER_WORK_DIR}/storage/docker/home/www-data"
 
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 
 RUN apt update -yqq && apt install -y \
     git \
@@ -31,7 +31,7 @@ RUN apt update -yqq && apt install -y \
     nodejs \
     && apt remove --purge --auto-remove -y
 
-RUN npm update && npm install -g npm@6.*
+RUN npm update && npm install -g npm@7.*
 
 RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl
 ## xdebug
