@@ -4,7 +4,7 @@ Fakturomat is a system to create and manage your invoices
 
 ## Base project configuration steps
 
-    git clone git@bitbucket.org:smajti1/fakturomat.git
+    git clone git@github.com:smajti1/fakturomat.git
     
     cd fakturomat
     
