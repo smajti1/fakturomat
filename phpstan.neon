@@ -1,5 +1,6 @@
 # vendor/bin/phpstan analyse --configuration=phpstan.neon
 parameters:
+    phpVersion: 80000
     bootstrapFiles:
         - _ide_helper.php
     ignoreErrors:
