@@ -20,7 +20,7 @@
     "tether": "^1.4.7"
   },
   "devDependencies": {
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "cross-env": "^7.0.2",
     "laravel-mix": "^5.0.9",
     "lodash": "^4.17.20",
