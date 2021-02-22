@@ -25,7 +25,7 @@ jobs:
       run: |
         npm ci --prefer-offline --no-audit
         mkdir -p public/fonts && cp node_modules/font-awesome/fonts/* public/fonts
-        npm run build-for-test
+        npm run development -- --no-progress
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit
       run: vendor/bin/phpunit
