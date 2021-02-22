@@ -7,6 +7,8 @@ parameters:
         - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::[$a-zA-Z0-9\\_]+#'
         - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::[$a-zA-Z0-9\\_]+#'
         - '#Access to an undefined property Illuminate\\Http\\Request::[$a-zA-Z0-9\\_]+#'
+        - '#Call to an undefined method Illuminate\\Http\\Request::[$a-zA-Z]+#'
+        - '#Access to undefined constant Illuminate\\Http\\Request::HEADER_X_FORWARDED_ALL#'
     level: 5
     paths:
         - app
