@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^8.0",
         "ext-intl": "*",
         "ext-pdo": "*",
         "cviebrock/eloquent-sluggable": "^8.0",
@@ -28,8 +28,8 @@
     "require-dev": {
         "barryvdh/laravel-debugbar": "~3.2",
         "barryvdh/laravel-ide-helper": "~2.6",
-        "filp/whoops": "~2.5",
         "fakerphp/faker": "~1.10",
+        "filp/whoops": "~2.5",
         "mockery/mockery": "~1.2",
         "phpstan/phpstan": "^0.12.30",
         "phpunit/phpunit": "~9.0"
@@ -71,7 +71,7 @@
     },
     "config": {
         "platform": {
-            "php": "7.4"
+            "php": "8.0"
         },
         "preferred-install": "dist",
         "sort-packages": true,
