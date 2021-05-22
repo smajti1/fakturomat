@@ -33,7 +33,7 @@ services:
     working_dir: ${DOCKER_WORK_DIR}
     volumes:
       - ./:/app:ro
-      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - ./:${DOCKER_WORK_DIR}
     depends_on:
       - web
