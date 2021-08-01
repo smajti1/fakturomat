@@ -6,7 +6,6 @@ parameters:
         - '#Access to an undefined property Illuminate\\Http\\Request::[$a-zA-Z0-9\\_]+#'
         - '#Call to an undefined method Illuminate\\Http\\Request::[$a-zA-Z]+#'
         - '#Call to an undefined method Illuminate\\Support\\Collection::count\(\)\.#'
-        - '#Static call to instance method Illuminate\\Database\\Query\\Builder::whereIn\(\)#'
     level: 5
     paths:
         - app
