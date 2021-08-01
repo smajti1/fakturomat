@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -8,10 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
+use LogicException;
 
 /**
- * App\Models\Product
- *
  * @property int $id
  * @property string $name
  * @property string $measure_unit
@@ -35,8 +36,6 @@ use Illuminate\Support\Facades\Auth;
  * @method static Builder|Product whereTaxPercent($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product whereUserId($value)
- * @method static Builder|Product create($value)
- * @method static Builder|Product make($value)
  * @mixin Model
  * @method static \Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
@@ -57,6 +56,9 @@ class Product extends Model
     public function isOwner(User $user = null): bool
     {
         $user = $user ?: Auth::user();
+        if (!$user instanceof User) {
+            throw new LogicException('User not logged!');
+        }
 
         return $user->id === $this->user->id;
     }

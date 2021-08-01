@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -8,10 +10,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
+use LogicException;
 
 /**
- * App\Models\Buyer
- *
  * @property int $id
  * @property string $name
  * @property string $city
@@ -49,8 +50,6 @@ use Illuminate\Support\Facades\Auth;
  * @method static Builder|Buyer whereUserId($value)
  * @method static Builder|Buyer whereWebsite($value)
  * @method static Builder|Buyer whereZipCode($value)
- * @method static Builder|Buyer create($value)
- * @method static Builder|Buyer make($value)
  * @mixin Model
  * @method static \Database\Factories\BuyerFactory factory(...$parameters)
  * @method static Builder|Buyer withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
@@ -71,6 +70,9 @@ class Buyer extends Model
     public function isOwner(User $user = null): bool
     {
         $user = $user ?: Auth::user();
+        if (!$user instanceof User) {
+            throw new LogicException('User not logged!');
+        }
 
         return $user->id === $this->user->id;
     }

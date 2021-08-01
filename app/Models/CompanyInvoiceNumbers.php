@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -7,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
- * App\Models\CompanyInvoiceNumbers
- *
  * @property int $id
  * @property int $company_id
  * @property int $number
@@ -31,8 +31,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|CompanyInvoiceNumbers whereShowNumber($value)
  * @method static Builder|CompanyInvoiceNumbers whereShowYear($value)
  * @method static Builder|CompanyInvoiceNumbers whereUpdatedAt($value)
- * @method static Builder|CompanyInvoiceNumbers create($value)
- * @method static Builder|CompanyInvoiceNumbers make($value)
  * @mixin Model
  */
 class CompanyInvoiceNumbers extends Model

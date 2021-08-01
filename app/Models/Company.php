@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
@@ -10,10 +12,9 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
+use LogicException;
 
 /**
- * App\Models\Company
- *
  * @property int $id
  * @property string $name
  * @property string $city
@@ -57,8 +58,6 @@ use Illuminate\Support\Facades\Auth;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereZipCode($value)
  * @method static Builder|Company withTrashed()
  * @method static Builder|Company withoutTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|Buyer create($value)
- * @method static Builder|Buyer make($value)
  * @mixin Model
  * @method static \Database\Factories\CompanyFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Company withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
@@ -89,6 +88,9 @@ class Company extends Model
     public function isOwner(User $user = null): bool
     {
         $user = $user ?: Auth::user();
+        if (!$user instanceof User) {
+            throw new LogicException('User not logged!');
+        }
 
         return $user->id === $this->user->id;
     }

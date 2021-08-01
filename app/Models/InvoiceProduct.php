@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
+use LogicException;
 
 /**
- * App\Models\InvoiceProduct
- *
  * @property int $id
  * @property string $name
  * @property string $measure_unit
@@ -62,6 +63,9 @@ class InvoiceProduct extends Model
     public function isOwner(User $user = null): bool
     {
         $user = $user ?: Auth::user();
+        if (!$user instanceof User) {
+            throw new LogicException('User not logged!');
+        }
 
         return $user->id === $this->user->id;
     }

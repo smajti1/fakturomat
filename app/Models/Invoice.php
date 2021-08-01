@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
@@ -8,10 +10,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
+use LogicException;
 
 /**
- * App\Models\Invoice
- *
  * @property int $id
  * @property int $payment
  * @property int $status
@@ -101,6 +102,9 @@ class Invoice extends Model
     public function isOwner(User $user = null): bool
     {
         $user = $user ?: Auth::user();
+        if (!$user instanceof User) {
+            throw new LogicException('User not logged!');
+        }
 
         return $user->id === $this->user->id;
     }

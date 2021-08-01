@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Steps\Account;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Smajti1\Laravel\Step;
@@ -16,19 +19,18 @@ class SetCompanySecondaryData extends Step
 
     public function process(Request $request)
     {
+        /** @var User|null $user */
         $user = Auth::user();
         $data = $request->all();
 
         if ($user && $this->wizard->dataHas('company_id')) {
             $company = $this->wizard->dataGet('company_id');
-            $company = Company::where('id', $company)->first();
-            if ($company) {
-                $company->update([
-                    'email'   => $data['company_email'],
-                    'website' => $data['website'],
-                    'phone'   => $data['phone'],
-                ]);
-            }
+            $company = Company::whereId($company)->first();
+            $company?->update([
+                'email' => $data['company_email'],
+                'website' => $data['website'],
+                'phone' => $data['phone'],
+            ]);
 
             $this->saveProgress($request);
         }

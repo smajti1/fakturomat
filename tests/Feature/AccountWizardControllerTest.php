@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
 use App\Models\User;
@@ -35,10 +37,12 @@ class AccountWizardControllerTest extends TestCase
         $faker = Factory::create();
         $password = $faker->password(8);
         $email = $faker->email;
-        User::create([
+        $user = new User();
+        $user->fill([
             'email'    => $email,
             'password' => $password,
         ]);
+        $user->save();
         $response = $this->post(
         	$this->getBaseUrl() . '/konto/' . SetUserEmailAndPassword::$slug,
 			[

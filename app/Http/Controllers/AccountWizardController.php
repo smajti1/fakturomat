@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Steps\Account\SetAddress;
 use App\Steps\Account\SetCompanyBasicData;
 use App\Steps\Account\SetCompanySecondaryData;
@@ -40,7 +43,7 @@ class AccountWizardController extends Controller
         } catch (StepNotFoundException $e) {
             abort(404);
         }
-
+        /** @var User $user */
         $user = Auth::user();
 
         return view('wizard.account.base', compact('step', 'user'));

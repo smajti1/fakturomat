@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use LogicException;
@@ -16,6 +19,7 @@ class InvoiceToPdfController extends Controller
 
     public function toPdf(Invoice $invoice)
     {
+        /** @var User $user */
         $user = Auth::user();
 
         if (!$this->commandExist()) {

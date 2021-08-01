@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Buyer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,8 +32,11 @@ class BuyerController extends Controller
     {
         $this->validate($this->request, $this->rules());
 
-        $buyer = Buyer::make($this->request->all());
-        $buyer->user()->associate(Auth::user());
+        /** @var User $user */
+        $user = Auth::user();
+        $buyer = new Buyer();
+        $buyer->fill($this->request->all());
+        $buyer->user()->associate($user);
         $buyer->save();
 
         $this->request->session()->flash('flash', ['success' => 'Dodano nowego kontrahenta!']);

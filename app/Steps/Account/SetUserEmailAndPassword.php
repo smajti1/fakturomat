@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Steps\Account;
 
 use App\Models\User;
@@ -16,6 +18,7 @@ class SetUserEmailAndPassword extends Step
 
     public function process(Request $request)
     {
+        /** @var User|null $user */
         $user = Auth::user();
         $data = $request->all();
 
@@ -30,11 +33,12 @@ class SetUserEmailAndPassword extends Step
                 ]);
             }
         } else {
-        	/** @var User $user */
-            $user = User::create([
+            $user = new User();
+            $user->fill([
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
             ]);
+            $user->saveOrFail();
 
             Auth::login($user);
         }
@@ -42,6 +46,7 @@ class SetUserEmailAndPassword extends Step
 
     public function rules(Request $request = null): array
     {
+        /** @var User|null $user */
         $user = Auth::user();
 
         return [

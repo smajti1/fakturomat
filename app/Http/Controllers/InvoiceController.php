@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Buyer;
 use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,7 +23,9 @@ class InvoiceController extends Controller
 
     public function index()
     {
-        $invoices = Invoice::where('user_id', Auth::user()->id)
+        /** @var User $user */
+        $user = Auth::user();
+        $invoices = Invoice::whereUserId($user->id)
             ->with(['buyer', 'invoice_products', 'company'])
             ->orderBy('created_at', 'desc')
             ->get();
@@ -30,6 +35,7 @@ class InvoiceController extends Controller
 
     public function create()
     {
+        /** @var User $user */
         $user = Auth::user();
         if ($user->buyers->isEmpty()) {
             //message = Aby dodać fakturę musisz dodać kontrachenta
@@ -49,6 +55,7 @@ class InvoiceController extends Controller
     {
         $this->validate($request, $this->rules());
 
+        /** @var Product[] $products */
         $products = Product::whereIn('id', array_keys($request->product))->get();
 
         $price = 0;
@@ -71,11 +78,12 @@ class InvoiceController extends Controller
             $invoiceData + compact('price')
         );
 
+        /** @var User $user */
         $user = Auth::user();
         $invoice->user()->associate($user);
         $invoice->company()->associate($user->company);
 
-        $buyer = Buyer::where('id', $request->buyer_id)->first();
+        $buyer = Buyer::whereId($request->buyer_id)->first();
         $invoice->buyer()->associate($buyer);
 
         $invoice->save();
@@ -93,6 +101,7 @@ class InvoiceController extends Controller
 
     public function edit(Invoice $invoice)
     {
+        /** @var User $user */
         $user = Auth::user();
         $company = $user->company;
         $buyers = $user->buyers;
@@ -108,6 +117,7 @@ class InvoiceController extends Controller
         $price = 0;
         $new_invoice_products = [];
         if (isset($request->product)) {
+            /** @var Product[] $products */
             $products = Product::whereIn('id', array_keys($request->product))->get();
             $new_invoice_products = [];
             foreach ($products as $product) {
@@ -127,6 +137,7 @@ class InvoiceController extends Controller
         if (isset($request->invoice_products)) {
             $invoice_product_ids = array_keys($request->invoice_products);
             $invoice->invoice_products()->whereNotIn('id', $invoice_product_ids)->delete();
+            /** @var InvoiceProduct[] $invoice_products */
             $invoice_products = InvoiceProduct::whereIn('id', array_keys($request->invoice_products))->get();
             foreach ($invoice_products as $invoice_product) {
                 $amount = $request->invoice_products[$invoice_product->id];
@@ -140,7 +151,7 @@ class InvoiceController extends Controller
         $invoice->invoice_products()->createMany($new_invoice_products);
         $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
         $invoice->update($invoiceData + compact('price'));
-        $buyer = Buyer::where('id', $request->buyer_id)->first();
+        $buyer = Buyer::whereId($request->buyer_id)->first();
         $invoice->buyer()->associate($buyer);
         $invoice->save();
 

@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -34,13 +37,16 @@ class ProductController extends Controller
     public function jsonList()
     {
         $search = $this->request->searchText;
-        $list = Auth::user()
+
+        /** @var User $user */
+        $user = Auth::user();
+        $list = $user
             ->products()
             ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
             ->get();
         if (!$list->count()) {
-            $list = Auth::user()
+            $list = $user
                 ->products()
                 ->limit(self::JSON_LIST_LIMIT)
                 ->get();
@@ -53,9 +59,11 @@ class ProductController extends Controller
     {
         $this->validate($this->request, $this->rules());
 
+        /** @var User $user */
         $user = Auth::user();
         $productData = $this->request->only('name', 'measure_unit', 'price', 'tax_percent');
-        $product = Product::make($productData);
+        $product = new Product();
+        $product->fill($productData);
         $product->user()->associate($user);
         $product->save();
 

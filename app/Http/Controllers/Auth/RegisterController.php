@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -42,7 +44,9 @@ class RegisterController extends Controller
     {
         $company_unique_id = '';
         if (Auth::check()) {
-            $company_unique_id = ',' . Auth::user()->company->id;
+            /** @var User $user */
+            $user = Auth::user();
+            $company_unique_id = ',' . $user->company->id;
         }
         return Validator::make($data, [
             'company_name' => "required|max:255|unique:companies,name$company_unique_id",
@@ -56,13 +60,14 @@ class RegisterController extends Controller
         $user = null;
 
         DB::transaction(static function () use (&$user, $data) {
-        	/** @var User $user */
-            $user = User::create([
+            $user = new User();
+            $user->fill([
                 'email'    => $data['email'],
                 'password' => bcrypt($data['password']),
             ]);
 
-            $company = Company::create([
+            $company = new Company();
+            $company->fill([
                 'name'          => $data['company_name'],
                 'city'          => $data['city'],
                 'zip_code'      => $data['zip_code'],
@@ -76,6 +81,7 @@ class RegisterController extends Controller
             ]);
 
             $company->user->associate($user);
+            $user->save();
             $company->save();
         });
 

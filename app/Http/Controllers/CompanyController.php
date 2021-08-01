@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -13,8 +16,9 @@ class CompanyController extends Controller
     public function jsonList(Request $request)
     {
         $search = $request->searchText;
-
-        return Auth::user()
+        /** @var User $user */
+        $user = Auth::user();
+        return $user
             ->company()
             ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
@@ -23,7 +27,9 @@ class CompanyController extends Controller
 
     public function edit()
     {
-        $company = Auth::user()->company;
+        /** @var User $user */
+        $user = Auth::user();
+        $company = $user->company;
 
         return view('companies.edit', compact('company'));
     }
@@ -31,7 +37,9 @@ class CompanyController extends Controller
     public function update(Request $request)
     {
         $this->validate($request, $this->rules());
-        $company = Auth::user()->company;
+        /** @var User $user */
+        $user = Auth::user();
+        $company = $user->company;
         $company->update($request->all());
         $company->save();
 
@@ -40,7 +48,9 @@ class CompanyController extends Controller
 
     protected function rules(): array
     {
-        $company_id = Auth::user()->company->id;
+        /** @var User $user */
+        $user = Auth::user();
+        $company_id = $user->company->id;
         return [
             'name'          => "required|max:255|unique:companies,name,$company_id",
             'address'       => 'max:255',

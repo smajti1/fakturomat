@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Steps\Account;
 
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Smajti1\Laravel\Step;
@@ -17,11 +20,12 @@ class SetCompanyBasicData extends Step
     public function process(Request $request)
     {
         $company = null;
+        /** @var User|null $user */
         $user = Auth::user();
         $data = $request->all();
         if ($this->wizard->dataHas('company_id')) {
             $company = $this->wizard->dataGet('company_id');
-            $company = Company::where('id', $company)->first();
+            $company = Company::whereId($company)->first();
         }
 
         if ($user) {
@@ -33,7 +37,8 @@ class SetCompanyBasicData extends Step
                     'bank_account'  => $data['bank_account'],
                 ]);
             } else {
-                $company = Company::make([
+                $company = new Company();
+                $company->fill([
                     'name'          => $data['company_name'],
                     'tax_id_number' => $data['tax_id_number'],
                     'regon'         => $data['regon'],
@@ -52,8 +57,10 @@ class SetCompanyBasicData extends Step
     public function rules(Request $request = null): array
     {
         $company_unique_id = '';
-        if (Auth::user()->company) {
-            $company_unique_id = ',' . Auth::user()->company->id;
+        /** @var User $user */
+        $user = Auth::user();
+        if ($user->company) {
+            $company_unique_id = ',' . $user->company->id;
         }
         return [
             'company_name'  => "required|max:255|unique:companies,name$company_unique_id",

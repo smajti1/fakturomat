@@ -34,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
             }
             $taxIdParts = str_replace(str_split($allowedChars), '', $value);
             $taxIdParts = array_map('intval', str_split($taxIdParts));
+            if (count($taxIdParts) < 9) {
+                return false;
+            }
 
             switch (App::getLocale()) {
                 case 'pl':

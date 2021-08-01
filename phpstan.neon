@@ -1,17 +1,12 @@
 # vendor/bin/phpstan analyse --configuration=phpstan.neon
 parameters:
-    phpVersion: 80000
     bootstrapFiles:
         - _ide_helper.php
     ignoreErrors:
-        - '#Access to an undefined property Illuminate\\Database\\Eloquent\\Model::[$a-zA-Z0-9\\_]+#'
-        - '#Call to an undefined method Illuminate\\Database\\Eloquent\\Model::[$a-zA-Z0-9\\_]+#'
         - '#Access to an undefined property Illuminate\\Http\\Request::[$a-zA-Z0-9\\_]+#'
         - '#Call to an undefined method Illuminate\\Http\\Request::[$a-zA-Z]+#'
-        - '#Access to undefined constant Illuminate\\Http\\Request::HEADER_X_FORWARDED_ALL#'
-        - '#Argument of an invalid type Illuminate\\Support\\Collection supplied for foreach, only iterables are supported#'
         - '#Call to an undefined method Illuminate\\Support\\Collection::count\(\)\.#'
-        - '#Cannot call method isEmpty\(\) on array<App\\Models\\Buyer>|Illuminate\\Database\\Eloquent\\Collection\.#'
+        - '#Static call to instance method Illuminate\\Database\\Query\\Builder::whereIn\(\)#'
     level: 5
     paths:
         - app
