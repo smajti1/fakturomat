@@ -14,7 +14,7 @@
                 <li>Faktury w formie pdf</li>
             </ul>
 
-            @if(Auth::check())
+            @if(Illuminate\Support\Facades\Auth::check())
                 @include('panel-body')
             @else
                 <div class="pull-right">

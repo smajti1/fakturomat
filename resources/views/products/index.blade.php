@@ -18,7 +18,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(Auth::user()->products as $product)
+            @foreach(Illuminate\Support\Facades\Auth::user()->products as $product)
                 <tr>
                     <td>{{ $product->name }}</td>
                     <td>{{ $product->measure_unit }}</td>

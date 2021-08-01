@@ -44,7 +44,7 @@
                             </button>
                         </form>
 
-                        <a href="{{ route('api.invoices.to.pdf', compact('invoice') + ['api_token' => \Auth::user()->api_token]) }}" class="inline-block" target="_blank">
+                        <a href="{{ route('api.invoices.to.pdf', compact('invoice') + ['api_token' => \Illuminate\Support\Facades\Auth::user()->api_token]) }}" class="inline-block" target="_blank">
                             <i class="fa fa-file-pdf-o"></i>
                         </a>
                     </td>

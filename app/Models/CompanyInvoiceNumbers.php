@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -18,19 +19,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Company $company
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereAutoincrementNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereCompanyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereShowMonth($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereShowNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereShowYear($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\CompanyInvoiceNumbers whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|CompanyInvoiceNumbers newModelQuery()
+ * @method static Builder|CompanyInvoiceNumbers newQuery()
+ * @method static Builder|CompanyInvoiceNumbers query()
+ * @method static Builder|CompanyInvoiceNumbers whereAutoincrementNumber($value)
+ * @method static Builder|CompanyInvoiceNumbers whereCompanyId($value)
+ * @method static Builder|CompanyInvoiceNumbers whereCreatedAt($value)
+ * @method static Builder|CompanyInvoiceNumbers whereId($value)
+ * @method static Builder|CompanyInvoiceNumbers whereNumber($value)
+ * @method static Builder|CompanyInvoiceNumbers whereShowMonth($value)
+ * @method static Builder|CompanyInvoiceNumbers whereShowNumber($value)
+ * @method static Builder|CompanyInvoiceNumbers whereShowYear($value)
+ * @method static Builder|CompanyInvoiceNumbers whereUpdatedAt($value)
+ * @method static Builder|CompanyInvoiceNumbers create($value)
+ * @method static Builder|CompanyInvoiceNumbers make($value)
+ * @mixin Model
  */
 class CompanyInvoiceNumbers extends Model
 {
@@ -72,9 +75,8 @@ class CompanyInvoiceNumbers extends Model
         if ($this->show_number && $this->autoincrement_number) {
             $number['number']++;
         }
-        $number = implode('/', $number);
 
-        return $number;
+        return implode('/', $number);
     }
 
 }

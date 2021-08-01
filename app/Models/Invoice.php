@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,23 +30,26 @@ use Illuminate\Support\Facades\Auth;
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\InvoiceProduct[] $invoice_products
  * @property-read int|null $invoice_products_count
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereBuyerId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCompanyId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereIssueDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePath($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePayment($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePaymentAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Invoice whereUserId($value)
- * @mixin \Eloquent
+ * @method static Builder|Invoice newModelQuery()
+ * @method static Builder|Invoice newQuery()
+ * @method static Builder|Invoice query()
+ * @method static Builder|Invoice whereBuyerId($value)
+ * @method static Builder|Invoice whereCompanyId($value)
+ * @method static Builder|Invoice whereCreatedAt($value)
+ * @method static Builder|Invoice whereId($value)
+ * @method static Builder|Invoice whereIssueDate($value)
+ * @method static Builder|Invoice whereNumber($value)
+ * @method static Builder|Invoice wherePath($value)
+ * @method static Builder|Invoice wherePayment($value)
+ * @method static Builder|Invoice wherePaymentAt($value)
+ * @method static Builder|Invoice wherePrice($value)
+ * @method static Builder|Invoice whereStatus($value)
+ * @method static Builder|Invoice whereUpdatedAt($value)
+ * @method static Builder|Invoice whereUserId($value)
+ * @method static Builder|Invoice create($value)
+ * @method static Builder|Invoice make($value)
+ * @mixin Model
+ * @method static \Database\Factories\InvoiceFactory factory(...$parameters)
  */
 class Invoice extends Model
 {

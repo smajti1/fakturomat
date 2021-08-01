@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Auth;
 
 /**
@@ -32,31 +33,35 @@ use Illuminate\Support\Facades\Auth;
  * @property \Illuminate\Support\Carbon|null $deleted_at
  * @property-read \App\Models\CompanyInvoiceNumbers|null $companyInvoiceNumber
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company findSimilarSlugs($attribute, $config, $slug)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company newQuery()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Company onlyTrashed()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereBankAccount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereBankName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereRegon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereTaxIdNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereWebsite($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Company whereZipCode($value)
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Company withTrashed()
- * @method static \Illuminate\Database\Query\Builder|\App\Models\Company withoutTrashed()
- * @mixin \Eloquent
+ * @method static \Illuminate\Database\Eloquent\Builder|Company findSimilarSlugs($attribute, $config, $slug)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company newQuery()
+ * @method static Builder|Company onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereBankAccount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereBankName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereCity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereEmail($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company wherePhone($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereRegon($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereStreet($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereTaxIdNumber($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereWebsite($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company whereZipCode($value)
+ * @method static Builder|Company withTrashed()
+ * @method static Builder|Company withoutTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Buyer create($value)
+ * @method static Builder|Buyer make($value)
+ * @mixin Model
+ * @method static \Database\Factories\CompanyFactory factory(...$parameters)
+ * @method static \Illuminate\Database\Eloquent\Builder|Company withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
 class Company extends Model
 {

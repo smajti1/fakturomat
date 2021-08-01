@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -28,27 +29,31 @@ use Illuminate\Support\Facades\Auth;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer findSimilarSlugs($attribute, $config, $slug)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereBankAccount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereBankName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereCity($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer wherePhone($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereRegon($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereSlug($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereStreet($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereTaxIdNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereWebsite($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Buyer whereZipCode($value)
- * @mixin \Eloquent
+ * @method static Builder|Buyer findSimilarSlugs($attribute, $config, $slug)
+ * @method static Builder|Buyer newModelQuery()
+ * @method static Builder|Buyer newQuery()
+ * @method static Builder|Buyer query()
+ * @method static Builder|Buyer whereBankAccount($value)
+ * @method static Builder|Buyer whereBankName($value)
+ * @method static Builder|Buyer whereCity($value)
+ * @method static Builder|Buyer whereCreatedAt($value)
+ * @method static Builder|Buyer whereEmail($value)
+ * @method static Builder|Buyer whereId($value)
+ * @method static Builder|Buyer whereName($value)
+ * @method static Builder|Buyer wherePhone($value)
+ * @method static Builder|Buyer whereRegon($value)
+ * @method static Builder|Buyer whereSlug($value)
+ * @method static Builder|Buyer whereStreet($value)
+ * @method static Builder|Buyer whereTaxIdNumber($value)
+ * @method static Builder|Buyer whereUpdatedAt($value)
+ * @method static Builder|Buyer whereUserId($value)
+ * @method static Builder|Buyer whereWebsite($value)
+ * @method static Builder|Buyer whereZipCode($value)
+ * @method static Builder|Buyer create($value)
+ * @method static Builder|Buyer make($value)
+ * @mixin Model
+ * @method static \Database\Factories\BuyerFactory factory(...$parameters)
+ * @method static Builder|Buyer withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
 class Buyer extends Model
 {

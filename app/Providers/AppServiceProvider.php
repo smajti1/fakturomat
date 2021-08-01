@@ -57,9 +57,8 @@ class AppServiceProvider extends ServiceProvider
                 $allowedChars = implode('|', str_split($parameters[0]));
                 $text = trans('validation.tax_id_number_allowed_chars', ['attribute' => "[$allowedChars]"]);
             }
-            $message = str_replace(':allowedChars', $text, $message);
 
-            return $message;
+            return str_replace(':allowedChars', $text, $message);
         });
     }
 

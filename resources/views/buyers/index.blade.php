@@ -20,7 +20,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach(Auth::user()->buyers as $buyer)
+            @foreach(Illuminate\Support\Facades\Auth::user()->buyers as $buyer)
                 <tr>
                     <td><a href="{{ route('buyer.edit', compact('buyer')) }}">{{ $buyer->name }}</a></td>
                     <td>

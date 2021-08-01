@@ -13,13 +13,12 @@ class CompanyController extends Controller
     public function jsonList(Request $request)
     {
         $search = $request->searchText;
-        $list = Auth::user()
+
+        return Auth::user()
             ->company()
             ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
             ->get();
-
-        return $list;
     }
 
     public function edit()

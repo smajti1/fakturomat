@@ -17,7 +17,7 @@
         <a href="{{ url('/') }}" class="webpage-link navbar-brand">Fakturomat</a>
         <div class="collapse navbar-collapse" id="navbar-header" aria-expanded="false">
             <ul class="navbar-nav mr-auto">
-                @if (Auth::guest())
+                @if (Illuminate\Support\Facades\Auth::guest())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/login') }}">Zaloguj się</a>
                     </li>
@@ -36,7 +36,7 @@
                     </li>
                 @endif
             </ul>
-            @if (!Auth::guest())
+            @if (!Illuminate\Support\Facades\Auth::guest())
                 <form id="logout-form" action="{{ url('/logout') }}" method="POST">
                     {{ csrf_field() }}
                     <button class="btn btn-outline-secondary btn-color-636b6f nav-link pull-right">
@@ -46,8 +46,8 @@
             @endif
         </div>
         <span class="btn nohover pull-right d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">
-            @if (Auth::check())
-                {{ Auth::user()->email }}
+            @if (Illuminate\Support\Facades\Auth::check())
+                {{ Illuminate\Support\Facades\Auth::user()->email }}
             @endif
         </span>
     </nav>

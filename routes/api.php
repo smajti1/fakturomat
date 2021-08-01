@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\Api\InvoiceToPdfController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------

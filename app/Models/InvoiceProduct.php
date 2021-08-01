@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
@@ -20,19 +21,21 @@ use Illuminate\Support\Facades\Auth;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\Invoice $invoice
  * @property-read \App\Models\User $user
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereAmount($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereInvoiceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereMeasureUnit($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct wherePrice($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereTaxPercent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\InvoiceProduct whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|InvoiceProduct newModelQuery()
+ * @method static Builder|InvoiceProduct newQuery()
+ * @method static Builder|InvoiceProduct query()
+ * @method static Builder|InvoiceProduct whereAmount($value)
+ * @method static Builder|InvoiceProduct whereCreatedAt($value)
+ * @method static Builder|InvoiceProduct whereId($value)
+ * @method static Builder|InvoiceProduct whereInvoiceId($value)
+ * @method static Builder|InvoiceProduct whereMeasureUnit($value)
+ * @method static Builder|InvoiceProduct whereName($value)
+ * @method static Builder|InvoiceProduct wherePrice($value)
+ * @method static Builder|InvoiceProduct whereTaxPercent($value)
+ * @method static Builder|InvoiceProduct whereUpdatedAt($value)
+ * @method static Builder|InvoiceProduct create($value)
+ * @method static Builder|InvoiceProduct make($value)
+ * @mixin Model
  */
 class InvoiceProduct extends Model
 {

@@ -14,9 +14,8 @@ function spellOutAmount($price): string
 
     $id = 'invoice.currency.' . config('invoice.currency');
     $price = $numberFormatter->format($integer) . ' ' . trans_choice("$id.integer", $integer);
-    $price .= ' ' . $numberFormatter->format($decimal) . ' ' . trans_choice("$id.decimal", $decimal);
 
-    return $price;
+    return $price . (' ' . $numberFormatter->format($decimal) . ' ' . trans_choice("$id.decimal", $decimal));
 }
 
 function activeTaxes(): array

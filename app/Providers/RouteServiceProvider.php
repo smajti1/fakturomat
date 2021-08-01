@@ -14,19 +14,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $namespace = null;
-
-    /**
-     * Define your route model bindings, pattern filters, etc.
-     *
-     * @return void
-     */
-    public function boot()
-    {
-        //
-
-        parent::boot();
-    }
+    protected $namespace;
 
     /**
      * Define the routes for the application.

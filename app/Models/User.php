@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -27,17 +29,21 @@ use Illuminate\Support\Str;
  * @property-read int|null $notifications_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
  * @property-read int|null $products_count
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User query()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereApiToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereEmail($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User wherePassword($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereRememberToken($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\User whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static Builder|User query()
+ * @method static Builder|User whereApiToken($value)
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User whereRememberToken($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @method static Builder|User create($value)
+ * @method static Builder|User make($value)
+ * @method User associate($value)
+ * @mixin Model
+ * @method static \Database\Factories\UserFactory factory(...$parameters)
  */
 class User extends Authenticatable
 {
