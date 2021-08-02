@@ -27,6 +27,8 @@ get into docker container and install dependencies
     # you may need run attach.sh as root 
     ./attach.sh
     
+    optionaly if cannot create directories etc check uid (User ID)
+
     composer install --no-dev
     
     ./artisan key:generate
@@ -42,6 +44,7 @@ currency and taxes set in config/invoice.php
 ## Docs
 - [development](docs/development.md)
 - [postgres](docs/postgres.md)
+- [vps start commands](docs/vps-start-commands.md)
 
 ## Traefik
 - docs https://docs.traefik.io
