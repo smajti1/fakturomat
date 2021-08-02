@@ -3,6 +3,7 @@ version: '3'
 services:
   db:
     image: library/postgres:13
+    restart: ${DOCKER_RESTART}
     volumes:
       - postgres:/var/lib/postgresql/data:z
     environment:
@@ -20,6 +21,7 @@ services:
       dockerfile: docker/web/Dockerfile
       args:
         - DOCKER_WORK_DIR=${DOCKER_WORK_DIR}
+    restart: ${DOCKER_RESTART}
     working_dir: ${DOCKER_WORK_DIR}
     volumes:
       - ./:${DOCKER_WORK_DIR}
@@ -30,6 +32,7 @@ services:
 
   nginx:
     image: library/nginx:1.18
+    restart: ${DOCKER_RESTART}
     working_dir: ${DOCKER_WORK_DIR}
     volumes:
       - ./:/app:ro
@@ -37,23 +40,10 @@ services:
       - ./:${DOCKER_WORK_DIR}
     depends_on:
       - web
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.fakturomat.rule=Host(`${WEBPAGE_DOMAIN}`)"
-      - "traefik.http.routers.fakturomat.entryPoints=web"
-#      - "traefik.http.middlewares.fakturomat-https-redirect.redirectScheme.scheme=websecure"
-#      - "traefik.http.routers.fakturomat.middlewares=fakturomat-https-redirect"
-      - "traefik.http.services.fakturomat.loadBalancer.server.port=80"
-
-      - "traefik.http.routers.fakturomat-secure.rule=Host(`${WEBPAGE_DOMAIN}`)"
-      - "traefik.http.routers.fakturomat-secure.entryPoints=websecure"
-      - "traefik.http.routers.fakturomat-secure.tls=true"
-      - "traefik.http.routers.fakturomat-secure.service=fakturomat"
-      - "traefik.http.routers.fakturomat-secure.tls.certResolver=myresolver"
     networks:
       - default
-#    ports:
-#      - 80:80
+    environment:
+      - VIRTUAL_HOST=${WEBPAGE_DOMAIN}
 
 volumes:
   postgres:
