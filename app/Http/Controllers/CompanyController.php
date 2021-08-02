@@ -59,6 +59,7 @@ class CompanyController extends Controller
             'email'         => 'max:255',
             'website'       => 'max:255',
             'phone'         => 'max:255',
+			'bank_name' => 'max:255',
             'bank_account'  => 'max:255',
         ];
     }

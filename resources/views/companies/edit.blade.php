@@ -49,6 +49,11 @@
                     <input id="phone" type="text" class="form-control form-control-danger" name="phone" value="{{ old('phone', $company->phone) }}" placeholder="Telefon">
                     <div class="form-control-feedback">{{ $errors->first('phone') }}</div>
                 </div>
+                <div class="form-group{{ $errors->has('bank_name') ? ' has-danger' : '' }}">
+                    <label for="bank_name">Nazwa banku</label>
+                    <input id="bank_name" type="text" class="form-control form-control-danger" name="bank_name" value="{{ old('bank_name', $company->bank_name) }}" placeholder="Nazwa banku">
+                    <div class="form-control-feedback">{{ $errors->first('form-control-danger') }}</div>
+                </div>
                 <div class="form-group{{ $errors->has('bank_account') ? ' has-danger' : '' }}">
                     <label for="bank_account">Konto bankowe</label>
                     <input id="bank_account" type="text" class="form-control form-control-danger" name="bank_account" value="{{ old('bank_account', $company->bank_account) }}" placeholder="Konto bankowe">
