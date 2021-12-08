@@ -12,6 +12,7 @@ upgrade postgres version in `docker-compose.yml` file
     docker-compose down
     docker volume rm fakturomat_postgres
     docker-compose up --detach
+    # into next command may need to be to add --dbname=DBNAME
     docker-compose exec -T db psql --username=USERNAME < pgdump.sql
     
 

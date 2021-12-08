@@ -45,7 +45,4 @@ currency and taxes set in config/invoice.php
 - [development](docs/development.md)
 - [postgres](docs/postgres.md)
 - [vps start commands](docs/vps-start-commands.md)
-
-## Traefik
-- docs https://docs.traefik.io
-- revers proxy https://github.com/smajti1/traefik-reverse-proxy
+- [nginx reverse proxy](docs/vps-start-commands.md)
