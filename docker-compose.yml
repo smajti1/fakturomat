@@ -47,6 +47,7 @@ services:
       - default
     environment:
       - VIRTUAL_HOST=${WEBPAGE_DOMAIN}
+      - LETSENCRYPT_HOST=${WEBPAGE_DOMAIN}
 
 volumes:
   postgres:
