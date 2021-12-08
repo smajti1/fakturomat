@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: library/postgres:13
+    image: library/postgres:14
     restart: ${DOCKER_RESTART}
     volumes:
       - postgres:/var/lib/postgresql/data:z
@@ -31,7 +31,7 @@ services:
       - default
 
   nginx:
-    image: library/nginx:1.18
+    image: library/nginx:1.21
     restart: ${DOCKER_RESTART}
     working_dir: ${DOCKER_WORK_DIR}
     volumes:
