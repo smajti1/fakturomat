@@ -22,7 +22,7 @@ network should be the same that in docker-compose.yml
 
 For more see https://github.com/nginx-proxy/nginx-proxy
 
-To use https and auto-renewal 
+To use https and auto-renewal ssl certificate
 
     docker run --detach \
         --name nginx-proxy-acme \
