@@ -45,5 +45,5 @@ currency and taxes set in config/invoice.php
 - [development](docs/development.md)
 - [postgres](docs/postgres.md)
 - [vps start commands](docs/vps-start-commands.md)
-- [nginx reverse proxy](docs/vps-start-commands.md)
+- [nginx reverse proxy](docs/nginx-proxy.md)
 - [docker config/setup/help list](docs/docker.md)

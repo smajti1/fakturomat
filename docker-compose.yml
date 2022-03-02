@@ -31,7 +31,7 @@ services:
       - default
 
   nginx:
-    image: library/nginx:1.21
+    image: library/nginx:1.21.6
     restart: ${DOCKER_RESTART}
     working_dir: ${DOCKER_WORK_DIR}
     volumes:
@@ -54,5 +54,5 @@ volumes:
 
 networks:
   default:
-    external:
-      name: gateway
+    external: true
+    name: gateway

@@ -1,8 +1,11 @@
 ### To start
 
-add new entry in `/etc/host` like:
+add new entry in `/etc/hosts` like (ip may be different that in example see nginx-proxy see [Debug](#debug)):
 
-    127.0.0.1 fakturomat.local
+    127.0.0.1 fakturomat.test
+ensure host work
+
+    getent ahosts fakturomat.test
 
 Next start **nginx-proxy**
 
@@ -39,3 +42,11 @@ To see logs/debug use
     docker logs -f nginx-proxy
 
 For more see https://github.com/nginx-proxy/acme-companion
+
+## Debug
+
+    docker exec nginx-proxy cat /etc/nginx/conf.d/default.conf
+
+## Update
+
+    docker pull nginxproxy/nginx-proxy
