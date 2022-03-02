@@ -107,6 +107,6 @@ class InvoiceProduct extends Model
         if (is_numeric($vat)) {
             $price *= $vat;
         }
-        return $price;
+		return (float) $price;
     }
 }

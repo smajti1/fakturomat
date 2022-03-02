@@ -23,7 +23,6 @@ mix
     .copy('node_modules/font-awesome/fonts/*', 'public/fonts')
     .js([
         'node_modules/jquery/dist/jquery.js',
-        'node_modules/tether/dist/js/tether.js',
         'node_modules/bootstrap/dist/js/bootstrap.js',
         'node_modules/select2/dist/js/select2.js',
         'resources/js/app.js'
@@ -33,7 +32,6 @@ mix
     .sass('resources/sass/invoice-pdf.scss', 'public/css')
     .autoload({
         jquery: ['$', 'jQuery', 'window.jQuery'],
-        tether: ['Tether', 'window.Tether']
     })
     .version();
 

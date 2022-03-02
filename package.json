@@ -15,17 +15,15 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
-    "select2": "^4.1.0-rc.0",
-    "tether": "^1.4.7"
+    "select2": "^4.1.0-rc.0"
   },
   "devDependencies": {
-    "axios": "^0.21.0",
-    "cross-env": "^7.0.2",
+    "axios": "^0.26",
     "laravel-mix": "^6.0.11",
     "lodash": "^4.17.20",
-    "resolve-url-loader": "^3.1.2",
+    "resolve-url-loader": "^5.0.0",
     "sass": "^1.29.0",
-    "sass-loader": "^11.0.1",
+    "sass-loader": "^12.6",
     "vue-template-compiler": "^2.6.12"
   },
   "name": "www"
