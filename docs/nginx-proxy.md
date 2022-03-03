@@ -50,3 +50,7 @@ For more see https://github.com/nginx-proxy/acme-companion
 ## Update
 
     docker pull nginxproxy/nginx-proxy
+    docker stop nginxproxy/nginx-proxy
+    docker rm nginxproxy/nginx-proxy
+
+And start again
