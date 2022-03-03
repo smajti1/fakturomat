@@ -11,14 +11,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use LogicException;
 use RuntimeException;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\Process\Exception\ProcessFailedException;
 use Symfony\Component\Process\Process;
 
 class InvoiceToPdfController extends Controller
 {
 
-    public function toPdf(Invoice $invoice)
-    {
+    public function toPdf(Invoice $invoice): BinaryFileResponse
+	{
         /** @var User $user */
         $user = Auth::user();
 

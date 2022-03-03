@@ -9,13 +9,19 @@ use App\Steps\Account\SetAddress;
 use App\Steps\Account\SetCompanyBasicData;
 use App\Steps\Account\SetCompanySecondaryData;
 use App\Steps\Account\SetUserEmailAndPassword;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Smajti1\Laravel\Exceptions\StepNotFoundException;
+use Smajti1\Laravel\Step;
 use Smajti1\Laravel\Wizard;
 use Illuminate\Support\Facades\Auth;
 
 class AccountWizardController extends Controller
 {
+	/**
+	 * @var array<int|string, class-string<Step>>
+	 */
     public array $steps = [
         SetUserEmailAndPassword::class,
         SetCompanyBasicData::class,
@@ -32,8 +38,8 @@ class AccountWizardController extends Controller
         view()->share(['wizard' => $this->wizard]);
     }
 
-    public function wizard($step = null)
-    {
+    public function wizard(Step|string|null $step = null): View
+	{
         try {
             if (!$step) {
                 $step = $this->wizard->firstOrLastProcessed();
@@ -49,8 +55,8 @@ class AccountWizardController extends Controller
         return view('wizard.account.base', compact('step', 'user'));
     }
 
-    public function wizardPost(Request $request, $step = null)
-    {
+    public function wizardPost(Request $request, Step|string|null $step = null): RedirectResponse
+	{
         try {
             $step = $this->wizard->getBySlug($step);
         } catch (StepNotFoundException $e) {

@@ -17,6 +17,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 
 /**
  * @property int $id
@@ -51,7 +52,9 @@ class User extends Authenticatable
 {
     use Notifiable, HasFactory;
 
+	/** @var string[] */
     protected $fillable = ['email', 'password', 'api_token',];
+	/** @var string[] */
     protected $hidden = ['password', 'remember_token', 'api_token',];
 
     protected static function boot()
@@ -64,22 +67,22 @@ class User extends Authenticatable
 
     }
 
-    public function company(): HasOne
+    public function company(): HasOne|QueryBuilder
     {
         return $this->hasOne(Company::class);
     }
 
-    public function products(): HasMany
+    public function products(): HasMany|QueryBuilder
     {
         return $this->hasMany(Product::class);
     }
 
-    public function buyers(): HasMany
+    public function buyers(): HasMany|QueryBuilder
     {
         return $this->hasMany(Buyer::class);
     }
 
-    public function sendPasswordResetNotification($token)
+    public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
     }

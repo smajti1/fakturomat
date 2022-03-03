@@ -44,6 +44,7 @@ class Product extends Model
 {
     use Sluggable, HasFactory;
 
+	/** @var string[] */
     protected $fillable = [
         'name', 'measure_unit', 'price', 'tax_percent'
     ];
@@ -63,6 +64,9 @@ class Product extends Model
         return $user->id === $this->user->id;
     }
 
+	/**
+	 * @return array{slug: array{source: 'name'}}
+	 */
     public function sluggable(): array
     {
         return [

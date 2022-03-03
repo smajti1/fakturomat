@@ -35,7 +35,9 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 class CompanyInvoiceNumbers extends Model
 {
+	/** @var string[] */
     protected $fillable = ['number', 'autoincrement_number', 'show_number', 'show_month', 'show_year'];
+	/** @var string[] */
     protected $casts = [
         'autoincrement_number' => 'boolean',
         'show_number'          => 'boolean',
@@ -48,7 +50,10 @@ class CompanyInvoiceNumbers extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function getPieces(): array
+	/**
+	 * @return array{number? : int, month?: string, year?: string}
+	 */
+	public function getPieces(): array
     {
         $number = [];
 
@@ -67,8 +72,8 @@ class CompanyInvoiceNumbers extends Model
         return $number;
     }
 
-    public function getFormattedNextNumber()
-    {
+    public function getFormattedNextNumber(): string
+	{
         $number = $this->getPieces();
         if ($this->show_number && $this->autoincrement_number) {
             $number['number']++;

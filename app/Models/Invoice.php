@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use LogicException;
 
@@ -61,7 +62,9 @@ class Invoice extends Model
     public const PAYMENT_BANK_TRANSFER = 2;
     public const STATUS_NOT_PAID = 1;
     public const STATUS_PAID = 2;
+	/** @var string[] */
     protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
+	/** @var string[] */
     protected $casts = [
         'price' => 'float',
     ];
@@ -84,7 +87,7 @@ class Invoice extends Model
         return $this->belongsTo(Company::class);
     }
 
-    public function invoice_products(): HasMany
+    public function invoice_products(): HasMany|QueryBuilder
     {
         return $this->hasMany(InvoiceProduct::class);
     }
@@ -129,7 +132,10 @@ class Invoice extends Model
         return $netSum;
     }
 
-    public function getTaxPercentsSum(): array
+	/**
+	 * @return array<string, array<string, float>>
+	 */
+	public function getTaxPercentsSum(): array
     {
         $taxPercents = [];
         foreach ($this->invoice_products as $product) {
@@ -172,7 +178,7 @@ class Invoice extends Model
         return $this->statusList()[$this->status];
     }
 
-    public function statusList(): array
+	public function statusList(): array
     {
         return [
             self::STATUS_NOT_PAID => 'nie zapłacona',
@@ -185,7 +191,7 @@ class Invoice extends Model
         return $this->getPaymentList()[$this->payment];
     }
 
-    public function getPaymentList(): array
+	public function getPaymentList(): array
     {
         return [
             self::PAYMENT_CASH          => 'gotówka',

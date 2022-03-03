@@ -1,11 +1,13 @@
 <?php
 
-function money_pl_format($number): string
+declare(strict_types=1);
+
+function money_pl_format(float $number): string
 {
     return number_format($number, 2, ',', ' ');
 }
 
-function spellOutAmount($price): string
+function spellOutAmount(float $price): string
 {
     $numberFormatter = new \NumberFormatter(config('app.locale'), \NumberFormatter::SPELLOUT);
 
@@ -18,6 +20,9 @@ function spellOutAmount($price): string
     return $price . (' ' . $numberFormatter->format($decimal) . ' ' . trans_choice("$id.decimal", $decimal));
 }
 
+/**
+ * @return array<string, array{id: string, label: string, percent: int, from: string, to: string|null}>
+ */
 function activeTaxes(): array
 {
     $taxes = config('invoice.tax_rates.' . config('invoice.currency'));

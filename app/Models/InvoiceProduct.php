@@ -40,7 +40,7 @@ use LogicException;
  */
 class InvoiceProduct extends Model
 {
-
+	/** @var string[] */
     protected $fillable = [
         'name', 'measure_unit', 'price', 'tax_percent', 'vat', 'amount',
     ];
@@ -55,7 +55,7 @@ class InvoiceProduct extends Model
 		return $this->belongsTo(User::class);
 	}
 
-    public function priceWithVat()
+    public function priceWithVat(): float
     {
         return $this->price * $this->calculateVat();
     }
@@ -70,7 +70,7 @@ class InvoiceProduct extends Model
         return $user->id === $this->user->id;
     }
 
-    public function calculateVat()
+    public function calculateVat(): float|int
     {
         $vat = 1;
         if (is_numeric($this->tax_percent)) {
