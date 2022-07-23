@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Models\Buyer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Session\Store;
 use Illuminate\Support\Facades\Auth;
 
 class BuyerController extends Controller
@@ -39,7 +40,9 @@ class BuyerController extends Controller
         $buyer->user()->associate($user);
         $buyer->save();
 
-        $this->request->session()->flash('flash', ['success' => 'Dodano nowego kontrahenta!']);
+		/** @var Store $session */
+		$session = $this->request->session();
+		$session->flash('flash', ['success' => 'Dodano nowego kontrahenta!']);
 
         return redirect()->route('buyer.index');
     }
