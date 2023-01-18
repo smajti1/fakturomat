@@ -1,7 +1,5 @@
 ### Development
 
-Before start container uncomment `docker-compose.yml` service: `nginx` ports
-
 Create and seed database tables
     
     ./artisan migrate:fresh

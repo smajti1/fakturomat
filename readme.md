@@ -18,6 +18,8 @@ Create the external network "gateway" (only once)
 
     docker network create gateway
 
+start [nginx-proxy](docs/nginx-proxy.md)
+
 start containers
 
     docker-compose up --detach
@@ -27,7 +29,7 @@ get into docker container and install dependencies
     # you may need run attach.sh as root 
     ./attach.sh
     
-    optionaly if cannot create directories etc check uid (User ID)
+    # optionaly if cannot create directories etc check uid (User ID)
 
     composer install --no-dev
     
