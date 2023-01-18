@@ -6,8 +6,6 @@ parameters:
         - _ide_helper.php
     ignoreErrors:
         - '#Access to an undefined property Illuminate\\Http\\Request::[$a-zA-Z0-9\\_]+#'
-        - '#Call to an undefined method Illuminate\\Http\\Request::[$a-zA-Z]+#'
-        - '#Call to an undefined method Illuminate\\Support\\Collection::count\(\)\.#'
     level: 6
     paths:
         - app

@@ -1,10 +1,10 @@
-FROM php:8.1-fpm
+FROM php:8.2-fpm
 
 ARG DOCKER_WORK_DIR
 
 RUN usermod -u 1000 www-data --home="${DOCKER_WORK_DIR}/storage/docker/home/www-data"
 
-RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_18.x | bash -
 
 RUN apt update -yqq && apt install -y \
     git \
@@ -31,7 +31,7 @@ RUN apt update -yqq && apt install -y \
     nodejs \
     && apt remove --purge --auto-remove -y
 
-RUN npm update && npm install -g npm@8.*
+RUN npm update && npm install -g npm@9.*
 
 RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl
 ## xdebug
