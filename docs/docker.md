@@ -1,5 +1,5 @@
 ### check nginx logs
-    docker-compose logs -f nginx
+    docker compose logs -f nginx
 
 ### if disk usage is too big see Storage Driver
     sudo docker info

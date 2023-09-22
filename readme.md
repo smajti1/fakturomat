@@ -20,9 +20,13 @@ Create the external network "gateway" (only once)
 
 start [nginx-proxy](docs/nginx-proxy.md)
 
+build container with current user id (**optional** default id is `1000`)
+
+    docker compose build --build-arg UID="$(id -u)"
+
 start containers
 
-    docker-compose up --detach
+    docker compose up --detach
 
 get into docker container and install dependencies
 

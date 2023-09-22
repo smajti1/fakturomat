@@ -5,7 +5,7 @@
     apt install sudo
 
 
-### add docker and www-data users next install docker and docker-compose
+### add docker and www-data users next install docker and docker compose
     sudo groupadd docker
     sudo usermod -aG docker $USER
     sudo usermod -aG www-data $USER
