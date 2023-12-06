@@ -10,6 +10,6 @@ abstract class TestCase extends BaseTestCase
 
 	protected function getBaseUrl(): string
 	{
-		return 'http://' . env('WEBPAGE_DOMAIN');
+		return 'http://' . env('APP_URL');
 	}
 }

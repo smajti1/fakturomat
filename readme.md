@@ -14,21 +14,25 @@ next set up .env file
     
     nano .env
 
-Create the external network "gateway" (only once)
-
-    docker network create gateway
-
-start [nginx-proxy](docs/nginx-proxy.md)
-
 build container with current user id (**optional** default id is `1000`)
 
     docker compose build --build-arg UID="$(id -u)"
 
-start containers
+#### Start server
+This project use [caddy](https://caddyserver.com/docs) as a server and reverse proxy
+
+You may need to create external docker network
+
+    docker network create caddy
+
+To work with domain use [caddy reverse_proxy](https://github.com/lucaslorentz/caddy-docker-proxy)
+on development server should run on https://fakturomat.localhost next:
+
+#### Start containers and install dependencies
 
     docker compose up --detach
 
-get into docker container and install dependencies
+get into docker container
 
     # you may need run attach.sh as root 
     ./attach.sh
@@ -47,9 +51,12 @@ get into docker container and install dependencies
 
 currency and taxes set in config/invoice.php
 
+To see logs/debug use
+
+    docker compose logs -f web
+
 ## Docs
 - [development](docs/development.md)
 - [postgres](docs/postgres.md)
 - [vps start commands](docs/vps-start-commands.md)
-- [nginx reverse proxy](docs/nginx-proxy.md)
 - [docker config/setup/help list](docs/docker.md)
