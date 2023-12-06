@@ -1,11 +1,7 @@
-# vendor/bin/phpstan analyse --configuration=phpstan.neon
 includes:
+    - ./vendor/larastan/larastan/extension.neon
     - phpstan-baseline.neon
 parameters:
-    bootstrapFiles:
-        - _ide_helper.php
-    ignoreErrors:
-        - '#Access to an undefined property Illuminate\\Http\\Request::[$a-zA-Z0-9\\_]+#'
     level: 6
     paths:
         - app

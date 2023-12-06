@@ -1,4 +1,4 @@
-FROM php:8.2-fpm
+FROM php:8.3-fpm
 
 ARG DOCKER_WORK_DIR
 ARG UID=1000
@@ -23,7 +23,6 @@ RUN apt update -yqq && apt install -y \
     zip \
     # wkhtmltopdf dependencies
     fontconfig \
-    libjpeg62-turbo \
     libx11-6 \
     libxcb1 \
     libxext6 \
@@ -57,8 +56,11 @@ RUN echo Europe/Warsaw >/etc/timezone && \
 
 RUN mkdir -p public/uploads
 
+# libjpeg-turbo8 library require by wkhtmltopdf
+RUN curl -sOSL http://archive.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_2.1.5-2ubuntu1_amd64.deb && \
+    dpkg -i	libjpeg-turbo8_2.1.5-2ubuntu1_amd64.deb
 # tip check linux codename by running command "lsb_release -a" for exmple debian 9.9 has codename: stretch
-RUN curl -sOSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb && \
-    dpkg -i wkhtmltox_0.12.6-1.buster_amd64.deb
+RUN curl -sOSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb && \
+    dpkg -i wkhtmltox_0.12.6.1-3.jammy_amd64.deb
 
 USER www-data

@@ -55,7 +55,7 @@ class InvoiceController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        /** @var Product[] $products @phpstan-ignore-next-line */
+        /** @var Product[] $products */
         $products = Product::whereIn('id', array_keys($request->product))->get();
 
         $price = 0;
@@ -117,7 +117,7 @@ class InvoiceController extends Controller
         $price = 0;
         $new_invoice_products = [];
         if (isset($request->product)) {
-            /** @var Product[] $products @phpstan-ignore-next-line */
+            /** @var Product[] $products */
             $products = Product::whereIn('id', array_keys($request->product))->get();
             $new_invoice_products = [];
             foreach ($products as $product) {
@@ -137,7 +137,7 @@ class InvoiceController extends Controller
         if (isset($request->invoice_products)) {
             $invoice_product_ids = array_keys($request->invoice_products);
             $invoice->invoice_products()->whereNotIn('id', $invoice_product_ids)->delete();
-            /** @var InvoiceProduct[] $invoice_products @phpstan-ignore-next-line */
+            /** @var InvoiceProduct[] $invoice_products */
             $invoice_products = InvoiceProduct::whereIn('id', array_keys($request->invoice_products))->get();
             foreach ($invoice_products as $invoice_product) {
                 $amount = $request->invoice_products[$invoice_product->id];

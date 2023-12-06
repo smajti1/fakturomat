@@ -31,13 +31,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|CompanyInvoiceNumbers whereShowNumber($value)
  * @method static Builder|CompanyInvoiceNumbers whereShowYear($value)
  * @method static Builder|CompanyInvoiceNumbers whereUpdatedAt($value)
- * @mixin Model
  */
 class CompanyInvoiceNumbers extends Model
 {
 	/** @var string[] */
     protected $fillable = ['number', 'autoincrement_number', 'show_number', 'show_month', 'show_year'];
-	/** @var string[] */
+	/** @var array<string, string> */
     protected $casts = [
         'autoincrement_number' => 'boolean',
         'show_number'          => 'boolean',
@@ -45,6 +44,9 @@ class CompanyInvoiceNumbers extends Model
         'show_year'            => 'boolean',
     ];
 
+	/**
+	 * @return BelongsTo<Company, CompanyInvoiceNumbers>
+	 */
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);

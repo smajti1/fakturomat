@@ -58,7 +58,6 @@ use LogicException;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereZipCode($value)
  * @method static Builder|Company withTrashed()
  * @method static Builder|Company withoutTrashed()
- * @mixin Model
  * @method static \Database\Factories\CompanyFactory factory(...$parameters)
  * @method static \Illuminate\Database\Eloquent\Builder|Company withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
@@ -81,6 +80,9 @@ class Company extends Model
 
     }
 
+	/**
+	 * @return BelongsTo<User, Company>
+	 */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -135,6 +137,9 @@ class Company extends Model
         return $address;
     }
 
+	/**
+	 * @return HasOne<CompanyInvoiceNumbers>
+	 */
     public function companyInvoiceNumber(): HasOne
     {
         return $this->hasOne(CompanyInvoiceNumbers::class);

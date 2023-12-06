@@ -36,7 +36,6 @@ use LogicException;
  * @method static Builder|Product whereTaxPercent($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product whereUserId($value)
- * @mixin Model
  * @method static \Database\Factories\ProductFactory factory(...$parameters)
  * @method static Builder|Product withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
@@ -49,6 +48,9 @@ class Product extends Model
         'name', 'measure_unit', 'price', 'tax_percent'
     ];
 
+	/**
+	 * @return BelongsTo<User, Product>
+	 */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

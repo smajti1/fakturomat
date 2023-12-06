@@ -50,7 +50,6 @@ use LogicException;
  * @method static Builder|Invoice whereUserId($value)
  * @method static Builder|Invoice create($value)
  * @method static Builder|Invoice make($value)
- * @mixin Model
  * @method static \Database\Factories\InvoiceFactory factory(...$parameters)
  */
 class Invoice extends Model
@@ -64,7 +63,7 @@ class Invoice extends Model
     public const STATUS_PAID = 2;
 	/** @var string[] */
     protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
-	/** @var string[] */
+	/** @var array<string, string> */
     protected $casts = [
         'price' => 'float',
     ];
@@ -82,21 +81,33 @@ class Invoice extends Model
 
     }
 
+	/**
+	 * @return BelongsTo<Company, Invoice>
+	 */
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-    public function invoice_products(): HasMany|QueryBuilder
+	/**
+	 * @return HasMany<InvoiceProduct>
+	 */
+    public function invoice_products(): HasMany
     {
         return $this->hasMany(InvoiceProduct::class);
     }
 
+	/**
+	 * @return BelongsTo<User, Invoice>
+	 */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+	/**
+	 * @return BelongsTo<Buyer, Invoice>
+	 */
     public function buyer(): BelongsTo
     {
         return $this->belongsTo(Buyer::class);

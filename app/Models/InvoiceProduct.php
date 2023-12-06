@@ -36,7 +36,6 @@ use LogicException;
  * @method static Builder|InvoiceProduct whereUpdatedAt($value)
  * @method static Builder|InvoiceProduct create($value)
  * @method static Builder|InvoiceProduct make($value)
- * @mixin Model
  */
 class InvoiceProduct extends Model
 {
@@ -45,11 +44,17 @@ class InvoiceProduct extends Model
         'name', 'measure_unit', 'price', 'tax_percent', 'vat', 'amount',
     ];
 
+	/**
+	 * @return BelongsTo<Invoice, InvoiceProduct>
+	 */
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
     }
 
+	/**
+	 * @return BelongsTo<User, InvoiceProduct>
+	 */
 	public function user(): BelongsTo
 	{
 		return $this->belongsTo(User::class);

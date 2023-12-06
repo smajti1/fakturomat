@@ -14,7 +14,7 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "ext-intl": "*",
         "ext-pdo": "*",
         "cviebrock/eloquent-sluggable": "^9.0",
@@ -29,6 +29,7 @@
         "barryvdh/laravel-ide-helper": "~2.6",
         "fakerphp/faker": "~1.10",
         "filp/whoops": "~2.5",
+        "larastan/larastan": "^2.0",
         "mockery/mockery": "~1.2",
         "phpstan/phpstan": "^1.2.0",
         "phpunit/phpunit": "~9.0"
@@ -56,6 +57,8 @@
         }
     },
     "scripts": {
+        "artisan:ide-helper": "./artisan ide-helper:generate --no-interaction && ./artisan ide-helper:model --no-interaction --write",
+        "phpunit": "./vendor/bin/phpunit",
         "phpstan": "vendor/bin/phpstan analyse --configuration=phpstan.neon --memory-limit=1G",
         "post-root-package-install": [
             "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""

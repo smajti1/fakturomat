@@ -50,7 +50,6 @@ use LogicException;
  * @method static Builder|Buyer whereUserId($value)
  * @method static Builder|Buyer whereWebsite($value)
  * @method static Builder|Buyer whereZipCode($value)
- * @mixin Model
  * @method static \Database\Factories\BuyerFactory factory(...$parameters)
  * @method static Builder|Buyer withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
@@ -63,6 +62,9 @@ class Buyer extends Model
         'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone'
     ];
 
+	/**
+	 * @return BelongsTo<User, Buyer>
+	 */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

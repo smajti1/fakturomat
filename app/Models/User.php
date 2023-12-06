@@ -45,7 +45,6 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method User associate($value)
- * @mixin Model
  * @method static \Database\Factories\UserFactory factory(...$parameters)
  */
 class User extends Authenticatable
@@ -54,7 +53,7 @@ class User extends Authenticatable
 
 	/** @var string[] */
     protected $fillable = ['email', 'password', 'api_token',];
-	/** @var string[] */
+	/** @var array<int, string> */
     protected $hidden = ['password', 'remember_token', 'api_token',];
 
     protected static function boot()
@@ -67,17 +66,26 @@ class User extends Authenticatable
 
     }
 
-    public function company(): HasOne|QueryBuilder
+	/**
+	 * @return HasOne<Company>
+	 */
+    public function company(): HasOne
     {
         return $this->hasOne(Company::class);
     }
 
-    public function products(): HasMany|QueryBuilder
+	/**
+	 * @return HasMany<Product>
+	 */
+    public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-    public function buyers(): HasMany|QueryBuilder
+	/**
+	 * @return HasMany<Buyer>
+	 */
+    public function buyers(): HasMany
     {
         return $this->hasMany(Buyer::class);
     }
