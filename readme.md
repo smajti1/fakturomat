@@ -53,7 +53,7 @@ currency and taxes set in config/invoice.php
 
 To see logs/debug use
 
-    docker compose logs -f web
+    docker compose logs -f web_php
 
 ## Docs
 - [development](docs/development.md)

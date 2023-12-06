@@ -8,6 +8,6 @@
 :80 {
 	root * /var/www/public
 	encode gzip
-	php_fastcgi web:9000
+	php_fastcgi web_php:9000
 	file_server
 }

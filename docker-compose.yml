@@ -15,10 +15,10 @@ services:
     networks:
       - fakturomat-net
 
-  web:
+  web_php:
     build:
       context: .
-      dockerfile: docker/web/Dockerfile
+      dockerfile: docker/web_php/Dockerfile
       args:
         - DOCKER_WORK_DIR=${DOCKER_WORK_DIR}
     restart: ${DOCKER_RESTART}
@@ -38,7 +38,7 @@ services:
       - ./docker/Caddyfile:/etc/caddy/Caddyfile
       - ./:/var/www
     depends_on:
-      - web
+      - web_php
     networks:
       - caddy
       - fakturomat-net
