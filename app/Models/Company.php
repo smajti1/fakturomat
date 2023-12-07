@@ -32,7 +32,7 @@ use LogicException;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $deleted_at
- * @property-read \App\Models\CompanyInvoiceNumbers|null $companyInvoiceNumber
+ * @property-read \App\Models\CompanyInvoiceNumbers $companyInvoiceNumber
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|Company findSimilarSlugs($attribute, $config, $slug)
  * @method static \Illuminate\Database\Eloquent\Builder|Company newModelQuery()

@@ -1,9 +1,11 @@
 includes:
     - ./vendor/larastan/larastan/extension.neon
-    - phpstan-baseline.neon
 parameters:
-    level: 6
+    level: 8
     paths:
         - app
         - config
         - tests
+        - database/factories
+        - database/seeders
+        - routes

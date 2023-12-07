@@ -19,7 +19,7 @@ class InvoiceToPdfController extends Controller
 {
 
     public function toPdf(Invoice $invoice): BinaryFileResponse
-	{
+    {
         /** @var User $user */
         $user = Auth::user();
 
@@ -71,21 +71,6 @@ class InvoiceToPdfController extends Controller
         return response()->file($pathToFile, $headers);
     }
 
-    public function toHtml(Invoice $invoice)
-    {
-        $spellOutAmount = spellOutAmount($invoice->price);
-        $taxPercentsSum = $invoice->getTaxPercentsSum();
-        $totalSum = $invoice->getTotalSum();
-        $activeTaxes = activeTaxes();
-
-        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount', 'taxPercentsSum', 'totalSum', 'activeTaxes'));
-    }
-
-    public function footer()
-    {
-        return view('api.invoices.pdf.footer');
-    }
-
     private function commandExist(): bool
     {
         $returnVal = shell_exec("type -P wkhtmltopdf");
@@ -100,6 +85,21 @@ class InvoiceToPdfController extends Controller
         file_put_contents($htmlTmpFilePath, $htmlContent);
 
         return $htmlTmpFilePath;
+    }
+
+    public function toHtml(Invoice $invoice): View
+    {
+        $spellOutAmount = spellOutAmount($invoice->price);
+        $taxPercentsSum = $invoice->getTaxPercentsSum();
+        $totalSum = $invoice->getTotalSum();
+        $activeTaxes = activeTaxes();
+
+        return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount', 'taxPercentsSum', 'totalSum', 'activeTaxes'));
+    }
+
+    public function footer(): View
+    {
+        return view('api.invoices.pdf.footer');
     }
 
 }

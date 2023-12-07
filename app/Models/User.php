@@ -29,7 +29,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property Carbon|null $updated_at
  * @property-read Collection&Buyer[] $buyers
  * @property-read int|null $buyers_count
- * @property-read Company|null $company
+ * @property-read Company $company
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Product[] $products

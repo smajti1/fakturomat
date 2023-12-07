@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use LogicException;
 
 /**
  * @property int $id
@@ -78,6 +79,7 @@ class CompanyInvoiceNumbers extends Model
 	{
         $number = $this->getPieces();
         if ($this->show_number && $this->autoincrement_number) {
+			isset($number['number']) ?: throw new LogicException('Cannot get next number!');
             $number['number']++;
         }
 

@@ -56,12 +56,9 @@ class SetCompanyBasicData extends Step
 
     public function rules(Request $request = null): array
     {
-        $company_unique_id = '';
         /** @var User $user */
         $user = Auth::user();
-        if ($user->company) {
-            $company_unique_id = ',' . $user->company->id;
-        }
+		$company_unique_id = ',' . $user->company->id;
         return [
             'company_name'  => "required|max:255|unique:companies,name$company_unique_id",
             'tax_id_number' => 'max:255|tax_id_number: -',

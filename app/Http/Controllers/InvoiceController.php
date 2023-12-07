@@ -9,19 +9,14 @@ use App\Models\Invoice;
 use App\Models\InvoiceProduct;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class InvoiceController extends Controller
 {
-    protected Request $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
-
-    public function index()
+    public function index(): View
     {
         /** @var User $user */
         $user = Auth::user();
@@ -33,7 +28,7 @@ class InvoiceController extends Controller
         return view('invoices.index', compact('invoices'));
     }
 
-    public function create()
+    public function create(): View|RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
@@ -51,7 +46,7 @@ class InvoiceController extends Controller
         return view('invoices.create', compact('company', 'buyers', 'measureUnits', 'activeTaxes'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->validate($request, $this->rules());
 
@@ -65,11 +60,11 @@ class InvoiceController extends Controller
             $tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;
             $price += $product->price * $tax_percent * $amount;
             $invoice_products[] = [
-                'name'         => $product->name,
+                'name' => $product->name,
                 'measure_unit' => $product->measure_unit,
-                'price'        => $product->price,
-                'tax_percent'  => $product->tax_percent,
-                'amount'       => $amount,
+                'price' => $product->price,
+                'tax_percent' => $product->tax_percent,
+                'amount' => $amount,
             ];
         }
 
@@ -92,6 +87,9 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index');
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function rules(): array
     {
         return [
@@ -99,7 +97,7 @@ class InvoiceController extends Controller
         ];
     }
 
-    public function edit(Invoice $invoice)
+    public function edit(Invoice $invoice): View
     {
         /** @var User $user */
         $user = Auth::user();
@@ -111,7 +109,7 @@ class InvoiceController extends Controller
         return view('invoices.edit', compact('invoice', 'company', 'buyers', 'measureUnits', 'activeTaxes'));
     }
 
-    public function update(Invoice $invoice, Request $request)
+    public function update(Invoice $invoice, Request $request): RedirectResponse
     {
         abort_if(!$invoice->isOwner(), 404);
         $price = 0;
@@ -119,17 +117,16 @@ class InvoiceController extends Controller
         if (isset($request->product)) {
             /** @var Product[] $products */
             $products = Product::whereIn('id', array_keys($request->product))->get();
-            $new_invoice_products = [];
             foreach ($products as $product) {
                 $amount = $request->product[$product->id];
                 $tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;
                 $price += $product->price * $tax_percent * $amount;
                 $new_invoice_products[] = [
-                    'name'         => $product->name,
+                    'name' => $product->name,
                     'measure_unit' => $product->measure_unit,
-                    'price'        => $product->price,
-                    'tax_percent'  => $product->tax_percent,
-                    'amount'       => $amount,
+                    'price' => $product->price,
+                    'tax_percent' => $product->tax_percent,
+                    'amount' => $amount,
                 ];
             }
         }
@@ -141,7 +138,7 @@ class InvoiceController extends Controller
             $invoice_products = InvoiceProduct::whereIn('id', array_keys($request->invoice_products))->get();
             foreach ($invoice_products as $invoice_product) {
                 $amount = $request->invoice_products[$invoice_product->id];
-                $tax_percent = is_numeric($invoice_product->calculateVat()) ? $invoice_product->calculateVat() : 1;
+                $tax_percent = $invoice_product->calculateVat();
                 $price += $invoice_product->price * $tax_percent * $amount;
                 $invoice_product->amount = $amount;
                 $invoice_product->save();
@@ -158,7 +155,7 @@ class InvoiceController extends Controller
         return redirect()->route('invoices.index');
     }
 
-    public function destroy(Invoice $invoice)
+    public function destroy(Invoice $invoice): RedirectResponse
     {
         abort_if(!$invoice->isOwner(), 404);
         $invoice->delete();

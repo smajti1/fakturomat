@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use LogicException;
 use Smajti1\Laravel\Step;
 
 class SetAddress extends Step
@@ -23,7 +24,7 @@ class SetAddress extends Step
         $user = Auth::user();
         if ($user && $this->wizard->dataHas('company_id')) {
             $company = $this->wizard->dataGet('company_id');
-            $company = Company::whereId($company)->first();
+            $company = Company::whereId($company)->first() ?? throw new LogicException('Can not find company');
 
             $company->update(
                 $request->only(['city', 'zip_code', 'street'])

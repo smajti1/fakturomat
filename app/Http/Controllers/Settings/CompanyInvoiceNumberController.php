@@ -6,13 +6,15 @@ namespace App\Http\Controllers\Settings;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CompanyInvoiceNumberController extends Controller
 {
 
-    public function index()
+    public function index(): View
     {
         /** @var User $user */
         $user = Auth::user();
@@ -21,7 +23,7 @@ class CompanyInvoiceNumberController extends Controller
         return view('settings.company_invoice_number', compact('companyInvoiceNumber'));
     }
 
-    public function update(Request $request)
+    public function update(Request $request): RedirectResponse
     {
         $this->validate($request, $this->rules());
         $input = $request->all();
@@ -37,6 +39,9 @@ class CompanyInvoiceNumberController extends Controller
         return redirect()->route('settings.company_invoice_number.edit');
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function rules(): array
     {
         return [

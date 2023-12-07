@@ -10,7 +10,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Validator as ValidatorFacade;
+use Illuminate\Validation\Validator;
 
 class RegisterController extends Controller
 {
@@ -40,7 +41,10 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
-    protected function validator(array $data)
+    /**
+     * @param array<string, mixed> $data
+     */
+    protected function validator(array $data): Validator
     {
         $company_unique_id = '';
         if (Auth::check()) {
@@ -48,13 +52,16 @@ class RegisterController extends Controller
             $user = Auth::user();
             $company_unique_id = ',' . $user->company->id;
         }
-        return Validator::make($data, [
+        return ValidatorFacade::make($data, [
             'company_name' => "required|max:255|unique:companies,name$company_unique_id",
-            'email'        => 'required|email|max:255|unique:users',
-            'password'     => 'required|min:8|confirmed',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:8|confirmed',
         ]);
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function create(array $data): ?User
     {
         $user = null;
@@ -62,22 +69,22 @@ class RegisterController extends Controller
         DB::transaction(static function () use (&$user, $data) {
             $user = new User();
             $user->fill([
-                'email'    => $data['email'],
+                'email' => $data['email'],
                 'password' => bcrypt($data['password']),
             ]);
 
             $company = new Company();
             $company->fill([
-                'name'          => $data['company_name'],
-                'city'          => $data['city'],
-                'zip_code'      => $data['zip_code'],
-                'street'        => $data['street'],
+                'name' => $data['company_name'],
+                'city' => $data['city'],
+                'zip_code' => $data['zip_code'],
+                'street' => $data['street'],
                 'tax_id_number' => $data['tax_id_number'],
-                'regon'         => $data['regon'],
-                'email'         => $data['company_email'],
-                'website'       => $data['website'],
-                'phone'         => $data['phone'],
-                'bank_account'  => $data['bank_account'],
+                'regon' => $data['regon'],
+                'email' => $data['company_email'],
+                'website' => $data['website'],
+                'phone' => $data['phone'],
+                'bank_account' => $data['bank_account'],
             ]);
 
             $company->user->associate($user);

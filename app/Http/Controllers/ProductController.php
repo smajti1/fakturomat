@@ -6,6 +6,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,14 +22,14 @@ class ProductController extends Controller
         $this->request = $request;
     }
 
-    public function index()
+    public function index(): View
     {
         $activeTaxes = activeTaxes();
 
         return view('products.index', compact('activeTaxes'));
     }
 
-    public function create()
+    public function create(): View
     {
         $measureUnits = config('invoice.measure_units.' . config('app.locale'));
         $activeTaxes = activeTaxes();
@@ -34,7 +37,10 @@ class ProductController extends Controller
         return view('products.create', compact('measureUnits', 'activeTaxes'));
     }
 
-    public function jsonList()
+    /**
+     * @return Collection<int, Product>
+     */
+    public function jsonList(): Collection
     {
         $search = $this->request->searchText;
 
@@ -55,7 +61,7 @@ class ProductController extends Controller
         return $list;
     }
 
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate($this->request, $this->rules());
 
@@ -70,17 +76,20 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
+    /**
+     * @return array<string, string>
+     */
     protected function rules(): array
     {
         return [
-            'name'         => 'required|max:255',
+            'name' => 'required|max:255',
             'measure_unit' => 'max:255',
-            'price'        => 'required|numeric',
-            'tax_percent'  => 'required',
+            'price' => 'required|numeric',
+            'tax_percent' => 'required',
         ];
     }
 
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
         abort_if(!$product->isOwner(), 404);
         $activeTaxes = activeTaxes();
@@ -88,7 +97,7 @@ class ProductController extends Controller
         return view('products.edit', compact('product', 'activeTaxes'));
     }
 
-    public function update(Product $product, Request $request)
+    public function update(Product $product, Request $request): RedirectResponse
     {
         $this->validate($request, $this->rules());
         abort_if(!$product->isOwner(), 404);
@@ -97,7 +106,7 @@ class ProductController extends Controller
         return redirect()->route('product.index');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         abort_if(!$product->isOwner(), 404);
         $product->delete();

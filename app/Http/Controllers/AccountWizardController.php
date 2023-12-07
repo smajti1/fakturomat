@@ -44,7 +44,7 @@ class AccountWizardController extends Controller
             if (!$step) {
                 $step = $this->wizard->firstOrLastProcessed();
             } else {
-                $step = $this->wizard->getBySlug($step);
+                $step = $step instanceof Step ? $step : $this->wizard->getBySlug($step);
             }
         } catch (StepNotFoundException $e) {
             abort(404);
@@ -57,16 +57,16 @@ class AccountWizardController extends Controller
 
     public function wizardPost(Request $request, Step|string|null $step = null): RedirectResponse
 	{
-        try {
-            $step = $this->wizard->getBySlug($step);
+		try {
+            $step_by_slug = $step instanceof Step ? $step : $this->wizard->getBySlug($step ?? '');
         } catch (StepNotFoundException $e) {
             abort(404);
         }
 
-        $this->validate($request, $step->rules($request));
-        $step->process($request);
+        $this->validate($request, $step_by_slug->rules($request));
+		$step_by_slug->process($request);
 
-        if ($step->index === ($this->wizard->limit() - 1)) {
+        if ($step_by_slug->index === ($this->wizard->limit() - 1)) {
 
             return redirect()->route('panel');
         }

@@ -7,6 +7,9 @@ namespace Database\Factories;
 use App\Models\Buyer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
+/**
+ * @extends Factory<Buyer>
+ */
 class BuyerFactory extends Factory
 {
     protected $model = Buyer::class;

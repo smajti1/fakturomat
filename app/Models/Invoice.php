@@ -130,7 +130,7 @@ class Invoice extends Model
             $grossSum += $product->grossPrice();
         }
 
-        return $grossSum;
+        return (int) $grossSum;
     }
 
     public function netSum(): int
@@ -140,7 +140,7 @@ class Invoice extends Model
             $netSum += $product->grossPrice();
         }
 
-        return $netSum;
+        return (int) $netSum;
     }
 
 	/**
@@ -166,6 +166,9 @@ class Invoice extends Model
         return $taxPercents;
     }
 
+	/**
+	 * @return array{gross: int|float, net: int|float, tax: int|float}
+	 */
     public function getTotalSum(): array
     {
         $totalSum = [
@@ -189,6 +192,9 @@ class Invoice extends Model
         return $this->statusList()[$this->status];
     }
 
+	/**
+	 * @return array<int, string>
+	 */
 	public function statusList(): array
     {
         return [
@@ -202,6 +208,9 @@ class Invoice extends Model
         return $this->getPaymentList()[$this->payment];
     }
 
+	/**
+	 * @return array<int, string>
+	 */
 	public function getPaymentList(): array
     {
         return [

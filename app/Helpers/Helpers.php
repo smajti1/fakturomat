@@ -7,11 +7,11 @@ function money_pl_format(float $number): string
     return number_format($number, 2, ',', ' ');
 }
 
-function spellOutAmount(float $price): string
+function spellOutAmount(float $price_to_format): string
 {
     $numberFormatter = new \NumberFormatter(config('app.locale'), \NumberFormatter::SPELLOUT);
 
-    $price = number_format($price, 2, '.', '');
+    $price = number_format($price_to_format, 2, '.', '');
     [$integer, $decimal] = array_map('intval', explode('.', $price));
 
     $id = 'invoice.currency.' . config('invoice.currency');
@@ -25,6 +25,9 @@ function spellOutAmount(float $price): string
  */
 function activeTaxes(): array
 {
+    /**
+     * @var array<array{id: string, label: string, percent: int, from: string, to: string|null}> $taxes
+     */
     $taxes = config('invoice.tax_rates.' . config('invoice.currency'));
     $now = date('Y-m-d');
     $activeTaxes = [];
