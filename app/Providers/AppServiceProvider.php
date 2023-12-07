@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Providers;
 
@@ -12,23 +12,22 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-		if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-			|| (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] === '443')
-		) {
-			URL::forceScheme('https');
-		}
+        if ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
+            || (isset($_SERVER['HTTP_X_FORWARDED_PORT']) && $_SERVER['HTTP_X_FORWARDED_PORT'] === '443')
+            || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+        ) {
+            URL::forceScheme('https');
+        }
 
-        Validator::extend('tax_id_number', static function ($attribute, $value, $paramters, $validator) {
-            $parametersNumber = count($paramters);
+        Validator::extend('tax_id_number', static function ($attribute, $value, $parameters, $validator) {
+            $parametersNumber = count($parameters);
             if ($parametersNumber === 1) {
-                $allowedChars = $paramters[0] ?? '';
+                $allowedChars = $parameters[0] ?? '';
             } else if ($parametersNumber === 2) {
-                $allowedChars = $paramters[0] ?? '';
+                $allowedChars = $parameters[0] ?? '';
             } else {
                 throw new InvalidArgumentException("Invalid number/content of \$parameters variable");
             }
@@ -67,10 +66,8 @@ class AppServiceProvider extends ServiceProvider
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         if ($this->app->environment() === 'local') {
             if (class_exists('Barryvdh\Debugbar\ServiceProvider')) {

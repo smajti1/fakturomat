@@ -9,9 +9,9 @@ Fakturomat is a system to create and manage your invoices
     cd fakturomat
     
     cp .env.example .env
-    
+
 next set up .env file
-    
+
     nano .env
 
 build container with current user id (**optional** default id is `1000`)
@@ -19,13 +19,14 @@ build container with current user id (**optional** default id is `1000`)
     docker compose build --build-arg UID="$(id -u)"
 
 #### Start server
+
 This project use [caddy](https://caddyserver.com/docs) as a server and reverse proxy
 
 You may need to create external docker network
 
     docker network create caddy
 
-To work with domain use [caddy reverse_proxy](https://github.com/lucaslorentz/caddy-docker-proxy)
+To work with domain use caddy reverse_proxy [caddy-docker-proxy](https://github.com/lucaslorentz/caddy-docker-proxy)
 on development server should run on https://fakturomat.localhost next:
 
 #### Start containers and install dependencies
