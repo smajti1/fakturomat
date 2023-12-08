@@ -46,7 +46,7 @@ class CompanyController extends Controller
         $this->validate($request, $this->rules());
         /** @var User $user */
         $user = Auth::user();
-        $company = $user->company;
+        $company = $user->requireCompany();
         $company->update($request->all());
         $company->save();
 
@@ -60,7 +60,7 @@ class CompanyController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $company_id = $user->company->id;
+        $company_id = $user->requireCompany()->id;
         return [
             'name' => "required|max:255|unique:companies,name,$company_id",
             'address' => 'max:255',

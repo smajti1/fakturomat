@@ -18,7 +18,7 @@ class CompanyInvoiceNumberController extends Controller
     {
         /** @var User $user */
         $user = Auth::user();
-        $companyInvoiceNumber = $user->company->companyInvoiceNumber;
+        $companyInvoiceNumber = $user->requireCompany()->companyInvoiceNumber;
 
         return view('settings.company_invoice_number', compact('companyInvoiceNumber'));
     }
@@ -34,7 +34,7 @@ class CompanyInvoiceNumberController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        $user->company->companyInvoiceNumber->update($input);
+        $user->requireCompany()->companyInvoiceNumber->update($input);
 
         return redirect()->route('settings.company_invoice_number.edit');
     }

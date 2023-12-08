@@ -17,7 +17,7 @@ class SetCompanyBasicData extends Step
     public static $slug = 'podstawowe-dane-firmy';
     public static $view = 'wizard.account._step_set_company_basic_data';
 
-    public function process(Request $request)
+    public function process(Request $request): void
     {
         $company = null;
         /** @var User|null $user */
@@ -31,18 +31,18 @@ class SetCompanyBasicData extends Step
         if ($user) {
             if ($company) {
                 $company->update([
-                    'name'          => $data['company_name'],
+                    'name' => $data['company_name'],
                     'tax_id_number' => $data['tax_id_number'],
-                    'regon'         => $data['regon'],
-                    'bank_account'  => $data['bank_account'],
+                    'regon' => $data['regon'],
+                    'bank_account' => $data['bank_account'],
                 ]);
             } else {
                 $company = new Company();
                 $company->fill([
-                    'name'          => $data['company_name'],
+                    'name' => $data['company_name'],
                     'tax_id_number' => $data['tax_id_number'],
-                    'regon'         => $data['regon'],
-                    'bank_account'  => $data['bank_account'],
+                    'regon' => $data['regon'],
+                    'bank_account' => $data['bank_account'],
                 ]);
 
                 $company->user()->associate($user);
@@ -56,14 +56,17 @@ class SetCompanyBasicData extends Step
 
     public function rules(Request $request = null): array
     {
+        $company_unique_id = '';
         /** @var User $user */
         $user = Auth::user();
-		$company_unique_id = ',' . $user->company->id;
+        if ($user->company) {
+            $company_unique_id = ',' . $user->company->id;
+        }
         return [
-            'company_name'  => "required|max:255|unique:companies,name$company_unique_id",
+            'company_name' => "required|max:255|unique:companies,name$company_unique_id",
             'tax_id_number' => 'max:255|tax_id_number: -',
-            'regon'         => 'max:255',
-            'bank_account'  => 'max:255',
+            'regon' => 'max:255',
+            'bank_account' => 'max:255',
         ];
     }
 }

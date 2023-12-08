@@ -21,7 +21,7 @@ class RegisterController extends Controller
     |--------------------------------------------------------------------------
     |
     | This controller handles the registration of new users as well as their
-    | validation and creation. By default this controller uses a trait to
+    | validation and creation. By default, this controller uses a trait to
     | provide this functionality without requiring any additional code.
     |
     */
@@ -30,10 +30,8 @@ class RegisterController extends Controller
 
     /**
      * Where to redirect users after registration.
-     *
-     * @var string
      */
-    protected $redirectTo = '/panel';
+    protected string $redirectTo = '/panel';
 
     public function __construct()
     {
@@ -50,7 +48,7 @@ class RegisterController extends Controller
         if (Auth::check()) {
             /** @var User $user */
             $user = Auth::user();
-            $company_unique_id = ',' . $user->company->id;
+            $company_unique_id = ',' . $user->requireCompany()->id;
         }
         return ValidatorFacade::make($data, [
             'company_name' => "required|max:255|unique:companies,name$company_unique_id",

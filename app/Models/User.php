@@ -8,7 +8,6 @@ use App\Notifications\ResetPasswordNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,7 +16,7 @@ use Illuminate\Notifications\DatabaseNotificationCollection;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
-use Illuminate\Database\Query\Builder as QueryBuilder;
+use LogicException;
 
 /**
  * @property int $id
@@ -29,7 +28,7 @@ use Illuminate\Database\Query\Builder as QueryBuilder;
  * @property Carbon|null $updated_at
  * @property-read Collection&Buyer[] $buyers
  * @property-read int|null $buyers_count
- * @property-read Company $company
+ * @property-read Company|null $company
  * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
  * @property-read int|null $notifications_count
  * @property-read Collection|Product[] $products
@@ -51,9 +50,9 @@ class User extends Authenticatable
 {
     use Notifiable, HasFactory;
 
-	/** @var string[] */
+    /** @var string[] */
     protected $fillable = ['email', 'password', 'api_token',];
-	/** @var array<int, string> */
+    /** @var array<int, string> */
     protected $hidden = ['password', 'remember_token', 'api_token',];
 
     protected static function boot()
@@ -66,25 +65,25 @@ class User extends Authenticatable
 
     }
 
-	/**
-	 * @return HasOne<Company>
-	 */
+    /**
+     * @return HasOne<Company>
+     */
     public function company(): HasOne
     {
         return $this->hasOne(Company::class);
     }
 
-	/**
-	 * @return HasMany<Product>
-	 */
+    /**
+     * @return HasMany<Product>
+     */
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);
     }
 
-	/**
-	 * @return HasMany<Buyer>
-	 */
+    /**
+     * @return HasMany<Buyer>
+     */
     public function buyers(): HasMany
     {
         return $this->hasMany(Buyer::class);
@@ -93,5 +92,10 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new ResetPasswordNotification($token));
+    }
+
+    public function requireCompany(): Company
+    {
+        return $this->company ?: throw new LogicException('User without company!');
     }
 }
