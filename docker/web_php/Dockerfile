@@ -1,11 +1,10 @@
 FROM php:8.3-fpm
 
-ARG DOCKER_WORK_DIR
 ARG UID=1000
 ENV NODE_MAJOR=20
 
 
-RUN usermod -u ${UID} www-data --home="${DOCKER_WORK_DIR}/storage/docker/home/www-data"
+RUN usermod -u ${UID} www-data --home="/var/www/storage/docker/home/www-data"
 
 RUN apt update -yqq  && apt install -y ca-certificates gnupg
 RUN mkdir -p /etc/apt/keyrings && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg
@@ -21,6 +20,8 @@ RUN apt update -yqq && apt install -y \
     libpng-dev \
     libxml2-dev \
     zip \
+    # install postgresql-client only for pg_dump to make automatic database dump
+    postgresql-client \
     # wkhtmltopdf dependencies
     fontconfig \
     libx11-6 \

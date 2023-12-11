@@ -19,12 +19,10 @@ services:
     build:
       context: .
       dockerfile: docker/web_php/Dockerfile
-      args:
-        - DOCKER_WORK_DIR=${DOCKER_WORK_DIR}
     restart: ${DOCKER_RESTART}
-    working_dir: ${DOCKER_WORK_DIR}
+    working_dir: /var/www
     volumes:
-      - ./:${DOCKER_WORK_DIR}
+      - ./:/var/www
     environment:
       DB_HOST: db #override env
     networks:
@@ -33,7 +31,7 @@ services:
   caddy:
     image: caddy:2.7
     restart: ${DOCKER_RESTART}
-    working_dir: ${DOCKER_WORK_DIR}
+    working_dir: /var/www
     volumes:
       - ./docker/Caddyfile:/etc/caddy/Caddyfile
       - ./:/var/www

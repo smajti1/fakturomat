@@ -17,12 +17,15 @@
         "php": "^8.3",
         "ext-intl": "*",
         "ext-pdo": "*",
+        "ext-zip": "*",
         "cviebrock/eloquent-sluggable": "^10.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^v10.35",
         "laravel/tinker": "~2.1",
         "laravel/ui": "^4.0",
-        "smajti1/laravel-wizard": "^1.5"
+        "smajti1/laravel-wizard": "^1.5",
+        "spatie/flysystem-dropbox": "^3.0",
+        "spatie/laravel-backup": "^8.4"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "~3.2",

@@ -165,6 +165,7 @@ return [
          * Added providers
          */
         Cviebrock\EloquentSluggable\ServiceProvider::class,
+        App\Providers\DropboxServiceProvider::class,
 
     ],
 
