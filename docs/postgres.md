@@ -8,14 +8,14 @@ Dump database to file
 
 DB_DATABASE and DB_USERNAME variable take from .env file
 
-    docker compose exec db pg_dump --no-owner --dbname=DB_DATABASE --username=DB_USERNAME > pgdump.sql
+    docker compose exec db pg_dump --no-owner --dbname=fakturomat --username=fakturomat > pg_dump_$(date +'%F').sql
 
 upgrade postgres version in `docker-compose.yml` file
 
     docker compose down
     docker volume rm fakturomat_postgres
     docker compose up --detach
-    docker compose exec -T db psql --dbname=DB_DATABASE --username=USERNAME < pgdump.sql
+    docker compose exec -T db psql --dbname=fakturomat --username=fakturomat < pgdump.sql
 
 Download pgdump.sql from server
 
@@ -25,4 +25,4 @@ https://www.postgresql.org/docs/current/app-pgdump.html
 
 ### connect to db
 
-    docker compose exec postgres-db psql --password --dbname=$DB_DATABASE --username=$DB_USERNAME
+    docker compose exec db psql --password --dbname=fakturomat --username=fakturomat

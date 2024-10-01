@@ -1,6 +1,6 @@
 services:
   db:
-    image: library/postgres:15
+    image: library/postgres:17-alpine
     restart: ${DOCKER_RESTART}
     volumes:
       - postgres:/var/lib/postgresql/data:z
@@ -15,7 +15,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
+        max-file: "1"   # number of files or file count
         max-size: "25m" # file size
 
   web_php:
@@ -33,7 +33,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
+        max-file: "1"   # number of files or file count
         max-size: "25m" # file size
 
   caddy:
@@ -54,7 +54,7 @@ services:
     logging:
       driver: "json-file"
       options:
-        max-file: "5"   # number of files or file count
+        max-file: "1"   # number of files or file count
         max-size: "25m" # file size
 
 volumes:
