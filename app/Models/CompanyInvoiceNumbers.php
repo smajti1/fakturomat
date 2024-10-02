@@ -35,28 +35,39 @@ use LogicException;
  */
 class CompanyInvoiceNumbers extends Model
 {
-	/** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = ['number', 'autoincrement_number', 'show_number', 'show_month', 'show_year'];
-	/** @var array<string, string> */
+    /** @var array<string, string> */
     protected $casts = [
         'autoincrement_number' => 'boolean',
-        'show_number'          => 'boolean',
-        'show_month'           => 'boolean',
-        'show_year'            => 'boolean',
+        'show_number' => 'boolean',
+        'show_month' => 'boolean',
+        'show_year' => 'boolean',
     ];
 
-	/**
-	 * @return BelongsTo<Company, CompanyInvoiceNumbers>
-	 */
+    /**
+     * @return BelongsTo<Company, CompanyInvoiceNumbers>
+     */
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-	/**
-	 * @return array{number? : int, month?: string, year?: string}
-	 */
-	public function getPieces(): array
+    public function getFormattedNextNumber(): string
+    {
+        $number = $this->getPieces();
+        if ($this->show_number && $this->autoincrement_number) {
+            isset($number['number']) ?: throw new LogicException('Cannot get next number!');
+            $number['number']++;
+        }
+
+        return implode('/', $number);
+    }
+
+    /**
+     * @return array{number? : int, month?: string, year?: string}
+     */
+    public function getPieces(): array
     {
         $number = [];
 
@@ -73,17 +84,6 @@ class CompanyInvoiceNumbers extends Model
         }
 
         return $number;
-    }
-
-    public function getFormattedNextNumber(): string
-	{
-        $number = $this->getPieces();
-        if ($this->show_number && $this->autoincrement_number) {
-			isset($number['number']) ?: throw new LogicException('Cannot get next number!');
-            $number['number']++;
-        }
-
-        return implode('/', $number);
     }
 
 }

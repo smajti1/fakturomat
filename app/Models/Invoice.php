@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Query\Builder as QueryBuilder;
 use Illuminate\Support\Facades\Auth;
 use LogicException;
 
@@ -55,15 +54,15 @@ use LogicException;
 class Invoice extends Model
 {
 
-	use HasFactory;
+    use HasFactory;
 
     public const PAYMENT_CASH = 1;
     public const PAYMENT_BANK_TRANSFER = 2;
     public const STATUS_NOT_PAID = 1;
     public const STATUS_PAID = 2;
-	/** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
-	/** @var array<string, string> */
+    /** @var array<string, string> */
     protected $casts = [
         'price' => 'float',
     ];
@@ -81,33 +80,25 @@ class Invoice extends Model
 
     }
 
-	/**
-	 * @return BelongsTo<Company, Invoice>
-	 */
+    /**
+     * @return BelongsTo<Company, Invoice>
+     */
     public function company(): BelongsTo
     {
         return $this->belongsTo(Company::class);
     }
 
-	/**
-	 * @return HasMany<InvoiceProduct>
-	 */
+    /**
+     * @return HasMany<InvoiceProduct>
+     */
     public function invoice_products(): HasMany
     {
         return $this->hasMany(InvoiceProduct::class);
     }
 
-	/**
-	 * @return BelongsTo<User, Invoice>
-	 */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-	/**
-	 * @return BelongsTo<Buyer, Invoice>
-	 */
+    /**
+     * @return BelongsTo<Buyer, Invoice>
+     */
     public function buyer(): BelongsTo
     {
         return $this->belongsTo(Buyer::class);
@@ -121,6 +112,14 @@ class Invoice extends Model
         }
 
         return $user->id === $this->user->id;
+    }
+
+    /**
+     * @return BelongsTo<User, Invoice>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function grossSum(): int
@@ -143,10 +142,10 @@ class Invoice extends Model
         return (int) $netSum;
     }
 
-	/**
-	 * @return array<string, array<string, float>>
-	 */
-	public function getTaxPercentsSum(): array
+    /**
+     * @return array<string, array<string, float>>
+     */
+    public function getTaxPercentsSum(): array
     {
         $taxPercents = [];
         foreach ($this->invoice_products as $product) {
@@ -156,9 +155,9 @@ class Invoice extends Model
                 $taxPercents[$product->tax_percent]['amountVat'] += $product->taxAmount();
             } else {
                 $taxPercents[$product->tax_percent] = [
-                    'netPrice'   => $product->netPrice(),
+                    'netPrice' => $product->netPrice(),
                     'grossPrice' => $product->grossPrice(),
-                    'amountVat'  => $product->taxAmount(),
+                    'amountVat' => $product->taxAmount(),
                 ];
             }
         }
@@ -166,15 +165,15 @@ class Invoice extends Model
         return $taxPercents;
     }
 
-	/**
-	 * @return array{gross: int|float, net: int|float, tax: int|float}
-	 */
+    /**
+     * @return array{gross: int|float, net: int|float, tax: int|float}
+     */
     public function getTotalSum(): array
     {
         $totalSum = [
             'gross' => 0,
-            'net'   => 0,
-            'tax'   => 0,
+            'net' => 0,
+            'tax' => 0,
         ];
         foreach ($this->invoice_products as $product) {
             $totalSum['gross'] += $product->grossPrice();
@@ -192,14 +191,14 @@ class Invoice extends Model
         return $this->statusList()[$this->status];
     }
 
-	/**
-	 * @return array<int, string>
-	 */
-	public function statusList(): array
+    /**
+     * @return array<int, string>
+     */
+    public function statusList(): array
     {
         return [
             self::STATUS_NOT_PAID => 'nie zapłacona',
-            self::STATUS_PAID     => 'zapłacona',
+            self::STATUS_PAID => 'zapłacona',
         ];
     }
 
@@ -208,13 +207,13 @@ class Invoice extends Model
         return $this->getPaymentList()[$this->payment];
     }
 
-	/**
-	 * @return array<int, string>
-	 */
-	public function getPaymentList(): array
+    /**
+     * @return array<int, string>
+     */
+    public function getPaymentList(): array
     {
         return [
-            self::PAYMENT_CASH          => 'gotówka',
+            self::PAYMENT_CASH => 'gotówka',
             self::PAYMENT_BANK_TRANSFER => 'przelew',
         ];
     }

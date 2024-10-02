@@ -43,18 +43,10 @@ class Product extends Model
 {
     use Sluggable, HasFactory;
 
-	/** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
-        'name', 'measure_unit', 'price', 'tax_percent'
+        'name', 'measure_unit', 'price', 'tax_percent',
     ];
-
-	/**
-	 * @return BelongsTo<User, Product>
-	 */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function isOwner(User $user = null): bool
     {
@@ -66,9 +58,17 @@ class Product extends Model
         return $user->id === $this->user->id;
     }
 
-	/**
-	 * @return array{slug: array{source: 'name'}}
-	 */
+    /**
+     * @return BelongsTo<User, Product>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return array{slug: array{source: 'name'}}
+     */
     public function sluggable(): array
     {
         return [
@@ -83,16 +83,6 @@ class Product extends Model
         return 'slug';
     }
 
-    public function calculateVat(): string
-    {
-        $vat = $this->tax_percent;
-        if (is_numeric($this->tax_percent)) {
-            $vat = 1 + $this->tax_percent / 100;
-        }
-
-        return (string)$vat;
-    }
-
     public function formattedPriceWithVat(): float
     {
         $price = $this->price;
@@ -101,5 +91,15 @@ class Product extends Model
             $price *= $vat;
         }
         return (float) $price;
+    }
+
+    public function calculateVat(): string
+    {
+        $vat = $this->tax_percent;
+        if (is_numeric($this->tax_percent)) {
+            $vat = 1 + $this->tax_percent / 100;
+        }
+
+        return (string) $vat;
     }
 }

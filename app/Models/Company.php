@@ -65,7 +65,7 @@ class Company extends Model
 {
     use Sluggable, SoftDeletes, HasFactory;
 
-	/** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_name', 'bank_account',
     ];
@@ -80,12 +80,12 @@ class Company extends Model
 
     }
 
-	/**
-	 * @return BelongsTo<User, Company>
-	 */
-    public function user(): BelongsTo
+    /**
+     * @return HasOne<CompanyInvoiceNumbers>
+     */
+    public function companyInvoiceNumber(): HasOne
     {
-        return $this->belongsTo(User::class);
+        return $this->hasOne(CompanyInvoiceNumbers::class);
     }
 
     public function isOwner(User $user = null): bool
@@ -98,9 +98,17 @@ class Company extends Model
         return $user->id === $this->user->id;
     }
 
-	/**
-	 * @return array{slug: array{source: 'name'}}
-	 */
+    /**
+     * @return BelongsTo<User, Company>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return array{slug: array{source: 'name'}}
+     */
     public function sluggable(): array
     {
         return [
@@ -115,10 +123,10 @@ class Company extends Model
         return 'slug';
     }
 
-	/**
-	 * @return string[]
-	 */
-	public function getAddress(): array
+    /**
+     * @return string[]
+     */
+    public function getAddress(): array
     {
         $address = [];
         if ($street = $this->street) {
@@ -135,13 +143,5 @@ class Company extends Model
         }
 
         return $address;
-    }
-
-	/**
-	 * @return HasOne<CompanyInvoiceNumbers>
-	 */
-    public function companyInvoiceNumber(): HasOne
-    {
-        return $this->hasOne(CompanyInvoiceNumbers::class);
     }
 }

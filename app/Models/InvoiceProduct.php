@@ -39,30 +39,17 @@ use LogicException;
  */
 class InvoiceProduct extends Model
 {
-	/** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
         'name', 'measure_unit', 'price', 'tax_percent', 'vat', 'amount',
     ];
 
-	/**
-	 * @return BelongsTo<Invoice, InvoiceProduct>
-	 */
+    /**
+     * @return BelongsTo<Invoice, InvoiceProduct>
+     */
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
-    }
-
-	/**
-	 * @return BelongsTo<User, InvoiceProduct>
-	 */
-	public function user(): BelongsTo
-	{
-		return $this->belongsTo(User::class);
-	}
-
-    public function priceWithVat(): float
-    {
-        return $this->price * $this->calculateVat();
     }
 
     public function isOwner(User $user = null): bool
@@ -75,6 +62,24 @@ class InvoiceProduct extends Model
         return $user->id === $this->user->id;
     }
 
+    /**
+     * @return BelongsTo<User, InvoiceProduct>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function grossPrice(): float
+    {
+        return $this->amount * $this->priceWithVat();
+    }
+
+    public function priceWithVat(): float
+    {
+        return $this->price * $this->calculateVat();
+    }
+
     public function calculateVat(): float|int
     {
         $vat = 1;
@@ -83,11 +88,6 @@ class InvoiceProduct extends Model
         }
 
         return $vat;
-    }
-
-    public function grossPrice(): float
-    {
-        return $this->amount * $this->priceWithVat();
     }
 
     public function netPrice(): float
@@ -112,6 +112,6 @@ class InvoiceProduct extends Model
         if (is_numeric($vat)) {
             $price *= $vat;
         }
-		return (float) $price;
+        return (float) $price;
     }
 }

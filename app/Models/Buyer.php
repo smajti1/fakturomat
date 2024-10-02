@@ -57,18 +57,10 @@ class Buyer extends Model
 {
     use Sluggable, HasFactory;
 
-	/** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = [
-        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone'
+        'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone',
     ];
-
-	/**
-	 * @return BelongsTo<User, Buyer>
-	 */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
 
     public function isOwner(User $user = null): bool
     {
@@ -80,9 +72,17 @@ class Buyer extends Model
         return $user->id === $this->user->id;
     }
 
-	/**
-	 * @return array{slug: array{source: 'name'}}
-	 */
+    /**
+     * @return BelongsTo<User, Buyer>
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return array{slug: array{source: 'name'}}
+     */
     public function sluggable(): array
     {
         return [
@@ -97,9 +97,16 @@ class Buyer extends Model
         return 'slug';
     }
 
-	/**
-	 * @return string[]
-	 */
+    public function getAddressString(): string
+    {
+        $address = $this->getAddress();
+
+        return implode(', ', $address);
+    }
+
+    /**
+     * @return string[]
+     */
     public function getAddress(): array
     {
         $address = [];
@@ -111,12 +118,5 @@ class Buyer extends Model
         }
 
         return $address;
-    }
-
-    public function getAddressString(): string
-    {
-        $address = $this->getAddress();
-
-        return implode(', ', $address);
     }
 }

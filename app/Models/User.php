@@ -50,7 +50,7 @@ class User extends Authenticatable
 {
     use Notifiable, HasFactory;
 
-    /** @var string[] */
+    /** @var array<int, string> */
     protected $fillable = ['email', 'password', 'api_token',];
     /** @var array<int, string> */
     protected $hidden = ['password', 'remember_token', 'api_token',];
