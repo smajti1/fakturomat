@@ -61,3 +61,4 @@ To see logs/debug use
 - [postgres](docs/postgres.md)
 - [vps start commands](docs/vps-start-commands.md)
 - [docker config/setup/help list](docs/docker.md)
+- [github workflows](docs/github-workflows.md)
