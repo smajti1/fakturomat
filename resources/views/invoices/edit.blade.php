@@ -1,3 +1,4 @@
+@php use App\Models\Invoice; @endphp
 @extends('invoices.base')
 
 @section('breadcrumb')
@@ -28,11 +29,11 @@
             <div class="col-sm-6">
                 <label for="buyer_id">Nabywca</label>
                 <br/>
-                <select name="buyer_id" id="buyer_id">
+                <select name="buyer_id" id="buyer_id" class="form-select">
                     @foreach($buyers as $buyer)
-                    <option value="{{ $buyer->id }}" data-buyer-data="{{ json_encode($buyer->toArray()) }}" >
-                        {{ $buyer->name }}
-                    </option>
+                        <option value="{{ $buyer->id }}" data-buyer-data="{{ json_encode($buyer->toArray(), JSON_THROW_ON_ERROR) }}">
+                            {{ $buyer->name }}
+                        </option>
                     @endforeach
                 </select>
                 <div id="buyer-address-placeholder">
@@ -55,16 +56,16 @@
         <div>
             <label for="payment">Płatność</label>
             <select name="payment" id="payment">
-                <option value="{{ \App\Models\Invoice::PAYMENT_CASH }}" {{ $invoice->payment == \App\Models\Invoice::PAYMENT_CASH ? 'selected' : '' }}>gotówką</option>
-                <option value="{{ \App\Models\Invoice::PAYMENT_BANK_TRANSFER }}" {{ $invoice->payment == \App\Models\Invoice::PAYMENT_BANK_TRANSFER ? 'selected' : '' }}>przelewem</option>
+                <option value="{{ Invoice::PAYMENT_CASH }}" {{ $invoice->payment === Invoice::PAYMENT_CASH ? 'selected' : '' }}>gotówką</option>
+                <option value="{{ Invoice::PAYMENT_BANK_TRANSFER }}" {{ $invoice->payment === Invoice::PAYMENT_BANK_TRANSFER ? 'selected' : '' }}>przelewem</option>
             </select>
         </div>
 
         <div>
             <label for="status">Status</label>
             <select name="status" id="status">
-                <option value="{{ \App\Models\Invoice::STATUS_NOT_PAID }}" {{ $invoice->status == \App\Models\Invoice::STATUS_NOT_PAID ? 'selected' : '' }}>nie zapłacona</option>
-                <option value="{{ \App\Models\Invoice::STATUS_PAID }}" {{ $invoice->status == \App\Models\Invoice::STATUS_PAID ? 'selected' : '' }}>zapłacona</option>
+                <option value="{{ Invoice::STATUS_NOT_PAID }}" {{ $invoice->status === Invoice::STATUS_NOT_PAID ? 'selected' : '' }}>nie zapłacona</option>
+                <option value="{{ Invoice::STATUS_PAID }}" {{ $invoice->status === Invoice::STATUS_PAID ? 'selected' : '' }}>zapłacona</option>
             </select>
         </div>
 

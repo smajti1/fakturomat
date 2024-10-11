@@ -15,13 +15,14 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ url('/password/email') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                        <div class="mb-3{{ $errors->has('email') ? ' has-danger' : '' }}">
                             <label for="email">E-mail</label>
-                            <input id="email" type="text" class="form-control form-control-danger" name="email" value="{{ old('email', $email ?? '') }}" placeholder="E-mail">
+                            <input id="email" type="text" class="form-control form-control-danger" name="email"
+                                   value="{{ old('email', $email ?? '') }}" placeholder="E-mail">
                             <div class="form-control-feedback">{{ $errors->first('email') }}</div>
                         </div>
 
-                        <div class="form-group">
+                        <div class="mb-3">
                             <div class="col-md-8 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
                                     Wyślij

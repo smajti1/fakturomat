@@ -1,30 +1,35 @@
-<p class="h3">Wyszuja adress</p>
-<div class="form-group">
+<p class="h3">Wyszukaj adres</p>
+<div class="mb-3">
     <label for="address_string">Wyszukaj adres</label>
-    <input id="address_string" type="text" class="form-control" name="address_string" value="{{ old('address_string', $address_string ?? '') }}" placeholder="Adres">
+    <input id="address_string" type="text" class="form-control" name="address_string"
+           value="{{ old('address_string', $address_string ?? '') }}" placeholder="Adres">
 </div>
 <p class="h3">Lub wypełnij</p>
 <div>
-    <div class="form-group{{ $errors->has('city') ? ' has-danger' : '' }}">
+    <div class="mb-3{{ $errors->has('city') ? ' has-danger' : '' }}">
         <label for="city">Miasto</label>
-        <input id="city" type="text" class="form-control form-control-danger" name="city" value="{{ old('city', $city ?? '') }}" placeholder="Miasto">
+        <input id="city" type="text" class="form-control form-control-danger" name="city"
+               value="{{ old('city', $city ?? '') }}" placeholder="Miasto">
         <div class="form-control-feedback">{{ $errors->first('city') }}</div>
     </div>
-    <div class="form-group{{ $errors->has('zip_code') ? ' has-danger' : '' }}">
+    <div class="mb-3{{ $errors->has('zip_code') ? ' has-danger' : '' }}">
         <label for="zip_code">Kod pocztowy</label>
-        <input id="zip_code" type="text" class="form-control form-control-danger" name="zip_code" value="{{ old('zip_code', $zip_code ?? '') }}" placeholder="Kod pocztowy">
+        <input id="zip_code" type="text" class="form-control form-control-danger" name="zip_code"
+               value="{{ old('zip_code', $zip_code ?? '') }}" placeholder="Kod pocztowy">
         <div class="form-control-feedback">{{ $errors->first('zip_code') }}</div>
     </div>
-    <div class="form-group{{ $errors->has('street') ? ' has-danger' : '' }}">
+    <div class="mb-3{{ $errors->has('street') ? ' has-danger' : '' }}">
         <label for="street">Ulica</label>
-        <input id="street" type="text" class="form-control form-control-danger" name="street" value="{{ old('street', $street ?? '') }}" placeholder="Ulica">
+        <input id="street" type="text" class="form-control form-control-danger" name="street"
+               value="{{ old('street', $street ?? '') }}" placeholder="Ulica">
         <div class="form-control-feedback">{{ $errors->first('street') }}</div>
     </div>
 </div>
 
 @section('scripts')
     @parent
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&libraries=places" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ env('GOOGLE_MAPS_KEY') }}&libraries=places" async
+            defer></script>
     <script>
         $(function () {
             // This example displays an address form, using the autocomplete feature

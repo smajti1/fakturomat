@@ -3,7 +3,7 @@
 @section('content')
     <div id="welcome-page" class="row">
         <div class="content">
-            <div class="text-xs-center title">
+            <div class="text-center title">
                 Fakturomat
             </div>
             <ul>

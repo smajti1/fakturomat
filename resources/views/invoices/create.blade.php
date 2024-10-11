@@ -1,3 +1,4 @@
+@php use App\Models\Invoice; @endphp
 @extends('invoices.base')
 
 @section('breadcrumb')
@@ -29,9 +30,9 @@
             <div class="col-sm-6">
                 <label for="buyer_id">Nabywca</label>
                 <br/>
-                <select name="buyer_id" id="buyer_id">
+                <select name="buyer_id" id="buyer_id" class="form-select">
                     @foreach($buyers as $buyer)
-                        <option value="{{ $buyer->id }}" data-buyer-data="{{ json_encode($buyer->toArray()) }}" >
+                        <option value="{{ $buyer->id }}" data-buyer-data="{{ json_encode($buyer->toArray()) }}">
                             {{ $buyer->name }}
                         </option>
                     @endforeach
@@ -56,16 +57,16 @@
         <div>
             <label for="payment">Płatność</label>
             <select name="payment" id="payment">
-                <option value="{{ \App\Models\Invoice::PAYMENT_CASH }}">gotówką</option>
-                <option value="{{ \App\Models\Invoice::PAYMENT_BANK_TRANSFER }}">przelewem</option>
+                <option value="{{ Invoice::PAYMENT_CASH }}">gotówką</option>
+                <option value="{{ Invoice::PAYMENT_BANK_TRANSFER }}">przelewem</option>
             </select>
         </div>
 
         <div>
             <label for="status">Status</label>
             <select name="status" id="status">
-                <option value="{{ \App\Models\Invoice::STATUS_NOT_PAID }}">nie zapłacona</option>
-                <option value="{{ \App\Models\Invoice::STATUS_PAID }}">zapłacona</option>
+                <option value="{{ Invoice::STATUS_NOT_PAID }}">nie zapłacona</option>
+                <option value="{{ Invoice::STATUS_PAID }}">zapłacona</option>
             </select>
         </div>
 
