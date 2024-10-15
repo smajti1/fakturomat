@@ -6,85 +6,55 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Invoice;
-use App\Models\User;
-use Illuminate\Support\Facades\Auth;
+use HeadlessChromium\BrowserFactory;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
-use LogicException;
-use RuntimeException;
-use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 
 class InvoiceToPdfController extends Controller
 {
 
-    public function toPdf(Invoice $invoice): BinaryFileResponse
+    public function toPdf(Invoice $invoice): Response
     {
-        /** @var User $user */
-        $user = Auth::user();
-
-        if (!$this->commandExist()) {
-            throw new LogicException('Brak wkhtmltopdf');
-        }
         $date = $invoice->issue_date;
         $companySlug = mb_convert_case($invoice->company->slug, MB_CASE_TITLE, "UTF-8");
         $title = "FV_{$companySlug}_{$date}";
         $filename = "{$title}.pdf";
-        $uploadDir = public_path('uploads/users/' . $user->id . '/invoices');
 
-        if (!file_exists($uploadDir) && !mkdir($uploadDir, 0766, true) && !is_dir($uploadDir)) {
-            throw new RuntimeException(sprintf('Directory "%s" was not created', $uploadDir));
-        }
-
-        $pathToFile = "$uploadDir/$filename";
-
-        if (is_file($pathToFile)) {
-            unlink($pathToFile);
-        }
-
-
-        $htmlTmpFilePath = $this->createHtmlTmpFile($this->toHtml($invoice));
-        $htmlFooterTmpFilePath = $this->createHtmlTmpFile($this->footer());
-
-        $process = new Process([
-            "wkhtmltopdf",
-            "--margin-top",
-            "15mm",
-            "--margin-bottom",
-            "18mm",
-            "--footer-html",
-            "$htmlFooterTmpFilePath",
-            "--title",
-            $title,
-            $htmlTmpFilePath,
-            $pathToFile,
+        $browserFactory = new BrowserFactory('chromium');
+        $browser = $browserFactory->createBrowser([
+            'windowSize' => [1920, 1080],
+            'noSandbox' => true,
         ]);
-        $process->run();
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
+        try {
+            $page = $browser->createPage();
+
+            $html_body = $this->toHtml($invoice)->toHtml();
+            $html_footer = $this->footer($invoice)->toHtml();
+            $page->setHtml($html_body);
+
+            $pdf_options = [
+                'marginBottom' => 0,
+                'marginLeft' => 0,
+                'marginRight' => 0,
+                'displayHeaderFooter' => true,
+                'headerTemplate' => '<div></div>',
+                'footerTemplate' => $html_footer,
+            ];
+            $pdf = base64_decode($page->pdf($pdf_options)->getBase64());
+        } finally {
+            $browser->close();
         }
 
         $headers = [
-            'Content-Disposition' => "filename=\"$filename\"",
+            'Content-Description' => 'File Transfer',
+            'Content-Disposition' => "inline; filename=\"$filename\"",
+            'Content-Type' => 'application/pdf',
+            'Content-Transfer-Encoding' => 'binary',
+            'Expires' => 0,
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
         ];
 
-        return response()->file($pathToFile, $headers);
-    }
-
-    private function commandExist(): bool
-    {
-        $returnVal = shell_exec("type -P wkhtmltopdf");
-
-        return (empty($returnVal) ? false : true);
-    }
-
-    private function createHtmlTmpFile(View $view): string
-    {
-        $htmlContent = $view->render();
-        $htmlTmpFilePath = sys_get_temp_dir() . '/' . uniqid('', true) . '.html';
-        file_put_contents($htmlTmpFilePath, $htmlContent);
-
-        return $htmlTmpFilePath;
+        return response()->make($pdf, 200, $headers);
     }
 
     public function toHtml(Invoice $invoice): View
@@ -97,9 +67,8 @@ class InvoiceToPdfController extends Controller
         return view('api.invoices.pdf.html', compact('invoice', 'spellOutAmount', 'taxPercentsSum', 'totalSum', 'activeTaxes'));
     }
 
-    public function footer(): View
+    public function footer(Invoice $invoice): View
     {
-        return view('api.invoices.pdf.footer');
+        return view('api.invoices.pdf.footer', compact('invoice'));
     }
-
 }

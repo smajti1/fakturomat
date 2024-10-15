@@ -16,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::group(['middleware' => ['auth:api']], function()
-{
+Route::group(['middleware' => ['auth:api']], function () {
     Route::get('/faktura/{invoice}/html', [InvoiceToPdfController::class, 'toHtml'])->name('api.invoices.to.html');
-    Route::get('/faktura/{invoice}/pdf',  [InvoiceToPdfController::class, 'toPdf'])->name('api.invoices.to.pdf');
-    Route::get('/faktura/{invoice}/pdf-footer',  [InvoiceToPdfController::class, 'footer'])->name('api.invoices.to.pdf.footer');
+    Route::get('/faktura/{invoice}/pdf', [InvoiceToPdfController::class, 'toPdf'])->name('api.invoices.to.pdf');
 });

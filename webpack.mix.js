@@ -28,6 +28,7 @@ mix
         'resources/js/app.js'
     ], 'public/js/app.js')
     .copy('node_modules/bootstrap/dist/css/bootstrap.css', 'public/css')
+    .minify('public/css/bootstrap.css', 'public/css/bootstrap.mini.css')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/invoice-pdf.scss', 'public/css')
     .autoload({

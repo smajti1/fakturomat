@@ -22,23 +22,15 @@ RUN apt update -yqq && apt install -y \
     zip \
     # install postgresql-client only for pg_dump to make automatic database dump
     postgresql-client \
-    # wkhtmltopdf dependencies
-    fontconfig \
-    libx11-6 \
-    libxcb1 \
-    libxext6 \
-    libxrender1 \
-    xfonts-75dpi \
-    xfonts-base \
-    # end wkhtmltopdf dependencies
     # libonig-dev = php-mbstring
     libonig-dev \
     nodejs \
+    chromium \
     && apt remove --purge --auto-remove -y
 
 RUN npm update && npm install -g npm@10.*
 
-RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl
+RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl sockets
 ## xdebug
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
@@ -56,12 +48,5 @@ RUN echo Europe/Warsaw >/etc/timezone && \
     dpkg-reconfigure -f noninteractive tzdata
 
 RUN mkdir -p public/uploads
-
-# libjpeg-turbo8 library require by wkhtmltopdf
-RUN curl -sOSL http://archive.ubuntu.com/ubuntu/pool/main/libj/libjpeg-turbo/libjpeg-turbo8_2.1.5-2ubuntu1_amd64.deb && \
-    dpkg -i	libjpeg-turbo8_2.1.5-2ubuntu1_amd64.deb
-# tip check linux codename by running command "lsb_release -a" for exmple debian 9.9 has codename: stretch
-RUN curl -sOSL https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.jammy_amd64.deb && \
-    dpkg -i wkhtmltox_0.12.6.1-3.jammy_amd64.deb
 
 USER www-data

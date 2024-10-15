@@ -18,6 +18,8 @@
         "ext-intl": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
+        "ext-mbstring": "*",
+        "chrome-php/chrome": "^1.11",
         "cviebrock/eloquent-sluggable": "^10.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^v10.35",

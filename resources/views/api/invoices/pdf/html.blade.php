@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{{ config('app.name', 'Fakturomat') }}</title>
-    <style>{{ file_get_contents('css/bootstrap.css') }}</style>
+    <style>{!! file_get_contents('css/bootstrap.mini.css')  !!}</style>
     <style>{{ file_get_contents('css/invoice-pdf.css') }}</style>
 </head>
-<body class="pdf invoice-pdf" onload="subst()">
+<body class="pdf invoice-pdf" style="--bs-body-font-size: 0.8rem">
 
 <div class="container">
     <div class="row">
@@ -79,17 +79,17 @@
 
     <table id="invoice-product-list" class="table table-bordered table-striped">
         <thead>
-            <tr>
-                <th>Lp</th>
-                <th>Nazwa</th>
-                <th>Jedn.m.</th>
-                <th>Ilość</th>
-                <th>Cena netto</th>
-                <th>Kwota netto</th>
-                <th>VAT</th>
-                <th>Kwota VAT</th>
-                <th>Kwota brutto</th>
-            </tr>
+        <tr>
+            <th>Lp</th>
+            <th>Nazwa</th>
+            <th>Jedn.m.</th>
+            <th>Ilość</th>
+            <th>Cena netto</th>
+            <th>Kwota netto</th>
+            <th>VAT</th>
+            <th>Kwota VAT</th>
+            <th>Kwota brutto</th>
+        </tr>
         </thead>
         <tbody>
         @foreach($invoice->invoice_products as $product)
@@ -112,28 +112,28 @@
         <div class="col-6 offset-6">
             <table class="table table-bordered table-striped">
                 <thead>
-                    <tr>
-                        <th>Netto</th>
-                        <th>%</th>
-                        <th>VAT</th>
-                        <th>Brutto</th>
-                    </tr>
+                <tr>
+                    <th>Netto</th>
+                    <th>%</th>
+                    <th>VAT</th>
+                    <th>Brutto</th>
+                </tr>
                 </thead>
                 <tbody>
-                    @foreach($taxPercentsSum as $vat => $sum)
-                        <tr>
-                            <td class="space-nowrap">{{ money_pl_format($sum['netPrice']) }} zł</td>
-                            <td>{{ is_numeric($vat) ? ($vat . '%') : $activeTaxes[$vat]['label'] }}</td>
-                            <td class="space-nowrap">{{ money_pl_format($sum['amountVat']) }} zł</td>
-                            <td class="space-nowrap">{{ money_pl_format($sum['grossPrice']) }} zł</td>
-                        </tr>
-                    @endforeach
+                @foreach($taxPercentsSum as $vat => $sum)
                     <tr>
-                        <td class="space-nowrap">{{ money_pl_format($totalSum['net']) }} zł</td>
-                        <td>Razem</td>
-                        <td class="space-nowrap">{{ money_pl_format($totalSum['tax']) }} zł</td>
-                        <td class="space-nowrap">{{ money_pl_format($totalSum['gross']) }} zł</td>
+                        <td class="space-nowrap">{{ money_pl_format($sum['netPrice']) }} zł</td>
+                        <td>{{ is_numeric($vat) ? ($vat . '%') : $activeTaxes[$vat]['label'] }}</td>
+                        <td class="space-nowrap">{{ money_pl_format($sum['amountVat']) }} zł</td>
+                        <td class="space-nowrap">{{ money_pl_format($sum['grossPrice']) }} zł</td>
                     </tr>
+                @endforeach
+                <tr>
+                    <td class="space-nowrap">{{ money_pl_format($totalSum['net']) }} zł</td>
+                    <td>Razem</td>
+                    <td class="space-nowrap">{{ money_pl_format($totalSum['tax']) }} zł</td>
+                    <td class="space-nowrap">{{ money_pl_format($totalSum['gross']) }} zł</td>
+                </tr>
                 </tbody>
             </table>
         </div>
