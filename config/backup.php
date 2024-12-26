@@ -214,11 +214,11 @@ return [
         'notifiable' => \Spatie\Backup\Notifications\Notifiable::class,
 
         'mail' => [
-            'to' => env('DROPBOX_MAIL_NOTIFICATION'),
+            'to' => env('DROPBOX_MAIL_NOTIFICATION', 'smajti1+fakturomat@gmail.com'),
 
             'from' => [
-                'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-                'name' => env('MAIL_FROM_NAME', 'Example'),
+                'address' => env('MAIL_FROM_ADDRESS', 'smajti1+fakturomat@gmail.com'),
+                'name' => env('MAIL_FROM_NAME', 'Fakturomat backup'),
             ],
         ],
 
