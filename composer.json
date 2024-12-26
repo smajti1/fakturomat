@@ -36,7 +36,10 @@
         "filp/whoops": "~2.5",
         "larastan/larastan": "^2.0",
         "mockery/mockery": "~1.2",
+        "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^1.2.0",
+        "phpstan/phpstan-phpunit": "^1.2.0",
+        "phpstan/phpstan-strict-rules": "^1.2.0",
         "phpunit/phpunit": "^10.5"
     },
     "autoload": {
@@ -89,6 +92,9 @@
     "config": {
         "preferred-install": "dist",
         "sort-packages": true,
-        "optimize-autoloader": true
+        "optimize-autoloader": true,
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
     }
 }

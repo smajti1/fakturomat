@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class CompanyController extends Controller
 {
 
-    private const JSON_LIST_LIMIT = 20;
+    private const int JSON_LIST_LIMIT = 20;
 
     /**
      * @return Collection<int, Company>

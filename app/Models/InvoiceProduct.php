@@ -109,9 +109,6 @@ class InvoiceProduct extends Model
     {
         $price = $this->price;
         $vat = $this->calculateVat();
-        if (is_numeric($vat)) {
-            $price *= $vat;
-        }
-        return (float) $price;
+        return $price * $vat;
     }
 }

@@ -178,9 +178,7 @@ class Invoice extends Model
         foreach ($this->invoice_products as $product) {
             $totalSum['gross'] += $product->grossPrice();
             $totalSum['net'] += $product->netPrice();
-            if (is_numeric($product->taxAmount())) {
-                $totalSum['tax'] += $product->taxAmount();
-            }
+            $totalSum['tax'] += $product->taxAmount();
         }
 
         return $totalSum;

@@ -90,7 +90,7 @@ class Product extends Model
         if (is_numeric($vat)) {
             $price *= $vat;
         }
-        return (float) $price;
+        return $price;
     }
 
     public function calculateVat(): string

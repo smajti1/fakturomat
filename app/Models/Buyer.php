@@ -110,10 +110,10 @@ class Buyer extends Model
     public function getAddress(): array
     {
         $address = [];
-        if ($this->street) {
+        if ($this->street !== '') {
             $address[] = $this->street;
         }
-        if ($this->city || $this->zip_code) {
+        if ($this->city !== '' || $this->zip_code !== '') {
             $address[] = implode(' ', [$this->city, $this->zip_code]);
         }
 

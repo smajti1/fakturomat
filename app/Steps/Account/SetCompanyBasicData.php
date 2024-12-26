@@ -28,29 +28,30 @@ class SetCompanyBasicData extends Step
             $company = Company::whereId($company)->first();
         }
 
-        if ($user) {
-            if ($company) {
-                $company->update([
-                    'name' => $data['company_name'],
-                    'tax_id_number' => $data['tax_id_number'],
-                    'regon' => $data['regon'],
-                    'bank_account' => $data['bank_account'],
-                ]);
-            } else {
-                $company = new Company();
-                $company->fill([
-                    'name' => $data['company_name'],
-                    'tax_id_number' => $data['tax_id_number'],
-                    'regon' => $data['regon'],
-                    'bank_account' => $data['bank_account'],
-                ]);
-
-                $company->user()->associate($user);
-                $company->save();
-            }
-
-            $this->saveProgress($request, ['company_id' => $company->id]);
+        if ($user === null) {
+            return;
         }
+        if ($company !== null) {
+            $company->update([
+                'name' => $data['company_name'],
+                'tax_id_number' => $data['tax_id_number'],
+                'regon' => $data['regon'],
+                'bank_account' => $data['bank_account'],
+            ]);
+        } else {
+            $company = new Company();
+            $company->fill([
+                'name' => $data['company_name'],
+                'tax_id_number' => $data['tax_id_number'],
+                'regon' => $data['regon'],
+                'bank_account' => $data['bank_account'],
+            ]);
+
+            $company->user()->associate($user);
+            $company->save();
+        }
+
+        $this->saveProgress($request, ['company_id' => $company->id]);
 
     }
 
@@ -59,7 +60,7 @@ class SetCompanyBasicData extends Step
         $company_unique_id = '';
         /** @var User $user */
         $user = Auth::user();
-        if ($user->company) {
+        if ($user->company !== null) {
             $company_unique_id = ',' . $user->company->id;
         }
         return [

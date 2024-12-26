@@ -9,6 +9,7 @@ use App\Models\Invoice;
 use HeadlessChromium\BrowserFactory;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use LogicException;
 
 class InvoiceToPdfController extends Controller
 {
@@ -40,7 +41,7 @@ class InvoiceToPdfController extends Controller
                 'headerTemplate' => '<div></div>',
                 'footerTemplate' => $html_footer,
             ];
-            $pdf = base64_decode($page->pdf($pdf_options)->getBase64());
+            $pdf = base64_decode($page->pdf($pdf_options)->getBase64(), true) ?: throw new LogicException('Cannot generate PDF');
         } finally {
             $browser->close();
         }

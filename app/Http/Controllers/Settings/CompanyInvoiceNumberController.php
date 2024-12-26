@@ -27,10 +27,10 @@ class CompanyInvoiceNumberController extends Controller
     {
         $this->validate($request, $this->rules());
         $input = $request->all();
-        $input['autoincrement_number'] = $request->get('autoincrement_number') ? 1 : 0;
-        $input['show_number'] = $request->get('show_number') ? 1 : 0;
-        $input['show_month'] = $request->get('show_month') ? 1 : 0;
-        $input['show_year'] = $request->get('show_year') ? 1 : 0;
+        $input['autoincrement_number'] = $request->get('autoincrement_number') === true ? 1 : 0;
+        $input['show_number'] = $request->get('show_number') === true ? 1 : 0;
+        $input['show_month'] = $request->get('show_month') === true ? 1 : 0;
+        $input['show_year'] = $request->get('show_year') === true ? 1 : 0;
         /** @var User $user */
         $user = Auth::user();
 

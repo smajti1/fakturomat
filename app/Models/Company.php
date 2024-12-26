@@ -129,7 +129,8 @@ class Company extends Model
     public function getAddress(): array
     {
         $address = [];
-        if ($street = $this->street) {
+        $street = $this->street;
+        if ($street !== '') {
             if (
                 strpos($street, 'ul.') === false &&
                 strpos($street, 'Aleje') !== false
@@ -138,7 +139,7 @@ class Company extends Model
             }
             $address[] = $street;
         }
-        if ($this->city || $this->zip_code) {
+        if ($this->city !== '' || $this->zip_code !== '') {
             $address[] = implode(' ', [$this->zip_code, $this->city]);
         }
 

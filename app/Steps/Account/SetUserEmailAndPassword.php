@@ -22,7 +22,7 @@ class SetUserEmailAndPassword extends Step
         $user = Auth::user();
         $data = $request->all();
 
-        if ($user) {
+        if ($user !== null) {
             $user->update([
                 'email' => $data['email'],
             ]);
@@ -35,7 +35,7 @@ class SetUserEmailAndPassword extends Step
         } else {
             $user = new User();
             $user->fill([
-                'email'    => $data['email'],
+                'email' => $data['email'],
                 'password' => bcrypt($data['password']),
             ]);
             $user->saveOrFail();
@@ -50,8 +50,8 @@ class SetUserEmailAndPassword extends Step
         $user = Auth::user();
 
         return [
-            'email'    => 'required|email|max:255|unique:users' . ($user ? ",email,$user->id,id" : ''),
-            'password' => (!$user ? 'required|' : '') . 'min:8|confirmed',
+            'email' => 'required|email|max:255|unique:users' . ($user !== null ? ",email,$user->id,id" : ''),
+            'password' => ($user === null ? 'required|' : '') . 'min:8|confirmed',
         ];
     }
 }

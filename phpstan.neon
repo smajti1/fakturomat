@@ -1,5 +1,3 @@
-includes:
-    - ./vendor/larastan/larastan/extension.neon
 parameters:
     level: 8
     paths:
@@ -9,3 +7,6 @@ parameters:
         - database/factories
         - database/seeders
         - routes
+    strictRules:
+        strictCalls: false
+        disallowedConstructs: false

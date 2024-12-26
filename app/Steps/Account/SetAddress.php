@@ -22,12 +22,12 @@ class SetAddress extends Step
     {
         /** @var User|null $user */
         $user = Auth::user();
-        if ($user && $this->wizard->dataHas('company_id')) {
+        if ($user !== null && $this->wizard->dataHas('company_id')) {
             $company = $this->wizard->dataGet('company_id');
             $company = Company::whereId($company)->first() ?? throw new LogicException('Can not find company');
 
             $company->update(
-                $request->only(['city', 'zip_code', 'street'])
+                $request->only(['city', 'zip_code', 'street']),
             );
 
             $this->saveProgress($request);
@@ -37,9 +37,9 @@ class SetAddress extends Step
     public function rules(Request $request = null): array
     {
         return [
-            'city'     => 'max:255',
+            'city' => 'max:255',
             'zip_code' => 'max:255',
-            'street'   => 'max:255',
+            'street' => 'max:255',
         ];
     }
 }

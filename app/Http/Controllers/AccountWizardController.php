@@ -12,16 +12,16 @@ use App\Steps\Account\SetUserEmailAndPassword;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Smajti1\Laravel\Exceptions\StepNotFoundException;
 use Smajti1\Laravel\Step;
 use Smajti1\Laravel\Wizard;
-use Illuminate\Support\Facades\Auth;
 
 class AccountWizardController extends Controller
 {
-	/**
-	 * @var array<int|string, class-string<Step>>
-	 */
+    /**
+     * @var array<int|string, class-string<Step>>
+     */
     public array $steps = [
         SetUserEmailAndPassword::class,
         SetCompanyBasicData::class,
@@ -39,9 +39,9 @@ class AccountWizardController extends Controller
     }
 
     public function wizard(Step|string|null $step = null): View
-	{
+    {
         try {
-            if (!$step) {
+            if ($step === null || $step === '') {
                 $step = $this->wizard->firstOrLastProcessed();
             } else {
                 $step = $step instanceof Step ? $step : $this->wizard->getBySlug($step);
@@ -56,15 +56,15 @@ class AccountWizardController extends Controller
     }
 
     public function wizardPost(Request $request, Step|string|null $step = null): RedirectResponse
-	{
-		try {
+    {
+        try {
             $step_by_slug = $step instanceof Step ? $step : $this->wizard->getBySlug($step ?? '');
         } catch (StepNotFoundException $e) {
             abort(404);
         }
 
         $this->validate($request, $step_by_slug->rules($request));
-		$step_by_slug->process($request);
+        $step_by_slug->process($request);
 
         if ($step_by_slug->index === ($this->wizard->limit() - 1)) {
 

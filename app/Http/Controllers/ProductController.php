@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
-    private const JSON_LIST_LIMIT = 10;
+    private const int JSON_LIST_LIMIT = 10;
     protected Request $request;
 
     public function __construct(Request $request)
@@ -51,7 +51,7 @@ class ProductController extends Controller
             ->where('name', 'ILIKE', $search . '%')
             ->limit(self::JSON_LIST_LIMIT)
             ->get();
-        if (!$list->count()) {
+        if ($list->count() === 0) {
             $list = $user
                 ->products()
                 ->limit(self::JSON_LIST_LIMIT)

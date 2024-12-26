@@ -23,7 +23,7 @@ class SetCompanySecondaryData extends Step
         $user = Auth::user();
         $data = $request->all();
 
-        if ($user && $this->wizard->dataHas('company_id')) {
+        if ($user !== null && $this->wizard->dataHas('company_id')) {
             $company = $this->wizard->dataGet('company_id');
             $company = Company::whereId($company)->first();
             $company?->update([
@@ -39,9 +39,9 @@ class SetCompanySecondaryData extends Step
     public function rules(Request $request = null): array
     {
         return [
-            'email'   => 'max:255',
+            'email' => 'max:255',
             'website' => 'max:255',
-            'phone'   => 'max:255',
+            'phone' => 'max:255',
         ];
     }
 }
