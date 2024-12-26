@@ -39,22 +39,22 @@ use LogicException;
  */
 class InvoiceProduct extends Model
 {
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = [
         'name', 'measure_unit', 'price', 'tax_percent', 'vat', 'amount',
     ];
 
     /**
-     * @return BelongsTo<Invoice, InvoiceProduct>
+     * @return BelongsTo<Invoice, $this>
      */
     public function invoice(): BelongsTo
     {
         return $this->belongsTo(Invoice::class);
     }
 
-    public function isOwner(User $user = null): bool
+    public function isOwner(User|null $user = null): bool
     {
-        $user = $user ?: Auth::user();
+        $user = $user ?? Auth::user();
         if (!$user instanceof User) {
             throw new LogicException('User not logged!');
         }
@@ -63,7 +63,7 @@ class InvoiceProduct extends Model
     }
 
     /**
-     * @return BelongsTo<User, InvoiceProduct>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -109,6 +109,7 @@ class InvoiceProduct extends Model
     {
         $price = $this->price;
         $vat = $this->calculateVat();
-        return $price * $vat;
+        /** @phpstan-ignore cast.useless */
+        return (float) $price * $vat;
     }
 }

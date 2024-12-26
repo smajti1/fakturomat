@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Database\Factories\CompanyFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,14 +59,13 @@ use LogicException;
  * @method static \Illuminate\Database\Eloquent\Builder|Company whereZipCode($value)
  * @method static Builder|Company withTrashed()
  * @method static Builder|Company withoutTrashed()
- * @method static \Database\Factories\CompanyFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Company withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
 class Company extends Model
 {
+    /** @use HasFactory<CompanyFactory> */
     use Sluggable, SoftDeletes, HasFactory;
 
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = [
         'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone', 'bank_name', 'bank_account',
     ];
@@ -81,16 +81,16 @@ class Company extends Model
     }
 
     /**
-     * @return HasOne<CompanyInvoiceNumbers>
+     * @return HasOne<CompanyInvoiceNumbers, $this>
      */
     public function companyInvoiceNumber(): HasOne
     {
         return $this->hasOne(CompanyInvoiceNumbers::class);
     }
 
-    public function isOwner(User $user = null): bool
+    public function isOwner(User|null $user = null): bool
     {
-        $user = $user ?: Auth::user();
+        $user = $user ?? Auth::user();
         if (!$user instanceof User) {
             throw new LogicException('User not logged!');
         }
@@ -99,7 +99,7 @@ class Company extends Model
     }
 
     /**
-     * @return BelongsTo<User, Company>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

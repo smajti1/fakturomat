@@ -44,7 +44,7 @@ class SetUserEmailAndPassword extends Step
         }
     }
 
-    public function rules(Request $request = null): array
+    public function rules(Request|null $request = null): array
     {
         /** @var User|null $user */
         $user = Auth::user();

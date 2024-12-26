@@ -35,7 +35,7 @@ use LogicException;
  */
 class CompanyInvoiceNumbers extends Model
 {
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = ['number', 'autoincrement_number', 'show_number', 'show_month', 'show_year'];
     /** @var array<string, string> */
     protected $casts = [
@@ -46,7 +46,7 @@ class CompanyInvoiceNumbers extends Model
     ];
 
     /**
-     * @return BelongsTo<Company, CompanyInvoiceNumbers>
+     * @return BelongsTo<Company, $this>
      */
     public function company(): BelongsTo
     {

@@ -55,7 +55,7 @@ class SetCompanyBasicData extends Step
 
     }
 
-    public function rules(Request $request = null): array
+    public function rules(Request|null $request = null): array
     {
         $company_unique_id = '';
         /** @var User $user */

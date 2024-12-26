@@ -34,7 +34,7 @@ class SetAddress extends Step
         }
     }
 
-    public function rules(Request $request = null): array
+    public function rules(Request|null $request = null): array
     {
         return [
             'city' => 'max:255',

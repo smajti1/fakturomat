@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Notifications\ResetPasswordNotification;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -26,12 +27,12 @@ use LogicException;
  * @property string|null $remember_token
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Collection&Buyer[] $buyers
+ * @property-read Collection<int, Buyer> $buyers
  * @property-read int|null $buyers_count
  * @property-read Company|null $company
- * @property-read DatabaseNotificationCollection|DatabaseNotification[] $notifications
+ * @property-read DatabaseNotificationCollection<int, DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read Collection|Product[] $products
+ * @property-read Collection<int, Product> $products
  * @property-read int|null $products_count
  * @method static Builder|User newModelQuery()
  * @method static Builder|User newQuery()
@@ -44,15 +45,15 @@ use LogicException;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @method User associate($value)
- * @method static \Database\Factories\UserFactory factory(...$parameters)
  */
 class User extends Authenticatable
 {
+    /** @use HasFactory<UserFactory> */
     use Notifiable, HasFactory;
 
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = ['email', 'password', 'api_token',];
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $hidden = ['password', 'remember_token', 'api_token',];
 
     protected static function boot()
@@ -66,7 +67,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasOne<Company>
+     * @return HasOne<Company, $this>
      */
     public function company(): HasOne
     {
@@ -74,7 +75,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany<Product>
+     * @return HasMany<Product, $this>
      */
     public function products(): HasMany
     {
@@ -82,7 +83,7 @@ class User extends Authenticatable
     }
 
     /**
-     * @return HasMany<Buyer>
+     * @return HasMany<Buyer, $this>
      */
     public function buyers(): HasMany
     {

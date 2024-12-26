@@ -8,5 +8,8 @@ parameters:
         - database/seeders
         - routes
     strictRules:
-        strictCalls: false
-        disallowedConstructs: false
+        disallowedShortTernary: false
+        dynamicCallOnStaticMethod: false
+
+    # larastan
+    noEnvCallsOutsideOfConfig: false

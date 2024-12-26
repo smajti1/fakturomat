@@ -36,7 +36,7 @@ class SetCompanySecondaryData extends Step
         }
     }
 
-    public function rules(Request $request = null): array
+    public function rules(Request|null $request = null): array
     {
         return [
             'email' => 'max:255',

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Database\Factories\BuyerFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -50,21 +51,20 @@ use LogicException;
  * @method static Builder|Buyer whereUserId($value)
  * @method static Builder|Buyer whereWebsite($value)
  * @method static Builder|Buyer whereZipCode($value)
- * @method static \Database\Factories\BuyerFactory factory(...$parameters)
- * @method static Builder|Buyer withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
 class Buyer extends Model
 {
+    /** @use HasFactory<BuyerFactory> */
     use Sluggable, HasFactory;
 
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = [
         'name', 'city', 'zip_code', 'street', 'tax_id_number', 'regon', 'email', 'website', 'phone',
     ];
 
-    public function isOwner(User $user = null): bool
+    public function isOwner(User|null $user = null): bool
     {
-        $user = $user ?: Auth::user();
+        $user = $user ?? Auth::user();
         if (!$user instanceof User) {
             throw new LogicException('User not logged!');
         }
@@ -73,7 +73,7 @@ class Buyer extends Model
     }
 
     /**
-     * @return BelongsTo<User, Buyer>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

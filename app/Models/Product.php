@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
+use Database\Factories\ProductFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -36,21 +37,20 @@ use LogicException;
  * @method static Builder|Product whereTaxPercent($value)
  * @method static Builder|Product whereUpdatedAt($value)
  * @method static Builder|Product whereUserId($value)
- * @method static \Database\Factories\ProductFactory factory(...$parameters)
- * @method static Builder|Product withUniqueSlugConstraints(\Illuminate\Database\Eloquent\Model $model, string $attribute, array $config, string $slug)
  */
 class Product extends Model
 {
+    /** @use HasFactory<ProductFactory> */
     use Sluggable, HasFactory;
 
-    /** @var array<int, string> */
+    /** @var list<string> */
     protected $fillable = [
         'name', 'measure_unit', 'price', 'tax_percent',
     ];
 
-    public function isOwner(User $user = null): bool
+    public function isOwner(User|null $user = null): bool
     {
-        $user = $user ?: Auth::user();
+        $user = $user ?? Auth::user();
         if (!$user instanceof User) {
             throw new LogicException('User not logged!');
         }
@@ -59,7 +59,7 @@ class Product extends Model
     }
 
     /**
-     * @return BelongsTo<User, Product>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {
@@ -90,7 +90,8 @@ class Product extends Model
         if (is_numeric($vat)) {
             $price *= $vat;
         }
-        return $price;
+        /** @phpstan-ignore cast.useless */
+        return (float) $price;
     }
 
     public function calculateVat(): string

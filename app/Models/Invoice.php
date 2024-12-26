@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Database\Factories\InvoiceFactory;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -49,18 +50,17 @@ use LogicException;
  * @method static Builder|Invoice whereUserId($value)
  * @method static Builder|Invoice create($value)
  * @method static Builder|Invoice make($value)
- * @method static \Database\Factories\InvoiceFactory factory(...$parameters)
  */
 class Invoice extends Model
 {
-
+    /** @use HasFactory<InvoiceFactory> */
     use HasFactory;
 
-    public const PAYMENT_CASH = 1;
-    public const PAYMENT_BANK_TRANSFER = 2;
-    public const STATUS_NOT_PAID = 1;
-    public const STATUS_PAID = 2;
-    /** @var array<int, string> */
+    public const int PAYMENT_CASH = 1;
+    public const int PAYMENT_BANK_TRANSFER = 2;
+    public const int STATUS_NOT_PAID = 1;
+    public const int STATUS_PAID = 2;
+    /** @var list<string> */
     protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
     /** @var array<string, string> */
     protected $casts = [
@@ -81,7 +81,7 @@ class Invoice extends Model
     }
 
     /**
-     * @return BelongsTo<Company, Invoice>
+     * @return BelongsTo<Company, $this>
      */
     public function company(): BelongsTo
     {
@@ -89,7 +89,7 @@ class Invoice extends Model
     }
 
     /**
-     * @return HasMany<InvoiceProduct>
+     * @return HasMany<InvoiceProduct, $this>
      */
     public function invoice_products(): HasMany
     {
@@ -97,16 +97,16 @@ class Invoice extends Model
     }
 
     /**
-     * @return BelongsTo<Buyer, Invoice>
+     * @return BelongsTo<Buyer, $this>
      */
     public function buyer(): BelongsTo
     {
         return $this->belongsTo(Buyer::class);
     }
 
-    public function isOwner(User $user = null): bool
+    public function isOwner(User|null $user = null): bool
     {
-        $user = $user ?: Auth::user();
+        $user = $user ?? Auth::user();
         if (!$user instanceof User) {
             throw new LogicException('User not logged!');
         }
@@ -115,7 +115,7 @@ class Invoice extends Model
     }
 
     /**
-     * @return BelongsTo<User, Invoice>
+     * @return BelongsTo<User, $this>
      */
     public function user(): BelongsTo
     {

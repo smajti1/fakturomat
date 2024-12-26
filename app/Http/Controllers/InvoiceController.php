@@ -50,7 +50,6 @@ class InvoiceController extends Controller
     {
         $this->validate($request, $this->rules());
 
-        /** @var Product[] $products */
         $products = Product::whereIn('id', array_keys($request->product))->get();
 
         $price = 0;
@@ -70,7 +69,7 @@ class InvoiceController extends Controller
 
         $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
         $invoice = new Invoice(
-            $invoiceData + compact('price')
+            $invoiceData + compact('price'),
         );
 
         /** @var User $user */
@@ -82,6 +81,7 @@ class InvoiceController extends Controller
         $invoice->buyer()->associate($buyer);
 
         $invoice->save();
+        /** @phpstan-ignore argument.type */
         $invoice->invoice_products()->createMany($invoice_products);
 
         return redirect()->route('invoices.index');
@@ -115,7 +115,6 @@ class InvoiceController extends Controller
         $price = 0;
         $new_invoice_products = [];
         if (isset($request->product)) {
-            /** @var Product[] $products */
             $products = Product::whereIn('id', array_keys($request->product))->get();
             foreach ($products as $product) {
                 $amount = $request->product[$product->id];
@@ -134,7 +133,6 @@ class InvoiceController extends Controller
         if (isset($request->invoice_products)) {
             $invoice_product_ids = array_keys($request->invoice_products);
             $invoice->invoice_products()->whereNotIn('id', $invoice_product_ids)->delete();
-            /** @var InvoiceProduct[] $invoice_products */
             $invoice_products = InvoiceProduct::whereIn('id', array_keys($request->invoice_products))->get();
             foreach ($invoice_products as $invoice_product) {
                 $amount = $request->invoice_products[$invoice_product->id];
@@ -145,6 +143,7 @@ class InvoiceController extends Controller
             }
         }
 
+        /** @phpstan-ignore argument.type */
         $invoice->invoice_products()->createMany($new_invoice_products);
         $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
         $invoice->update($invoiceData + compact('price'));
