@@ -15,11 +15,11 @@ upgrade postgres version in `docker-compose.yml` file
     docker compose down
     docker volume rm fakturomat_postgres
     docker compose up --detach
-    docker compose exec -T db psql --dbname=fakturomat --username=fakturomat < pgdump.sql
+    docker compose exec -T db psql --dbname=fakturomat --username=fakturomat < pg_dump_.sql
 
 Download pgdump.sql from server
 
-    scp USERNAME@IP_ADDRESS:prod/fakturomat/pgdump.sql .
+    scp USERNAME@IP_ADDRESS:prod/fakturomat/pg_dump_$(date +'%F').sql .
 
 https://www.postgresql.org/docs/current/app-pgdump.html
 

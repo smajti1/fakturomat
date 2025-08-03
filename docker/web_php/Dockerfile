@@ -1,7 +1,7 @@
 FROM php:8.4-fpm
 
 ARG UID=1000
-ENV NODE_MAJOR=20
+ENV NODE_MAJOR=22
 
 
 RUN usermod -u ${UID} www-data --home="/var/www/storage/docker/home/www-data"
@@ -28,7 +28,7 @@ RUN apt update -yqq && apt install -y \
     chromium \
     && apt remove --purge --auto-remove -y
 
-RUN npm update && npm install -g npm@10.*
+RUN npm update && npm install -g npm@11.*
 
 RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl sockets
 ## xdebug

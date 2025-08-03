@@ -14,6 +14,10 @@ next set up .env file
 
     nano .env
 
+update docker images (before any update always do a backup)
+
+    docker compose pull
+
 build container with current user id (**optional** default id is `1000`)
 
     docker compose build --build-arg UID="$(id -u)"

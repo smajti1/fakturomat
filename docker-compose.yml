@@ -37,7 +37,7 @@ services:
         max-size: "25m" # file size
 
   caddy:
-    image: caddy:2.7
+    image: caddy:2.10
     restart: ${DOCKER_RESTART}
     working_dir: /var/www
     volumes:
