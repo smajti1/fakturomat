@@ -14,6 +14,8 @@ use LogicException;
 class InvoiceToPdfController extends Controller
 {
 
+    private const int RENDER_HTML_TIME_LIMIT = 45_000; // 45 seconds
+
     public function toPdf(Invoice $invoice): Response
     {
         $date = $invoice->issue_date;
@@ -23,15 +25,17 @@ class InvoiceToPdfController extends Controller
 
         $browserFactory = new BrowserFactory('chromium');
         $browser = $browserFactory->createBrowser([
-            'windowSize' => [1920, 1080],
             'noSandbox' => true,
+            'disableNotifications' => true,
+            'startupTimeout' => 45, // 45 seconds
+//            'debugLogger' => 'php://stdout',
         ]);
         try {
             $page = $browser->createPage();
 
             $html_body = $this->toHtml($invoice)->toHtml();
             $html_footer = $this->footer($invoice)->toHtml();
-            $page->setHtml($html_body);
+            $page->setHtml($html_body, self::RENDER_HTML_TIME_LIMIT);
 
             $pdf_options = [
                 'marginBottom' => 0,
