@@ -33,7 +33,7 @@ class InvoiceController extends Controller
         /** @var User $user */
         $user = Auth::user();
         if ($user->buyers->isEmpty()) {
-            //message = Aby dodać fakturę musisz dodać kontrachenta
+            //message = Aby dodać fakturę musisz dodać kontrahenta
             //ToDo in the future add some dialog or wizard
 
             return redirect()->route('buyer.create');
@@ -81,7 +81,6 @@ class InvoiceController extends Controller
         $invoice->buyer()->associate($buyer);
 
         $invoice->save();
-        /** @phpstan-ignore argument.type */
         $invoice->invoice_products()->createMany($invoice_products);
 
         return redirect()->route('invoices.index');
@@ -143,7 +142,6 @@ class InvoiceController extends Controller
             }
         }
 
-        /** @phpstan-ignore argument.type */
         $invoice->invoice_products()->createMany($new_invoice_products);
         $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
         $invoice->update($invoiceData + compact('price'));

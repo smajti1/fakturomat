@@ -44,7 +44,6 @@ class UserSmajtiSeeder extends Seeder
                 }
                 $invoice->buyer()->associate($buyer_list->random());
                 $invoice->setAttribute('price', $invoice_total_price);
-                /** @phpstan-ignore argument.type */
                 $invoice->invoice_products()->createMany($tmp_product_list);
                 $invoice->save();
             });
