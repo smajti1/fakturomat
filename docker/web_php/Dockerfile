@@ -1,7 +1,7 @@
-FROM php:8.4-fpm
+FROM php:8.5-fpm
 
 ARG UID=1000
-ENV NODE_MAJOR=22
+ENV NODE_MAJOR=24
 
 
 RUN usermod -u ${UID} www-data --home="/var/www/storage/docker/home/www-data"
@@ -19,6 +19,7 @@ RUN apt update -yqq && apt install -y \
     libfreetype6-dev \
     libpng-dev \
     libxml2-dev \
+    libicu-dev \
     zip \
     # install postgresql-client only for pg_dump to make automatic database dump
     postgresql-client \
