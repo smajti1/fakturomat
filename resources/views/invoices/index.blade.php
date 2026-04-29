@@ -18,6 +18,7 @@
                 <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Ilość produktów</th>
                 <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Wpłata</th>
                 <th>Data wystawienia</th>
+                <th>KSeF</th>
                 <th></th>
             </tr>
             </thead>
@@ -33,6 +34,20 @@
                     <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->invoice_products->count() }}</td>
                     <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->payment_at }}</td>
                     <td>{{ $invoice->issue_date }}</td>
+                    <td>
+                        @if($invoice->ksef_invoice_reference_number)
+                            <span class="text-success" title="Faktura wysłana do KSeF">
+                                <i class="fa fa-check-circle"></i> Wysłana
+                            </span>
+                        @else
+                            <form action="{{ route('ksef.sendInvoice', $invoice) }}" method="POST" class="inline-block">
+                                {{ csrf_field() }}
+                                <button type="submit" class="btn-like-link" onclick="return confirm('Wysłać fakturę nr [{{ $invoice->number }}] do KSeF?');">
+                                    <i class="fa fa-paper-plane"></i> Wyślij
+                                </button>
+                            </form>
+                        @endif
+                    </td>
                     <td>
                         <a href="{{ route('invoices.edit', compact('invoice')) }}" class="inline-block">
                             <i class="fa fa-pencil-square-o"></i>

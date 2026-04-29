@@ -16,15 +16,16 @@
     "require": {
         "php": "^8.4",
         "ext-intl": "*",
+        "ext-mbstring": "*",
         "ext-pdo": "*",
         "ext-zip": "*",
-        "ext-mbstring": "*",
         "chrome-php/chrome": "^1.11",
         "cviebrock/eloquent-sluggable": "^12.0",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^v12.52",
         "laravel/tinker": "~2.1",
         "laravel/ui": "^4.0",
+        "n1ebieski/ksef-php-client": "^1.1",
         "smajti1/laravel-wizard": "^1.5",
         "spatie/flysystem-dropbox": "^3.0",
         "spatie/laravel-backup": "^10.0"
@@ -94,6 +95,7 @@
         "sort-packages": true,
         "optimize-autoloader": true,
         "allow-plugins": {
+            "php-http/discovery": true,
             "phpstan/extension-installer": true
         }
     }

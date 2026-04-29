@@ -107,6 +107,14 @@ class Company extends Model
     }
 
     /**
+     * @return HasOne<KsefToken, $this>
+     */
+    public function ksefToken(): HasOne
+    {
+        return $this->hasOne(KsefToken::class);
+    }
+
+    /**
      * @return array{slug: array{source: 'name'}}
      */
     public function sluggable(): array
@@ -121,6 +129,11 @@ class Company extends Model
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    public function getAddressString(): string
+    {
+        return implode(', ', $this->getAddress());
     }
 
     /**

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 use LogicException;
+use function round;
 
 /**
  * @property int $id
@@ -61,7 +62,7 @@ class Invoice extends Model
     public const int STATUS_NOT_PAID = 1;
     public const int STATUS_PAID = 2;
     /** @var list<string> */
-    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'price_net', 'path'];
+    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'price_net', 'path', 'ksef_invoice_reference_number',];
     /** @var array<string, string> */
     protected $casts = [
         'price' => 'float',
@@ -123,24 +124,24 @@ class Invoice extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function grossSum(): int
+    public function grossSum(): float
     {
-        $grossSum = 0;
+        $grossSum = 0.0;
         foreach ($this->invoice_products as $product) {
             $grossSum += $product->grossPrice();
         }
 
-        return (int) $grossSum;
+        return round($grossSum, 2);
     }
 
-    public function netSum(): int
+    public function netSum(): float
     {
-        $netSum = 0;
+        $netSum = 0.0;
         foreach ($this->invoice_products as $product) {
-            $netSum += $product->grossPrice();
+            $netSum += $product->netPrice();
         }
 
-        return (int) $netSum;
+        return round($netSum, 2);
     }
 
     /**

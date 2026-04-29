@@ -31,7 +31,7 @@ RUN apt update -yqq && apt install -y \
 
 RUN npm update && npm install -g npm@11.*
 
-RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl sockets
+RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl sockets bcmath
 ## xdebug
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \

@@ -38,6 +38,9 @@
             <div>
                 <a href="{{ route('company.edit') }}">Ustawienia Firmy</a>
             </div>
+            <div>
+                <a href="{{ route('ksef.index') }}">Ksef</a>
+            </div>
         </div>
 
     </div>
