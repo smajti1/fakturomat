@@ -54,10 +54,12 @@ class InvoiceController extends Controller
 
         $price = 0;
         $invoice_products = [];
+        $price_net = 0;
         foreach ($products as $product) {
             $amount = $request->product[$product->id];
             $tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;
-            $price += $product->price * $tax_percent * $amount;
+            $price_net = $product->price * $amount;
+            $price += $price_net * $tax_percent;
             $invoice_products[] = [
                 'name' => $product->name,
                 'measure_unit' => $product->measure_unit,
@@ -66,10 +68,11 @@ class InvoiceController extends Controller
                 'amount' => $amount,
             ];
         }
+        $price = round($price, 2);
 
         $invoiceData = $request->only('number', 'company_id', 'buyer_id', 'issue_date', 'payment_at', 'payment', 'status');
         $invoice = new Invoice(
-            $invoiceData + compact('price'),
+            $invoiceData + compact('price', 'price_net'),
         );
 
         /** @var User $user */

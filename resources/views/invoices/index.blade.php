@@ -13,7 +13,8 @@
                 <th class="d-none d-lg-table-cell d-xl-table-cell">Status</th>
                 <th>Nabywca</th>
                 <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Płatność</th>
-                <th>Kwota</th>
+                <th>Kwota netto</th>
+                <th>Kwota brutto</th>
                 <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Ilość produktów</th>
                 <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Wpłata</th>
                 <th>Data wystawienia</th>
@@ -27,6 +28,7 @@
                     <td class="d-none d-lg-table-cell d-xl-table-cell">{{ $invoice->status }}</td>
                     <td>{{ $invoice->buyer['name'] }}</td>
                     <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->payment }}</td>
+                    <td>{{ $invoice->price_net }} zł</td>
                     <td>{{ $invoice->price }} zł</td>
                     <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->invoice_products->count() }}</td>
                     <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->payment_at }}</td>

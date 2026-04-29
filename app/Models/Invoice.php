@@ -61,10 +61,11 @@ class Invoice extends Model
     public const int STATUS_NOT_PAID = 1;
     public const int STATUS_PAID = 2;
     /** @var list<string> */
-    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'path'];
+    protected $fillable = ['payment', 'status', 'payment_at', 'number', 'issue_date', 'price', 'price_net', 'path'];
     /** @var array<string, string> */
     protected $casts = [
         'price' => 'float',
+        'price_net' => 'float',
     ];
 
     protected static function boot()

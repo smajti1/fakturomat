@@ -10,6 +10,7 @@ use App\Models\Invoice;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use function round;
 
 class UserSmajtiSeeder extends Seeder
 {
@@ -33,17 +34,20 @@ class UserSmajtiSeeder extends Seeder
             ])
             ->each(static function (Invoice $invoice) use ($product_list, $buyer_list) {
                 $invoice_total_price = 0;
+                $invoice_total_price_net = 0.0;
                 $tmp_product_list = [];
                 /** @phpstan-ignore argument.type */
                 foreach ($product_list->random(random_int(1, count($product_list) - 1)) as $product) {
                     $amount = random_int(0, 2_000);
                     $tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;
+                    $invoice_total_price_net += $product->price * $amount;
                     $invoice_total_price += $product->price * $tax_percent * $amount;
                     $tmp_product_list[] = array_merge($product->only(['name', 'measure_unit', 'price', 'tax_percent']),
                         ['amount' => $amount]);
                 }
                 $invoice->buyer()->associate($buyer_list->random());
-                $invoice->setAttribute('price', $invoice_total_price);
+                $invoice->setAttribute('price_net', $invoice_total_price_net);
+                $invoice->setAttribute('price', round($invoice_total_price, 2));
                 $invoice->invoice_products()->createMany($tmp_product_list);
                 $invoice->save();
             });

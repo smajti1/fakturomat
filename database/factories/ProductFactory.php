@@ -17,10 +17,10 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-			'name' => $this->faker->name,
-			'measure_unit' => array_rand(config('invoice.measure_units.' . config('app.locale'))),
-			'price' => $this->faker->randomFloat(null, 0.01, 100_000),
-			'tax_percent' => $this->faker->randomElement(config('invoice.tax_rates.' . config('invoice.currency')))['id'],
-		];
+            'name' => $this->faker->name,
+            'measure_unit' => array_rand(config('invoice.measure_units.' . config('app.locale'))),
+            'price' => $this->faker->randomFloat(2, 0.01, 1_000),
+            'tax_percent' => $this->faker->randomElement(config('invoice.tax_rates.' . config('invoice.currency')))['id'],
+        ];
     }
 }
