@@ -39,6 +39,10 @@
                             <span class="text-success" title="Faktura wysłana do KSeF">
                                 <i class="fa fa-check-circle"></i> Wysłana
                             </span>
+                        @elseif($company->ksefToken === null)
+                            <span class="text-warning" title="KSeF nie jest skonfigurowany">
+                                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Nieaktywny
+                            </span>
                         @else
                             <form action="{{ route('ksef.sendInvoice', $invoice) }}" method="POST" class="inline-block">
                                 {{ csrf_field() }}

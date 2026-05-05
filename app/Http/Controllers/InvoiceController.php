@@ -24,8 +24,9 @@ class InvoiceController extends Controller
             ->with(['buyer', 'invoice_products', 'company'])
             ->orderBy('created_at', 'desc')
             ->get();
+        $company = $user->company;
 
-        return view('invoices.index', compact('invoices'));
+        return view('invoices.index', compact('invoices', 'company'));
     }
 
     public function create(): View|RedirectResponse

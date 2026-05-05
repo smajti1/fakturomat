@@ -73,9 +73,16 @@ class KsefController extends Controller
         $this->validate($request, ['ksef_token' => 'required',]);
         /** @var User $user */
         $user = Auth::user();
-        $company = $user->requireCompany()->ksefToken()->create([
-            'ksef_token' => $request->input('ksef_token'),
-        ]);
+        $company = $user->requireCompany();
+        if ($company->ksefToken !== null) {
+            $company->ksefToken->update([
+                'ksef_token' => $request->input('ksef_token'),
+            ]);
+        } else {
+            $company->ksefToken()->create([
+                'ksef_token' => $request->input('ksef_token'),
+            ]);
+        }
 
         return redirect()->route('ksef.index', [$company]);
     }
