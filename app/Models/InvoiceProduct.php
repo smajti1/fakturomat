@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Auth;
 use LogicException;
+use function round;
 
 /**
  * @property int $id
@@ -72,12 +73,7 @@ class InvoiceProduct extends Model
 
     public function grossPrice(): float
     {
-        return $this->amount * $this->priceWithVat();
-    }
-
-    public function priceWithVat(): float
-    {
-        return $this->price * $this->calculateVat();
+        return round($this->amount * $this->price * $this->calculateVat(), 2);
     }
 
     public function calculateVat(): float|int
@@ -90,9 +86,14 @@ class InvoiceProduct extends Model
         return $vat;
     }
 
+    public function priceWithVat(): float
+    {
+        return round($this->price * $this->calculateVat(), 2);
+    }
+
     public function netPrice(): float
     {
-        return $this->amount * $this->price;
+        return round($this->amount * $this->price, 2);
     }
 
     public function taxAmount(): float
@@ -102,7 +103,7 @@ class InvoiceProduct extends Model
             $tax_percent = ($this->tax_percent / 100);
         }
 
-        return $this->amount * $this->price * $tax_percent;
+        return round($this->amount * $this->price * $tax_percent, 2);
     }
 
     public function formattedPriceWithVat(): float

@@ -36,7 +36,6 @@ class UserSmajtiSeeder extends Seeder
                 $invoice_total_price = 0;
                 $invoice_total_price_net = 0.0;
                 $tmp_product_list = [];
-                /** @phpstan-ignore argument.type */
                 foreach ($product_list->random(random_int(1, count($product_list) - 1)) as $product) {
                     $amount = random_int(0, 2_000);
                     $tax_percent = is_numeric($product->calculateVat()) ? $product->calculateVat() : 1;

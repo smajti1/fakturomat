@@ -145,7 +145,7 @@ class Invoice extends Model
     }
 
     /**
-     * @return array<string, array<string, float>>
+     * @return array<string, array{netPrice: float, grossPrice: float, amountVat: float}>
      */
     public function getTaxPercentsSum(): array
     {
@@ -168,19 +168,23 @@ class Invoice extends Model
     }
 
     /**
-     * @return array{gross: int|float, net: int|float, tax: int|float}
+     * @return array{gross: float, net: float, tax: float}
      */
     public function getTotalSum(): array
     {
         $totalSum = [
-            'gross' => 0,
-            'net' => 0,
-            'tax' => 0,
+            'gross' => 0.0,
+            'net' => 0.0,
+            'tax' => 0.0,
         ];
         foreach ($this->invoice_products as $product) {
             $totalSum['gross'] += $product->grossPrice();
             $totalSum['net'] += $product->netPrice();
             $totalSum['tax'] += $product->taxAmount();
+        }
+
+        foreach ($totalSum as $key => $value) {
+            $totalSum[$key] = round($value, 2);
         }
 
         return $totalSum;

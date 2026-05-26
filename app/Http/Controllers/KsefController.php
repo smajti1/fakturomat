@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Company;
 use App\Models\Invoice;
-use App\Models\InvoiceProduct;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
@@ -22,6 +21,9 @@ use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Faktura;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FaWiersz;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Naglowek;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\NIPGroup;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_1Group;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_2Group;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_3Group;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot1;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot1DaneIdentyfikacyjne;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot2;
@@ -31,6 +33,7 @@ use N1ebieski\KSEFClient\Requests\Sessions\Online\Close\CloseRequest;
 use N1ebieski\KSEFClient\Requests\Sessions\Online\Open\OpenRequest;
 use N1ebieski\KSEFClient\Requests\Sessions\Online\Send\SendRequest;
 use N1ebieski\KSEFClient\Resources\ClientResource;
+use N1ebieski\KSEFClient\Support\Optional;
 use N1ebieski\KSEFClient\ValueObjects\InternalId;
 use N1ebieski\KSEFClient\ValueObjects\Mode;
 use N1ebieski\KSEFClient\ValueObjects\NIP;
@@ -47,14 +50,20 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11A;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11Vat;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_12;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_13_1;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_13_2;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_13_3;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_14_1;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_14_2;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_14_3;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_15;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_2;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_7;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_8A;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_8B;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_9A;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_9B;
 use SensitiveParameter;
+use function array_key_exists;
 
 class KsefController extends Controller
 {
@@ -141,9 +150,26 @@ class KsefController extends Controller
 
     private function createFaktura(Company $company, Invoice $invoice): Faktura
     {
-        $i = 1;
         $now = Carbon::now();
         $buyer = $invoice->buyer;
+        $totalSumMappedByTax = $invoice->getTaxPercentsSum();
+
+        $i = 1;
+        $invoiceProductList = [];
+        foreach ($invoice->invoice_products as $invoiceProduct) {
+            $invoiceProductList[] = new FaWiersz(
+                new NrWierszaFa($i++),
+                p_7: new P_7($invoiceProduct->name),
+                p_8A: new P_8A($invoiceProduct->measure_unit),
+                p_8B: new P_8B($invoiceProduct->amount),
+                p_9A: new P_9A($invoiceProduct->price),
+                p_11: new P_11($invoiceProduct->netPrice()),
+                p_11A: new P_11A($invoiceProduct->grossPrice()),
+                p_11Vat: new P_11Vat($invoiceProduct->grossPrice() - $invoiceProduct->netPrice()),
+                p_12: P_12::from($invoiceProduct->tax_percent),
+            );
+        }
+
         return new Faktura(
             new Naglowek(),
             new Podmiot1(
@@ -165,18 +191,13 @@ class KsefController extends Controller
                 new P_1($now),
                 new P_2($invoice->number),
                 new P_15($invoice->grossSum()),
-                faWiersz: $invoice->invoice_products->map(fn(InvoiceProduct $product) => new FaWiersz(
-                    new NrWierszaFa($i++),
-                    p_7: new P_7($product->name),
-                    p_8A: new P_8A($product->measure_unit),
-                    p_8B: new P_8B($product->amount),
-                    p_9A: new P_9A($product->price),
-                    p_9B: new P_9B($product->priceWithVat()),
-                    p_11: new P_11($product->netPrice()),
-                    p_11A: new P_11A($product->grossPrice()),
-                    p_11Vat: new P_11Vat($product->grossPrice() - $product->netPrice()),
-                    p_12: P_12::from($product->tax_percent),
-                ))->toArray(),
+                /** @phpstan-ignore function.impossibleType */
+                p_13_1Group: array_key_exists('23', $totalSumMappedByTax) ? new P_13_1Group(new P_13_1($totalSumMappedByTax['23']['netPrice']), new P_14_1($totalSumMappedByTax['23']['amountVat'])) : new Optional(),
+                /** @phpstan-ignore function.impossibleType */
+                p_13_2Group: array_key_exists('8', $totalSumMappedByTax) ? new P_13_2Group(new P_13_2($totalSumMappedByTax['8']['netPrice']), new P_14_2($totalSumMappedByTax['8']['amountVat'])) : new Optional(),
+                /** @phpstan-ignore function.impossibleType */
+                p_13_3Group: array_key_exists('5', $totalSumMappedByTax) ? new P_13_3Group(new P_13_3($totalSumMappedByTax['5']['netPrice']), new P_14_3($totalSumMappedByTax['5']['amountVat'])) : new Optional(),
+                faWiersz: $invoiceProductList,
             ),
         );
     }
