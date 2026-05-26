@@ -29,11 +29,11 @@ RUN apt update -yqq && apt install -y \
     chromium \
     && apt remove --purge --auto-remove -y
 
-RUN npm update && npm install -g npm@11.*
+RUN npm install -g npm@11.*
 
-RUN docker-php-ext-install pgsql gd soap pdo_pgsql zip intl sockets bcmath
+RUN docker-php-ext-install -j$(nproc) pgsql gd soap pdo_pgsql zip intl sockets bcmath
 ## xdebug
-RUN pecl install xdebug \
+RUN pecl install xdebug-3.5.0 \
     && docker-php-ext-enable xdebug \
     && echo "xdebug.mode=debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.discover_client_host=on" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
