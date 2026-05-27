@@ -47,7 +47,6 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\Nazwa;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\NrWierszaFa;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_1;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11;
-use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11A;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11Vat;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_12;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_13_1;
@@ -164,7 +163,6 @@ class KsefController extends Controller
                 p_8B: new P_8B($invoiceProduct->amount),
                 p_9A: new P_9A($invoiceProduct->price),
                 p_11: new P_11($invoiceProduct->netPrice()),
-                p_11A: new P_11A($invoiceProduct->grossPrice()),
                 p_11Vat: new P_11Vat($invoiceProduct->grossPrice() - $invoiceProduct->netPrice()),
                 p_12: P_12::from($invoiceProduct->tax_percent),
             );
