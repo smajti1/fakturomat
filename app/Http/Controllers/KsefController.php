@@ -19,15 +19,19 @@ use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Adres;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Fa;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Faktura;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FaWiersz;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\FormaPlatnosciGroup;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Naglowek;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\NIPGroup;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\NrRBGroup;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_1Group;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_2Group;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_3Group;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Platnosc;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot1;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot1DaneIdentyfikacyjne;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot2;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot2DaneIdentyfikacyjne;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\RachunekBankowy;
 use N1ebieski\KSEFClient\Factories\EncryptionKeyFactory;
 use N1ebieski\KSEFClient\Requests\Sessions\Online\Close\CloseRequest;
 use N1ebieski\KSEFClient\Requests\Sessions\Online\Open\OpenRequest;
@@ -41,9 +45,12 @@ use N1ebieski\KSEFClient\ValueObjects\NipVatUe;
 use N1ebieski\KSEFClient\ValueObjects\PeppolId;
 use N1ebieski\KSEFClient\ValueObjects\Requests\ReferenceNumber;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\AdresL1;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FormaPlatnosci;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\FormCode;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\KodWaluty;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\Nazwa;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\NazwaBanku;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\NrRB;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\NrWierszaFa;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_1;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_11;
@@ -196,6 +203,13 @@ class KsefController extends Controller
                 /** @phpstan-ignore function.impossibleType */
                 p_13_3Group: array_key_exists('5', $totalSumMappedByTax) ? new P_13_3Group(new P_13_3($totalSumMappedByTax['5']['netPrice']), new P_14_3($totalSumMappedByTax['5']['amountVat'])) : new Optional(),
                 faWiersz: $invoiceProductList,
+                platnosc: new Platnosc(
+                    platnoscGroup: new FormaPlatnosciGroup(FormaPlatnosci::Przelew),
+                    rachunekBankowy: [new RachunekBankowy(
+                        new NrRBGroup(new NrRB($company->bank_account)),
+                        nazwaBanku: new NazwaBanku($company->bank_name),
+                    )],
+                ),
             ),
         );
     }
