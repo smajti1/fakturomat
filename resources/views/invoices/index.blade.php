@@ -10,7 +10,6 @@
             <thead>
             <tr>
                 <th>Nr.</th>
-                <th class="d-none d-lg-table-cell d-xl-table-cell">Status</th>
                 <th>Nabywca</th>
                 <th class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">Płatność</th>
                 <th>Kwota netto</th>
@@ -26,7 +25,6 @@
             @foreach($invoices as $invoice)
                 <tr>
                     <td>{{ $invoice->number }}</td>
-                    <td class="d-none d-lg-table-cell d-xl-table-cell">{{ $invoice->status }}</td>
                     <td>{{ $invoice->buyer['name'] }}</td>
                     <td class="d-none d-md-table-cell d-lg-table-cell d-xl-table-cell">{{ $invoice->payment }}</td>
                     <td>{{ $invoice->price_net }} zł</td>
@@ -66,7 +64,10 @@
                         </form>
 
                         <a href="{{ route('api.invoices.to.pdf', compact('invoice') + ['api_token' => \Illuminate\Support\Facades\Auth::user()->api_token]) }}" class="inline-block" target="_blank">
-                            <i class="fa fa-file-pdf-o"></i>
+                            <i class="fa fa-file-pdf-o" title="pobierz fakturę w formacie pdf"></i>
+                        </a>
+                        <a target="_blank" href="{{ route('ksef.downloadXml', $invoice) }}">
+                            <i class="fa fa-file-excel-o" title="pobierz fakturę w formacie xml"></i>
                         </a>
                     </td>
                 </tr>

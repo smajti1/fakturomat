@@ -221,4 +221,13 @@ class Invoice extends Model
             self::PAYMENT_BANK_TRANSFER => 'przelew',
         ];
     }
+
+    public function getFileName(string $file_extension): string
+    {
+        $date = $this->issue_date;
+        $companySlug = mb_convert_case($this->company->slug, MB_CASE_TITLE, "UTF-8");
+        $title = "FV_{$companySlug}_{$date}";
+
+        return "{$title}.$file_extension";
+    }
 }

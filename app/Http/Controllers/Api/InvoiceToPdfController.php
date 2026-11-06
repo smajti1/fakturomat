@@ -18,10 +18,7 @@ class InvoiceToPdfController extends Controller
 
     public function toPdf(Invoice $invoice): Response
     {
-        $date = $invoice->issue_date;
-        $companySlug = mb_convert_case($invoice->company->slug, MB_CASE_TITLE, "UTF-8");
-        $title = "FV_{$companySlug}_{$date}";
-        $filename = "{$title}.pdf";
+        $filename = $invoice->getFileName("pdf");
 
         $browserFactory = new BrowserFactory('chromium');
         $browser = $browserFactory->createBrowser([

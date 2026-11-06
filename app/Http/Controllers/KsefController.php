@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
@@ -212,5 +213,21 @@ class KsefController extends Controller
                 ),
             ),
         );
+    }
+
+    public function downloadXml(Invoice $invoice): Response
+    {
+        /** @var User $user */
+        $user = Auth::user();
+        $company = $user->requireCompany();
+
+        $faktura = $this->createFaktura($company, $invoice);
+        $xml = $faktura->toXml();
+        $filename = $invoice->getFileName("xml");
+
+        return response($xml, 200, [
+            'Content-Type' => 'application/xml; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"$filename\"",
+        ]);
     }
 }

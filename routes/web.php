@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']], static function () {
     Route::get('/ksef/dodaj', [KsefController::class, 'create'])->name('ksef.create');
     Route::put('/ksef/dodaj', [KsefController::class, 'store'])->name('ksef.store');
     Route::post('/ksef/sendInvoice/{invoice}', [KsefController::class, 'sendInvoice'])->name('ksef.sendInvoice');
+    Route::get('/ksef/downloadXml/{invoice}', [KsefController::class, 'downloadXml'])->name('ksef.downloadXml');
 
     Route::group(['namespace' => 'Settings', 'prefix' => 'ustawienia'], static function () {
         Route::get('/numeracja-faktur/edytuj', [CompanyInvoiceNumberController::class, 'index'])->name('settings.company_invoice_number.edit');
