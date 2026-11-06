@@ -149,7 +149,7 @@
         </div>
 
         <div>
-            <strong>Data wystawienia:</strong>
+            <strong>Data dokonania lub zakończenia dostawy towarów lub wykonania usługi:</strong>
             {{ $invoice->issue_date }}
         </div>
 

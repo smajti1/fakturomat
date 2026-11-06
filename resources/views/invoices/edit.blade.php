@@ -44,7 +44,9 @@
         @include('invoices.product-list')
 
         <div>
-            <label for="issue_date">Data wystawienia</label>
+            <label for="issue_date">Data dostawy/usługi
+                <i class="fa fa-question-circle-o" title="Data dokonania lub zakończenia dostawy towarów lub wykonania usługi (wcześniej Data wystawienia)"></i>
+            </label>
             <input type="date" name="issue_date" id="issue_date" value="{{ $invoice->issue_date }}">
         </div>
 

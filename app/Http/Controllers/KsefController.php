@@ -27,6 +27,7 @@ use N1ebieski\KSEFClient\DTOs\Requests\Sessions\NrRBGroup;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_1Group;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_2Group;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_13_3Group;
+use N1ebieski\KSEFClient\DTOs\Requests\Sessions\P_6Group;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Platnosc;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot1;
 use N1ebieski\KSEFClient\DTOs\Requests\Sessions\Podmiot1DaneIdentyfikacyjne;
@@ -65,6 +66,7 @@ use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_14_2;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_14_3;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_15;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_2;
+use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_6;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_7;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_8A;
 use N1ebieski\KSEFClient\ValueObjects\Requests\Sessions\P_8B;
@@ -112,11 +114,12 @@ class KsefController extends Controller
         return view('ksef.create', compact('company'));
     }
 
-    public function sendInvoice(Invoice $invoice): RedirectResponse
+    public function sendInvoice(Invoice $invoice, Request $request): RedirectResponse
     {
         /** @var User $user */
         $user = Auth::user();
         $company = $user->requireCompany();
+        $sendIssueDate = $request->boolean('sendIssueDate');
 
         $ksef_token = $company->ksefToken->ksef_token ?? '';
         $client = $this->getClientByToken($company->tax_id_number, $ksef_token);
@@ -125,7 +128,7 @@ class KsefController extends Controller
         )->data();
         $reference_number_for_session = new ReferenceNumber($response['referenceNumber'] ?? '');
 
-        $faktura = $this->createFaktura($company, $invoice);
+        $faktura = $this->createFaktura($company, $invoice, $sendIssueDate);
         $response_send_invoice = $client->sessions()->online()->send(
             new SendRequest(
                 $reference_number_for_session,
@@ -155,7 +158,7 @@ class KsefController extends Controller
             ->build();
     }
 
-    private function createFaktura(Company $company, Invoice $invoice): Faktura
+    private function createFaktura(Company $company, Invoice $invoice, bool $sendIssueDate): Faktura
     {
         $now = Carbon::now();
         $buyer = $invoice->buyer;
@@ -174,6 +177,11 @@ class KsefController extends Controller
                 p_11Vat: new P_11Vat($invoiceProduct->grossPrice() - $invoiceProduct->netPrice()),
                 p_12: P_12::from($invoiceProduct->tax_percent),
             );
+        }
+
+        $p_6Group = new Optional();
+        if ($sendIssueDate) {
+            $p_6Group = new P_6Group(new P_6($invoice->issue_date));
         }
 
         return new Faktura(
@@ -197,6 +205,7 @@ class KsefController extends Controller
                 new P_1($now),
                 new P_2($invoice->number),
                 new P_15($invoice->grossSum()),
+                p_6Group: $p_6Group,
                 /** @phpstan-ignore function.impossibleType */
                 p_13_1Group: array_key_exists('23', $totalSumMappedByTax) ? new P_13_1Group(new P_13_1($totalSumMappedByTax['23']['netPrice']), new P_14_1($totalSumMappedByTax['23']['amountVat'])) : new Optional(),
                 /** @phpstan-ignore function.impossibleType */
@@ -215,13 +224,14 @@ class KsefController extends Controller
         );
     }
 
-    public function downloadXml(Invoice $invoice): Response
+    public function downloadXml(Invoice $invoice, Request $request): Response
     {
         /** @var User $user */
         $user = Auth::user();
         $company = $user->requireCompany();
+        $sendIssueDate = $request->boolean('sendIssueDate');
 
-        $faktura = $this->createFaktura($company, $invoice);
+        $faktura = $this->createFaktura($company, $invoice, $sendIssueDate);
         $xml = $faktura->toXml();
         $filename = $invoice->getFileName("xml");
 
