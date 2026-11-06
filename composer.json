@@ -97,6 +97,11 @@
         "allow-plugins": {
             "php-http/discovery": true,
             "phpstan/extension-installer": true
+        },
+        "policy": {
+            "cooldown": {
+                "period": "1 day"
+            }
         }
     }
 }
